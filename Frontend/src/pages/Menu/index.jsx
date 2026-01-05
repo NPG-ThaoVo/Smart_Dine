@@ -1,8 +1,7 @@
 import FoodCard from "./components/FoodCard";
 import HeaderMenu from "./components/HeaderMenu";
-import "./index.css";
 
-function App() {
+function Menu() {
   return (
     <>
       <div className="min-h-screen gradient-bg pb-24">
@@ -13,4 +12,4 @@ function App() {
   );
 }
 
-export default App;
+export default Menu;
