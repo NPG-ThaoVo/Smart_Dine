@@ -1,10 +1,10 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import connectDB from './config/db.js'; // Nhớ đuôi .js
-import userRoutes from './routes/userRoutes.js'; // Nhớ đuôi .js
+import express from "express";
+import dotenv from "dotenv";
+import connectDB from "./config/db.js"; // Remember the .js extension
+import userRoutes from "./routes/userRoutes.js"; // Remember the .js extension
 import cors from "cors";
 
-// Load biến môi trường
+// Load environment variables
 dotenv.config();
 
 app.use(
@@ -14,18 +14,18 @@ app.use(
   })
 );
 const app = express();
-// Middleware quan trọng: Giúp Express hiểu được dữ liệu JSON
-// Nếu thiếu dòng này, req.body sẽ bị undefined
+// Important middleware: Helps Express understand JSON data
+// If this line is missing, req.body will be undefined
 app.use(express.json());
 
-// Kết nối Database
+// Connect to Database
 connectDB();
 
-// Route gốc
-// Mọi request bắt đầu bằng /api/users sẽ đi vào userRoutes
-app.use('/api/users', userRoutes);
+// Root route
+// All requests starting with /api/users will go to userRoutes
+app.use("/api/users", userRoutes);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(`🚀 Server đang chạy tại http://localhost:${PORT}`);
+  console.log(`🚀 Server is running at http://localhost:${PORT}`);
 });
