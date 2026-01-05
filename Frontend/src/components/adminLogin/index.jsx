@@ -1,30 +1,27 @@
 import React from "react";
 import { Spinner } from "../ui/spinner";
+import { Button } from "../ui/button";
 
 const adminLogin = ({ loading, handleLogin }) => {
   return (
     <div className="rounded-xl border border-border/30 bg-card/80 text-card-foreground backdrop-blur-xl shadow-md transition-all duration-300 hover:shadow-lg hover:border-border/50 w-full max-w-md">
       <div className="flex flex-col space-y-1.5 p-6 text-center">
         <div className="text-5xl mb-4">🍜</div>
-        <h3 className="font-bold tracking-tight text-2xl">
-          SmartDine Admin
-        </h3>
+        <h3 className="font-bold tracking-tight text-2xl">SmartDine Admin</h3>
         <p className="font-medium text-sm text-muted-foreground">
           Đăng nhập để quản lý nhà hàng của bạn
         </p>
       </div>
       <div className="p-6 pt-0 space-y-4">
-        <button
+        <Button
+          variant="outline"
           disabled={loading}
           onClick={() => handleLogin()}
-          className="inline-flex items-center justify-center gap-3 whitespace-nowrap
-rounded-xl font-medium transition-colors
-focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
-disabled:pointer-events-none disabled:opacity-50
-w-full h-12 px-4 py-6 text-lg border shadow-sm
-bg-white text-[#111827] border-[#E5E7EB]
-hover:bg-[#FFF4E5] hover:text-[#E9560C] hover:border-[#F6D4B8]
-focus-visible:ring-[#E9560C] cursor-pointer"
+          className="w-full h-12 px-4 text-lg
+    rounded-xl shadow-sm
+    bg-white text-[#111827] border-[#E5E7EB]
+    hover:bg-[#FFF4E5] hover:text-[#E9560C] hover:border-[#F6D4B8]
+    focus-visible:ring-[#E9560C] cursor-pointer"
         >
           {loading ? (
             <span className="w-5 h-5">
@@ -51,23 +48,20 @@ focus-visible:ring-[#E9560C] cursor-pointer"
             </svg>
           )}
           <span>Đăng nhập với Google</span>
-        </button>
+        </Button>
         <div className="relative">
           <div className="shrink-0 bg-border h-[1px] w-full"></div>
           <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-card px-2 text-xs text-muted-foreground">
             Hoặc
           </span>
         </div>
-        <button
-          className="inline-flex items-center justify-center gap-2 whitespace-nowrap
-    rounded-xl font-medium transition-colors
-    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
-    disabled:pointer-events-none disabled:opacity-50
-    w-full h-12 px-4 py-6 text-lg
-    bg-[#E9560C] text-white
-    hover:bg-[#d94f0b]
-    focus-visible:ring-[#E9560C]
-    shadow-sm cursor-pointer"
+        <Button
+          variant="default"
+          className="w-full h-12 px-4 text-lg
+    rounded-xl shadow-sm
+    bg-[#E9560C] hover:bg-[#d94f0b]
+    text-white
+    focus-visible:ring-[#E9560C]cursor-pointer"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -85,7 +79,7 @@ focus-visible:ring-[#E9560C] cursor-pointer"
             <circle cx="12" cy="7" r="4"></circle>
           </svg>
           Đăng nhập Demo
-        </button>
+        </Button>
         <p className="font-medium text-center text-sm text-muted-foreground mt-1">
           Chỉ dành cho quản trị viên nhà hàng
         </p>

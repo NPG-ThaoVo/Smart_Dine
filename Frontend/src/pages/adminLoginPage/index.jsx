@@ -1,5 +1,5 @@
 import React from "react";
-import AdminLogin from "../../components/adminLogin";
+import AdminLogin from "../../components/AdminLogin";
 import { useState } from "react";
 
 const adminLoginPage = () => {
