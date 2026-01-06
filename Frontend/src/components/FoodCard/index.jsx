@@ -2,6 +2,7 @@ import React from "react";
 
 const FoodCard = () => {
   return (
+    // Main Content
     <main className="px-3 md:px-4 py-4 md:py-6">
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4 px-1">

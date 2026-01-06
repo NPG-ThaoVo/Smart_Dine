@@ -3,10 +3,11 @@ import HeaderMenu from "./components/HeaderMenu";
 
 function Menu() {
   return (
+    // Menu Page
     <>
       <div className="min-h-screen gradient-bg pb-24">
-        <HeaderMenu/>
-        <FoodCard/>
+        <HeaderMenu />
+        <FoodCard />
       </div>
     </>
   );
