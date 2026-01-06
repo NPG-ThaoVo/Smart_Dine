@@ -1,16 +1,21 @@
-import FoodCard from "./components/FoodCard";
-import HeaderMenu from "./components/HeaderMenu";
-import "./index.css";
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import AdminLoginPage from "./pages/AdminLoginPage";
+import Menu from "./pages/Menu";
 
 function App() {
   return (
-    <>
-      <div className="min-h-screen gradient-bg pb-24">
-        <HeaderMenu/>
-        <FoodCard/>
-      </div>
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Menu />} />
+        <Route path="/admin/login" element={<AdminLoginPage />} />
+      </Routes>
+    </Router>
   );
 }
-
 export default App;
