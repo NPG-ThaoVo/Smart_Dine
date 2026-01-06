@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Button } from "../ui/button";
 const FoodCard = () => {
   return (
     // Main Content
@@ -29,7 +29,7 @@ const FoodCard = () => {
                   </span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 text-[#e9560c]-foreground h-9 w-9 rounded-full bg-[#e9560c] hover:bg-[#e9560c]/90 shadow-lg shadow-[#e9560c]/30 hover:scale-110 transition-transform">
+                  <Button className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 text-[#e9560c]-foreground h-9 w-9 rounded-full bg-[#e9560c] hover:bg-[#e9560c]/90 shadow-lg shadow-[#e9560c]/30 hover:scale-110 transition-transform">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -45,7 +45,7 @@ const FoodCard = () => {
                       <path d="M5 12h14"></path>
                       <path d="M12 5v14"></path>
                     </svg>
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>
@@ -69,7 +69,7 @@ const FoodCard = () => {
                   </span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <button
+                  <Button
                     className="
     inline-flex items-center justify-center
     h-9 w-9 rounded-full
@@ -94,7 +94,7 @@ const FoodCard = () => {
                       <path d="M5 12h14"></path>
                       <path d="M12 5v14"></path>
                     </svg>
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>
