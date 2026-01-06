@@ -1,11 +1,12 @@
 import express from "express";
 import dotenv from "dotenv";
-import connectDB from "./config/db.js"; // Remember the .js extension
-import userRoutes from "./routes/userRoutes.js"; // Remember the .js extension
+import connectDB from "./config/db.js"; // Remember the .js extension // Remember the .js extension
+import authRoutes from "./routes/authRoutes.js"; // Remember the .js extension
 import cors from "cors";
 
 // Load environment variables
 dotenv.config();
+const app = express();
 
 app.use(
   cors({
@@ -13,7 +14,6 @@ app.use(
     credentials: true,
   })
 );
-const app = express();
 // Important middleware: Helps Express understand JSON data
 // If this line is missing, req.body will be undefined
 app.use(express.json());
@@ -23,7 +23,7 @@ connectDB();
 
 // Root route
 // All requests starting with /api/users will go to userRoutes
-app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
