@@ -20,7 +20,8 @@ export default function CallToActionSection() {
       </section>
 
       <footer className="border-t py-8 text-center text-muted-foreground">
-        © 2024 SmartDine. Hệ thống quản lý nhà hàng thông minh.
+        © {new Date().getFullYear()} SmartDine. Hệ thống quản lý nhà hàng thông
+        minh.
       </footer>
     </>
   );
