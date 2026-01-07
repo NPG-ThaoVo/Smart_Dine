@@ -13,6 +13,18 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+    name: {
+      type: String,
+      default: null,
+    },
+    email: {
+      type: String,
+      default: null,
+    },
+    password: {
+      type: String,
+      default: null,
+    },
     avatar: {
       type: String,
       default: "default.jpg",
