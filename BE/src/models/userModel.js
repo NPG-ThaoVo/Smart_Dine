@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 const userSchema = new mongoose.Schema(
-{
+  {
     refreshToken: {
       type: String,
       select: false,
@@ -10,6 +10,22 @@ const userSchema = new mongoose.Schema(
     resetPasswordToken: String,
     resetPasswordExpire: Date,
     googleId: {
+      type: String,
+      default: null,
+    },
+    name: {
+      type: String,
+      default: null,
+    },
+    email: {
+      type: String,
+      default: null,
+      unique: true,
+      trim: true,
+      lowercase: true,
+      match: [/^\S+@\S+\.\S+$/, "Please use a valid email address"],
+    },
+    password: {
       type: String,
       default: null,
     },
@@ -32,7 +48,7 @@ userSchema.pre("save", async function () {
 
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
-  // next();  
+  // next();
 });
 
 // 🔑 Method: Tự so sánh password
