@@ -79,7 +79,7 @@ export function DialogCreateOrEditTable({
             <DialogClose asChild>
               <Button variant="outline">Huỷ</Button>
             </DialogClose>
-            <Button className="bg-primary" type="submit">
+            <Button className="bg-[#e96523] hover:bg-[#e96523]/90 text-white" type="submit" > 
               {isEditing ? "Cập Nhật Bàn" : "Thêm Bàn"}
             </Button>
           </DialogFooter>

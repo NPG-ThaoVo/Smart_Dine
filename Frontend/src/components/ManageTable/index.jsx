@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Button } from "@/components/ui/button";
 const ManageTable = ({ setOpenQRChange, setOpenDeleteChange, onEdit }) => {
   return (
     <div>
@@ -25,9 +25,9 @@ const ManageTable = ({ setOpenQRChange, setOpenDeleteChange, onEdit }) => {
           <div className="p-4 bg-background/50 backdrop-blur-md border-t border-white/5 relative z-20">
             <div className="flex items-center justify-between gap-2">
               <div className="flex gap-1">
-                <button
+                <Button
                   onClick={() => setOpenQRChange(true)}
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 h-9 w-9 rounded-xl hover:bg-white/10 hover:text-white text-muted-foreground transition-colors"
+                  className="bg-transparent text-gray-400 hover:bg-white/10 hover:text-white "
                   title="QR Code"
                 >
                   <svg
@@ -55,8 +55,8 @@ const ManageTable = ({ setOpenQRChange, setOpenDeleteChange, onEdit }) => {
                     <path d="M21 12v.01"></path>
                     <path d="M12 21v-1"></path>
                   </svg>
-                </button>
-                <button
+                </Button>
+                <Button
                   onClick={() =>
                     onEdit({
                       id: 1,
@@ -64,7 +64,7 @@ const ManageTable = ({ setOpenQRChange, setOpenDeleteChange, onEdit }) => {
                       name: "Bàn cửa sổ",
                     })
                   }
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 h-9 w-9 rounded-xl hover:bg-white/10 hover:text-blue-400 text-muted-foreground transition-colors"
+                  className="bg-transparent text-gray-400 hover:bg-white/10 hover:text-blue-400"
                   title="Chỉnh sửa"
                 >
                   <svg
@@ -82,10 +82,10 @@ const ManageTable = ({ setOpenQRChange, setOpenDeleteChange, onEdit }) => {
                     <path d="M12 20h9"></path>
                     <path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"></path>
                   </svg>
-                </button>
-                <button
+                </Button>
+                <Button
                   onClick={() => setOpenDeleteChange(true)}
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 h-9 w-9 rounded-xl hover:bg-white/10 hover:text-red-400 text-muted-foreground transition-colors"
+                  className="bg-transparent text-gray-400 hover:bg-white/10 hover:text-red-400"
                   title="Xóa"
                 >
                   <svg
@@ -106,7 +106,7 @@ const ManageTable = ({ setOpenQRChange, setOpenDeleteChange, onEdit }) => {
                     <line x1="10" x2="10" y1="11" y2="17"></line>
                     <line x1="14" x2="14" y1="11" y2="17"></line>
                   </svg>
-                </button>
+                </Button>
               </div>
             </div>
           </div>
@@ -132,8 +132,8 @@ const ManageTable = ({ setOpenQRChange, setOpenDeleteChange, onEdit }) => {
           <div className="p-4 bg-background/50 backdrop-blur-md border-t border-white/5 relative z-20">
             <div className="flex items-center justify-between gap-2">
               <div className="flex gap-1">
-                <button
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 h-9 w-9 rounded-xl hover:bg-white/10 hover:text-white text-muted-foreground transition-colors"
+                <Button
+                  className="bg-transparent text-gray-400 hover:bg-white/10 hover:text-white"
                   title="QR Code"
                 >
                   <svg
@@ -161,9 +161,9 @@ const ManageTable = ({ setOpenQRChange, setOpenDeleteChange, onEdit }) => {
                     <path d="M21 12v.01"></path>
                     <path d="M12 21v-1"></path>
                   </svg>
-                </button>
-                <button
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 h-9 w-9 rounded-xl hover:bg-white/10 hover:text-blue-400 text-muted-foreground transition-colors"
+                </Button>
+                <Button
+                  className="bg-transparent text-gray-400 hover:bg-white/10 hover:text-blue-400"
                   title="Chỉnh sửa"
                 >
                   <svg
@@ -181,9 +181,9 @@ const ManageTable = ({ setOpenQRChange, setOpenDeleteChange, onEdit }) => {
                     <path d="M12 20h9"></path>
                     <path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"></path>
                   </svg>
-                </button>
-                <button
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 h-9 w-9 rounded-xl hover:bg-white/10 hover:text-red-400 text-muted-foreground transition-colors"
+                </Button>
+                <Button
+                  className="bg-transparent text-gray-400 hover:bg-white/10 hover:text-red-400"
                   title="Xóa"
                 >
                   <svg
@@ -204,9 +204,9 @@ const ManageTable = ({ setOpenQRChange, setOpenDeleteChange, onEdit }) => {
                     <line x1="10" x2="10" y1="11" y2="17"></line>
                     <line x1="14" x2="14" y1="11" y2="17"></line>
                   </svg>
-                </button>
+                </Button>
               </div>
-              <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary hover:bg-primary/90 px-3 h-9 rounded-xl bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-400 hover:to-pink-500 text-white border border-white/10 shadow-lg shadow-rose-500/20">
+              <Button className="rounded-xl bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-400 hover:to-pink-500 text-white border border-white/10 shadow-lg shadow-rose-500/20">
                 Chi tiết
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -223,7 +223,7 @@ const ManageTable = ({ setOpenQRChange, setOpenDeleteChange, onEdit }) => {
                   <path d="M5 12h14"></path>
                   <path d="m12 5 7 7-7 7"></path>
                 </svg>
-              </button>
+              </Button>
             </div>
           </div>
         </div>

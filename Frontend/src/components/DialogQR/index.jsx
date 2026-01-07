@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import {
   Dialog,
   DialogClose,
@@ -53,7 +53,7 @@ export function DialogQR({ open, onOpenChange, handleDownload }) {
               Khách hàng quét mã này để đặt món
             </p>
             <div className="flex gap-2">
-              <button
+              <Button
                 onClick={() => {
                   handleDownload();
                   handleClick();
@@ -77,8 +77,8 @@ export function DialogQR({ open, onOpenChange, handleDownload }) {
                   <line x1="12" x2="12" y1="15" y2="3"></line>
                 </svg>
                 Tải xuống
-              </button>
-              <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+              </Button>
+              <Button className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -96,7 +96,7 @@ export function DialogQR({ open, onOpenChange, handleDownload }) {
                   <rect x="6" y="14" width="12" height="8" rx="1"></rect>
                 </svg>
                 In QR
-              </button>
+              </Button>
             </div>
           </div>
         </form>

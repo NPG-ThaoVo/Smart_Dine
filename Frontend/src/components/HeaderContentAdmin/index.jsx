@@ -1,6 +1,7 @@
 import { Dialog } from "@radix-ui/react-dialog";
 import React from "react";
 import { DialogCreateOrEditTable } from "../DialogCreateOrEditTable";
+import { Button } from "@/components/ui/button";
 
 const HeaderContentAdmin = ({ onOpenChange }) => {
   return (
@@ -37,9 +38,9 @@ const HeaderContentAdmin = ({ onOpenChange }) => {
               value=""
             />
           </div>
-          <button
+          <Button
             onClick={() => onOpenChange(true)}
-            className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 h-10 px-4 py-2 bg-[#e96523] hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/20"
+            className="bg-[#e96523] text-white hover:bg-[#e96523]/90 h-10 px-4 py-2"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +58,7 @@ const HeaderContentAdmin = ({ onOpenChange }) => {
               <path d="M12 5v14"></path>
             </svg>
             Thêm bàn mới
-          </button>
+          </Button>
         </div>
       </div>
     </div>
