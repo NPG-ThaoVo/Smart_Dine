@@ -53,13 +53,12 @@ export default function OrderSidebar({
         side="right"
         className="
           w-3/4 sm:max-w-sm
-          bg-card/95 backdrop-blur-xl
+          bg-white
           border-l border-border/30
           shadow-xl
           p-6
           flex flex-col
           gap-4
-          glass-panel
         "
       >
         {/* Header */}
@@ -80,7 +79,7 @@ export default function OrderSidebar({
           ) : (
             <div className="space-y-4">
               {cartItems.map((item) => (
-                <div key={item.id} className="bg-muted/50 rounded-lg p-3">
+                <div key={item.id} className="bg-gray-100 rounded-lg p-3">
                   {/* Item header */}
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
@@ -140,7 +139,7 @@ export default function OrderSidebar({
 
         {/* Footer - Order summary */}
         {cartItems.length > 0 && (
-          <div className="flex sm:flex-row sm:justify-end sm:space-x-2 flex-col gap-4 border-t pt-4">
+          <div className="flex flex-col gap-4 border-t pt-4">
             <div className="w-full space-y-2">
               <div className="flex justify-between text-sm">
                 <span>Tạm tính</span>
