@@ -30,21 +30,7 @@ const FoodCard = () => {
                 </div>
                 <div className="flex items-center gap-1.5">
                   <Button className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 text-[#e9560c]-foreground h-9 w-9 rounded-full bg-[#e9560c] hover:bg-[#e9560c]/90 shadow-lg shadow-[#e9560c]/30 hover:scale-110 transition-transform">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="lucide lucide-plus w-4 h-4"
-                    >
-                      <path d="M5 12h14"></path>
-                      <path d="M12 5v14"></path>
-                    </svg>
+                    <Plus className="w-4 h-4 mr-2" />
                   </Button>
                 </div>
               </div>
@@ -79,21 +65,7 @@ const FoodCard = () => {
     hover:scale-110 transition-transform
   "
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="lucide lucide-plus w-4 h-4"
-                    >
-                      <path d="M5 12h14"></path>
-                      <path d="M12 5v14"></path>
-                    </svg>
+                    <Plus className="w-4 h-4 mr-2" />
                   </Button>
                 </div>
               </div>

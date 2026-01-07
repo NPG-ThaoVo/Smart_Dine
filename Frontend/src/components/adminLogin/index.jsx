@@ -1,6 +1,7 @@
 import React from "react";
 import { Spinner } from "../ui/spinner";
 import { Button } from "../ui/button";
+import { User } from "lucide-react";
 
 const adminLogin = ({ loading, handleLogin }) => {
   return (
@@ -63,21 +64,7 @@ const adminLogin = ({ loading, handleLogin }) => {
     text-white
     focus-visible:ring-[#E9560C]cursor-pointer"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="lucide lucide-user w-5 h-5 mr-2"
-          >
-            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-          </svg>
+          <User className="w-5 h-5 mr-2" />
           Đăng nhập Demo
         </Button>
         <p className="font-medium text-center text-sm text-muted-foreground mt-1">

@@ -4,10 +4,11 @@ import Menu from "./pages/Menu";
 import SmartDineLanding from "./pages/Smartdine-Landing-Page";
 import TableManagement from "./pages/TableManagement";
 import AdminLayout from "./components/AdminLayout";
-
+import { Toaster } from "react-hot-toast";
 function App() {
   return (
     <BrowserRouter>
+      <Toaster position="top-right" reverseOrder={false} />
       <Routes>
         <Route path="/" element={<Menu />} />
         <Route path="/admin/login" element={<AdminLoginPage />} />

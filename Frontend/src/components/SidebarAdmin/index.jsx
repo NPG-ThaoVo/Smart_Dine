@@ -96,13 +96,13 @@ export function SidebarAdmin() {
                         }`
                       }
                     >
-                      <item.icon className="h-[18px] w-[18px] text-[#51535b] hover:text-amber-400" />
-                      <span className="flex-1 truncate text-[#51535b] hover:text-amber-400">
+                      <item.icon className="h-[18px] w-[18px] text-[#51535b] hover:text-[#e9560c] " />
+                      <span className="flex-1 truncate text-[#51535b] ">
                         {item.title}
                       </span>
 
                       {item.badge && (
-                        <span className="ml-auto rounded-full bg-primary px-1.5 text-[10px] font-bold text-primary-foreground">
+                        <span className="ml-auto rounded-full  bg-[#e9560c] px-1.5 text-[10px] font-bold text-primary-foreground">
                           {item.badge}
                         </span>
                       )}

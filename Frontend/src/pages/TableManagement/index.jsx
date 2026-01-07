@@ -4,7 +4,7 @@ import { DialogQR } from "@/components/DialogQR";
 import HeaderContentAdmin from "@/components/HeaderContentAdmin";
 import ManageTable from "@/components/ManageTable";
 import React from "react";
-
+import toast from "react-hot-toast";
 const TableManagement = () => {
   const [openCreateOrEdit, setOpenCreateOrEdit] = React.useState(false);
   const [openQR, setOpenQR] = React.useState(false);
@@ -18,29 +18,8 @@ const TableManagement = () => {
   const onSubmitEdit = () => {
     console.log("Handle edit table logic here");
   };
-  const contentBlock = "Nội dung ví dụ để tải xuống dưới dạng tệp văn bản.";
-  const inputValue = "example_filename";
   const handleDownload = () => {
-    // 1️⃣ Tạo blob từ nội dung
-    const blob = new Blob([contentBlock], { type: "text/plain" });
-
-    // 2️⃣ Tạo URL tạm thời cho blob
-    const url = URL.createObjectURL(blob);
-
-    // 3️⃣ Tạo thẻ <a> để mô phỏng hành động tải xuống
-    const a = document.createElement("a");
-    a.href = url;
-    const filename = `${inputValue}.txt`;
-    a.download = filename;
-
-    // 4️⃣ Thêm vào DOM và click tự động
-    document.body.appendChild(a);
-    a.click();
-
-    // 5️⃣ Dọn dẹp
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    toast.success("Tải xuống thành công!");
+    console.log("Handle download QR code logic here");
   };
   return (
     <div>
