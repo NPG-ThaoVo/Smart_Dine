@@ -15,6 +15,7 @@ const menuItemSchema = new mongoose.Schema(
     description: {
       type: String,
       required: true,
+      trim: true,
     },
     price: {
       type: Number,
@@ -28,6 +29,7 @@ const menuItemSchema = new mongoose.Schema(
     image: {
       type: String,
       default: "default.jpg",
+      required: true,
     },
     upsellSuggestions: [
       {

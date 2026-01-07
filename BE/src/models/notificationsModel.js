@@ -9,10 +9,12 @@ const notificationSchema = new mongoose.Schema(
         title: {
             type: String,
             required: true,
+            trim: true,
         },
         message: {
             type: String,
             required: true,
+            trim: true,
         },
         tableId: {
             type: mongoose.Schema.Types.ObjectId,

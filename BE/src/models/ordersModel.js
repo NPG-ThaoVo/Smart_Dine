@@ -14,6 +14,7 @@ const orderSchema = new mongoose.Schema(
      note: {
       type: String,
       default: null,
+      trim: true,
     },
      status: {
       type: String,
