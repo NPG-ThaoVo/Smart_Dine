@@ -4,17 +4,12 @@ const tableSchema = new mongoose.Schema(
     Name: {
       type: String,
       required: true,
+      lowercase: true,
     },
    number: {
       type: Number,
       required: true,
       unique: true,
-    },
-     status: {
-      type: String,
-      enum: ["AVAILABLE", "OCCUPIED"],
-      default: "AVAILABLE",
-      required: true,
     },
       currentSessionId: {
       type: mongoose.Schema.Types.ObjectId,

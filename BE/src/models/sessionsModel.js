@@ -26,5 +26,11 @@ const sessionSchema = new mongoose.Schema(
       default: null,
     },
   },
+  { timestamps: true }
+  
 );
+sessionSchema.index({ tableId: 1 });
+sessionSchema.index({ userId: 1 });
+sessionSchema.index({ tableId: 1, status: 1 });
+
 export default mongoose.model("Session", sessionSchema);

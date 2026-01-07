@@ -12,7 +12,7 @@ const orderSchema = new mongoose.Schema(
       required: true,
     },
      note: {
-      type: Text,
+      type: String,
       default: null,
     },
      status: {
@@ -24,4 +24,5 @@ const orderSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
 export default mongoose.model("Order", orderSchema);

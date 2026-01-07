@@ -16,14 +16,10 @@ const menuItemSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    status: {
-      type: String,
-      enum: ["ACTIVE", "HIDDEN"],
-      default: "ACTIVE",
-    },
     price: {
       type: Number,
       required: true,
+       min: [1, "Price must be greater than 0"],
     },
     isAvailable: {
       type: Boolean,
@@ -41,4 +37,6 @@ const menuItemSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+MenuItem.find({ categoryId, isAvailable: true });
+menuItemSchema.index({ categoryId: 1, isAvailable: 1 });
 export default mongoose.model("MenuItem", menuItemSchema);
