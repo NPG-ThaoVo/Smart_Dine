@@ -119,6 +119,7 @@ const FoodCard = () => {
   // Function to decrease quantity or remove item
   const removeFromCart = (itemId) => {
     const existingItem = cartItems.find((cartItem) => cartItem.id === itemId);
+    if (!existingItem) return;
     if (existingItem.quantity === 1) {
       setCartItems(cartItems.filter((cartItem) => cartItem.id !== itemId));
     } else {
