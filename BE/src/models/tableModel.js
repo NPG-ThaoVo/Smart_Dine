@@ -13,7 +13,7 @@ const tableSchema = new mongoose.Schema(
     },
     currentSessionId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Session",
+      // ref: "Session",
       default: null,
     },
     isAvailable: {

@@ -2,8 +2,8 @@ POST http://localhost:3001/api/table
 Content-Type: application/json
 
 {
-  "number": 6,
-  "name": "Bàn VIP tầng 1"
+  "number": 11,
+  "Name": "Bàn lỏ"
 }
 
 ###
@@ -13,14 +13,14 @@ GET http://localhost:3001/api/table?status=OCCUPIED
 ###
 GET http://localhost:3001/api/table?search=VIP
 ###
-GET http://localhost:3001/api/table/695ea68e124492e3ba2a5b1b
+GET http://localhost:3001/api/table/695ea705124492e3ba2a5b23
 ###
-PUT http://localhost:3001/api/table/695ea68e124492e3ba2a5b1b
+PUT http://localhost:3001/api/table/695f5666fd4ec837338da385
 Content-Type: application/json
 
 {
-  "name": "Bàn VIP tầng 1"
+  "Name": "Bàn VIP"
 }
 ###
-DELETE http://localhost:3001/api/table/695ea68e124492e3ba2a5b1b
+DELETE http://localhost:3001/api/table/695ea5918467cb4c5939a5b8
 
