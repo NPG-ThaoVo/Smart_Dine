@@ -15,7 +15,7 @@ export const getMenuItemById = async (req, res) => {
     const menuItemId = req.params.menuItemId;
     const menuItem = await menuService.getMenuItemById(menuItemId);
      if(!menuItem){
-      errorResponse(res,"Menu item not found",404);
+       return errorResponse(res,"Menu item not found",404);
     }
      return successResponse(res,menuItem);
   } catch (error) {
