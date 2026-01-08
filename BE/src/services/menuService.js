@@ -5,10 +5,25 @@ export const createMenuItem = async (menuItemData) => {
   return MenuItem.create(menuItemData);
 };
 
-// lấy tất cả menu items
-export const getAllMenuItems = async () => {
-  return MenuItem.find();
+export const getAllMenuItems = async (page = 1, limit = 10) => {
+  const skip = (page - 1) * limit;
+
+  const [items, total] = await Promise.all([
+    MenuItem.find().skip(skip).limit(limit),
+    MenuItem.countDocuments()
+  ]);
+
+  return {
+    items,
+    pagination: {
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit)
+    }
+  };
 };
+
 
 // lấy menu item theo id
 export const getMenuItemById = async (menuItemId) => {
