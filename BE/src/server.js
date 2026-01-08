@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import connectDB from "./config/db.js"; // Remember the .js extension // Remember the .js extension
 import authRoutes from "./routes/authRoutes.js"; // Remember the .js extension
 import cors from "cors";
-import tableRoutes from "./routes/tableRoutes.js";
 import menuRoutes  from "./routes/menuRoutes.js";
 // Load environment variables
 dotenv.config();

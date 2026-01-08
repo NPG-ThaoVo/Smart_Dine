@@ -4,7 +4,8 @@ const tableSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
-      lowercase: true,
+      unique: true,
+      trim: true,
     },
     number: {
       type: Number,
@@ -13,7 +14,7 @@ const tableSchema = new mongoose.Schema(
     },
     currentSessionId: {
       type: mongoose.Schema.Types.ObjectId,
-      // ref: "Session",
+      ref: "Session",
       default: null,
     },
     isAvailable: {
