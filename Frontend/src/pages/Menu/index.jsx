@@ -1,5 +1,5 @@
-import FoodCard from "./components/FoodCard";
-import HeaderMenu from "./components/HeaderMenu";
+import FoodCard from "@/components/FoodCard";
+import HeaderMenu from "@/components/HeaderMenu";
 
 function Menu() {
   return (
