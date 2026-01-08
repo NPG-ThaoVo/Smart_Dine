@@ -3,7 +3,7 @@ import { Spinner } from "../ui/spinner";
 import { Button } from "../ui/button";
 import { User } from "lucide-react";
 
-const adminLogin = ({ loading, handleLogin }) => {
+const AdminLogin = ({ loading, handleGoogleLoginWrapper }) => {
   return (
     <div className="rounded-xl border border-border/30 bg-card/80 text-card-foreground backdrop-blur-xl shadow-md transition-all duration-300 hover:shadow-lg hover:border-border/50 w-full max-w-md">
       <div className="flex flex-col space-y-1.5 p-6 text-center">
@@ -17,7 +17,7 @@ const adminLogin = ({ loading, handleLogin }) => {
         <Button
           variant="outline"
           disabled={loading}
-          onClick={() => handleLogin()}
+          onClick={() => handleGoogleLoginWrapper()}
           className="w-full h-12 px-4 text-lg
     rounded-xl shadow-sm
     bg-white text-[#111827] border-[#E5E7EB]
@@ -75,4 +75,4 @@ const adminLogin = ({ loading, handleLogin }) => {
   );
 };
 
-export default adminLogin;
+export default AdminLogin;

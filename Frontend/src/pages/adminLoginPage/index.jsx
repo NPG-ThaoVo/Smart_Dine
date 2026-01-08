@@ -1,17 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AdminLogin from "../../components/AdminLogin";
-import { useState } from "react";
+import testLoginGoogle from "../../components/GoogleLogin";
 
-const adminLoginPage = () => {
+const AdminLoginPage = () => {
   const [loading, setLoading] = useState(false);
-  const handleLogin = () => {
-    setLoading(true);
+  const navigate = useNavigate();
+
+  const handleGoogleLoginWrapper = async () => {
+    try {
+      setLoading(true);
+      const data = await testLoginGoogle();
+      console.log("Login success:", data);
+      navigate("/admin/login");
+    } catch (error) {
+      console.log("Google login flow failed", error);
+    } finally {
+      setLoading(false);
+    }
   };
+
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <AdminLogin loading={loading} handleLogin={handleLogin} />
+      <AdminLogin
+        loading={loading}
+        handleGoogleLoginWrapper={handleGoogleLoginWrapper}
+      />
     </div>
   );
 };
 
-export default adminLoginPage;
+export default AdminLoginPage;
