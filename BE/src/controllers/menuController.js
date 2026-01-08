@@ -11,14 +11,14 @@ export const getAllMenuItems = async (req, res) => {
     (req.query.page && (!Number.isInteger(page) || page < 1)) ||
     (req.query.limit && (!Number.isInteger(limit) || limit < 1))
   ) {
-    return errorResponse(res, "Invalid pagination parameters", 400);
+    return errorResponse(res, "Tham số phân trang không hợp lệ", 400);
   }
   const safePage = page || 1;
   const safeLimit = Math.min(limit || 10, 100);
 // Prevent DOS via excessive skip values
   const MAX_PAGE = 10000;
   if (safePage > MAX_PAGE) {
-    return errorResponse(res, `Page number cannot exceed ${MAX_PAGE}`, 400);
+    return errorResponse(res, `Số trang không được vượt quá ${MAX_PAGE}`, 400);
   }
   try {
     const result = await menuService.getAllMenuItems(
@@ -29,7 +29,7 @@ export const getAllMenuItems = async (req, res) => {
     return successResponse(res, result);
   } catch (error) {
     console.error("Error fetching menu items:", error);
-    return errorResponse(res, "Internal server error", 500);
+    return errorResponse(res, "Lỗi máy chủ nội bộ", 500);
   }
 };
 
@@ -38,16 +38,16 @@ export const getMenuItemById = async (req, res) => {
   try {
     const menuItemId = req.params.menuItemId;
     if (!mongoose.Types.ObjectId.isValid(menuItemId)) {
-       return errorResponse(res, "Invalid menu item ID format", 400);
+       return errorResponse(res, "Định dạng ID món không hợp lệ", 400);
      }
      const menuItem = await menuService.getMenuItemById(menuItemId);
     if (!menuItem) {
-      return errorResponse(res, "Menu item not found", 404);
+      return errorResponse(res, "Không tìm thấy món", 404);
     }
      return successResponse(res,menuItem);
   } catch (error) {
     console.error("Error fetching menu item:", error);
-    return errorResponse(res, "Internal server error", 500);
+    return errorResponse(res, "Lỗi máy chủ nội bộ", 500);
   }
 };
 //cập nhật menu item theo id
@@ -56,28 +56,28 @@ export const updateMenuItemById = async (req, res) => {
     const menuItemId = req.params.menuItemId;
     const menuItemData = req.body;
     if (!mongoose.Types.ObjectId.isValid(menuItemId)) {
-      return errorResponse(res, "Invalid menu item ID format", 400);
+      return errorResponse(res, "Định dạng ID món không hợp lệ", 400);
     }
     if (!menuItemData || Object.keys(menuItemData).length === 0) {
-      return errorResponse(res, "Update data is required", 400);
+      return errorResponse(res, "Yêu cầu cung cấp dữ liệu cập nhật", 400);
     }
         // Validate price if it's being updated
      if (menuItemData.price !== undefined && menuItemData.price <= 0) {
-      return errorResponse(res, "Price must be greater than 0", 400);
+      return errorResponse(res, "Giá phải lớn hơn 0", 400);
     }
     const menuItem = await menuService.updateMenuItemById(menuItemId, menuItemData);
      if(!menuItem){
-      return errorResponse(res,"Menu item not found",404);
+      return errorResponse(res,"Không tìm thấy món",404);
     }
  
 
-     return successResponse(res, { message: "Menu item updated successfully", data: menuItem });
+     return successResponse(res, { message: "Cập nhật món thành công", data: menuItem });
   } catch (error) {
     console.error("Error in updateMenuItemById:", error);
    if (error.name === 'ValidationError') {
      return errorResponse(res, error.message, 400);
    }
-    return errorResponse(res, "Internal server error", 500);
+    return errorResponse(res, "Lỗi máy chủ nội bộ", 500);
   }
 };
 //xóa menu item theo id
@@ -86,16 +86,16 @@ export const deleteMenuItemById = async (req, res) => {
     const menuItemId = req.params.menuItemId;
    
     if (!mongoose.Types.ObjectId.isValid(menuItemId)) {
-      return errorResponse(res, "Invalid menu item ID format", 400);
+      return errorResponse(res, "Định dạng ID món không hợp lệ", 400);
     }
     const menuItem = await menuService.deleteMenuItemById(menuItemId);
     if(!menuItem){
-      return errorResponse(res,"Menu item not found",404);
+      return errorResponse(res,"Không tìm thấy món",404);
     }
- return successResponse(res, { message: "Menu item deleted successfully", data: menuItem });
+ return successResponse(res, { message: "Xóa món thành công", data: menuItem });
   } catch (error) {
     console.error("Error deleting menu item:", error);
-    return errorResponse(res, "Internal server error", 500);
+    return errorResponse(res, "Lỗi máy chủ nội bộ", 500);
   }
 };
 //tạo menu item
@@ -103,15 +103,15 @@ export const createMenuItem = async (req, res) => {
   try {
     const menuItemData = req.body;
        if (!menuItemData || Object.keys(menuItemData).length === 0) {
-      return errorResponse(res, "Menu item data is required", 400);
+      return errorResponse(res, "Yêu cầu cung cấp dữ liệu món", 400);
     }
     // Add specific field validation
     if (!menuItemData.name || !menuItemData.price) {
-      return errorResponse(res, "Name and price are required fields", 400);
+      return errorResponse(res, "Tên và giá là các trường bắt buộc", 400);
     }
     // Add more specific field validations if needed
     if (menuItemData.price <= 0) {
-      return errorResponse(res, "Price must be greater than 0", 400);
+      return errorResponse(res, "Giá phải lớn hơn 0", 400);
     }
     const menuItem = await menuService.createMenuItem(menuItemData);
      return successResponse(res,menuItem);
@@ -120,6 +120,6 @@ export const createMenuItem = async (req, res) => {
       return errorResponse(res, error.message, 400);
     }
      console.error("Error creating menu item:", error);
-    return errorResponse(res, "Internal server error", 500);
+    return errorResponse(res, "Lỗi máy chủ nội bộ", 500);
   }
 };
