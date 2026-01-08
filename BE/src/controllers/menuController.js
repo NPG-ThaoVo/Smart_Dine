@@ -61,14 +61,15 @@ export const updateMenuItemById = async (req, res) => {
     if (!menuItemData || Object.keys(menuItemData).length === 0) {
       return errorResponse(res, "Update data is required", 400);
     }
+        // Validate price if it's being updated
+     if (menuItemData.price !== undefined && menuItemData.price <= 0) {
+      return errorResponse(res, "Price must be greater than 0", 400);
+    }
     const menuItem = await menuService.updateMenuItemById(menuItemId, menuItemData);
      if(!menuItem){
       return errorResponse(res,"Menu item not found",404);
     }
-     // Validate price if it's being updated
-     if (menuItemData.price !== undefined && menuItemData.price <= 0) {
-      return errorResponse(res, "Price must be greater than 0", 400);
-    }
+ 
 
      return successResponse(res, { message: "Menu item updated successfully", data: menuItem });
   } catch (error) {
