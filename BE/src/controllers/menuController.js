@@ -4,9 +4,12 @@ import {successResponse,errorResponse} from "../utils/response.js";
 export const getAllMenuItems = async (req, res) => {
   try {
     const menuItems = await menuService.getAllMenuItems();
-    successResponse(res,menuItems);
+     if(!menuItems){
+      errorResponse(res,"Menu items not found",404);
+    }
+     return successResponse(res,menuItems);
   } catch (error) {
-    errorResponse(res,error.message,400);
+    return errorResponse(res,error.message,400);
   }
 };
 //lấy menu item theo id
@@ -14,9 +17,12 @@ export const getMenuItemById = async (req, res) => {
   try {
     const menuItemId = req.params.menuItemId;
     const menuItem = await menuService.getMenuItemById(menuItemId);
-    successResponse(res,menuItem);
+     if(!menuItem){
+      errorResponse(res,"Menu item not found",404);
+    }
+     return successResponse(res,menuItem);
   } catch (error) {
-    errorResponse(res,error.message,400);
+    return errorResponse(res,error.message,400);
   }
 };
 //cập nhật menu item theo id
@@ -25,9 +31,13 @@ export const updateMenuItemById = async (req, res) => {
     const menuItemId = req.params.menuItemId;
     const menuItemData = req.body;
     const menuItem = await menuService.updateMenuItemById(menuItemId, menuItemData);
-    successResponse(res,menuItem);
+     if(!menuItem){
+      errorResponse(res,"Menu item not found",404);
+    }
+
+     return successResponse(res,menuItem);
   } catch (error) {
-    errorResponse(res,error.message,400);
+    return errorResponse(res,error.message,400);
   }
 };
 //xóa menu item theo id
@@ -38,9 +48,9 @@ export const deleteMenuItemById = async (req, res) => {
     if(!menuItem){
       errorResponse(res,"Menu item not found",404);
     }
-    successResponse(res,"Menu item deleted successfully",menuItem);
+     return successResponse(res,"Menu item deleted successfully",menuItem);
   } catch (error) {
-    errorResponse(res,error.message,400);
+    return errorResponse(res,error.message,400);
   }
 };
 //tạo menu item
@@ -48,8 +58,11 @@ export const createMenuItem = async (req, res) => {
   try {
     const menuItemData = req.body;
     const menuItem = await menuService.createMenuItem(menuItemData);
-    res.status(201).json(menuItem);
+     if(!menuItem){
+      errorResponse(res,"Menu item not created",404);
+    }
+     return successResponse(res,menuItem);
   } catch (error) {
-    errorResponse(res,error.message,400);
+    return errorResponse(res,error.message,400);
   }
 };

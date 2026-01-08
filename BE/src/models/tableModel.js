@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const tableSchema = new mongoose.Schema(
   {
-    Name: {
+    name: {
       type: String,
       required: true,
       lowercase: true,

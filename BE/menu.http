@@ -7,22 +7,21 @@ POST http://localhost:3001/api/menu
 Content-Type: application/json
 
 {
-  "name": "New Item",
+  "name": "New Item 1",
   "price": 9.99,
   "description": "A delicious new menu item",
-  "category": "Appetizers",
   "image": "https://example.com/new-menu-item.jpg",
   "categoryId": "695f5666fd4ec837338da285"
 }
 ### Cập nhật một menu item theo ID
-PUT http://localhost:3001/api/menu/695f84eefaf709ae0ae8c37f
+PUT http://localhost:3001/api/menu/695fac5099356e329ba46cb7
 Content-Type: application/json
 
 {
   "name": "Updated Menu Item 1",
   "price": 12.99,
   "description": "An updated description",
-  "category": "Main Courses"
+  "categoryId": "695f5666fd4ec837338d2285"
 }
 ### Xóa một menu item theo ID
 DELETE http://localhost:3001/api/menu/695f84eefaf709ae0ae8c37f
