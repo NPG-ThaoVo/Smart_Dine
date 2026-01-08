@@ -47,11 +47,14 @@ export const updateMenuItemById = async (req, res) => {
 export const deleteMenuItemById = async (req, res) => {
   try {
     const menuItemId = req.params.menuItemId;
+       if (!menuItemId) {
+      return errorResponse(res, "Menu item ID is required", 400);
+    }
     const menuItem = await menuService.deleteMenuItemById(menuItemId);
     if(!menuItem){
-      errorResponse(res,"Menu item not found",404);
+      return errorResponse(res,"Menu item not found",404);
     }
-     return successResponse(res,"Menu item deleted successfully",menuItem);
+ return successResponse(res, { message: "Menu item deleted successfully", data: menuItem });
   } catch (error) {
     return errorResponse(res,error.message,400);
   }
