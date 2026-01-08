@@ -28,6 +28,7 @@ export const getAllMenuItems = async (req, res) => {
 
     return successResponse(res, result);
   } catch (error) {
+    console.error("Error fetching menu items:", error);
     return errorResponse(res, "Internal server error", 500);
   }
 };
@@ -45,6 +46,7 @@ export const getMenuItemById = async (req, res) => {
     }
      return successResponse(res,menuItem);
   } catch (error) {
+    console.error("Error fetching menu item:", error);
     return errorResponse(res, "Internal server error", 500);
   }
 };
@@ -63,9 +65,17 @@ export const updateMenuItemById = async (req, res) => {
      if(!menuItem){
       return errorResponse(res,"Menu item not found",404);
     }
+     // Validate price if it's being updated
+     if (menuItemData.price !== undefined && menuItemData.price <= 0) {
+      return errorResponse(res, "Price must be greater than 0", 400);
+    }
 
      return successResponse(res, { message: "Menu item updated successfully", data: menuItem });
   } catch (error) {
+    console.error("Error in updateMenuItemById:", error);
+   if (error.name === 'ValidationError') {
+     return errorResponse(res, error.message, 400);
+   }
     return errorResponse(res, "Internal server error", 500);
   }
 };
@@ -83,6 +93,7 @@ export const deleteMenuItemById = async (req, res) => {
     }
  return successResponse(res, { message: "Menu item deleted successfully", data: menuItem });
   } catch (error) {
+    console.error("Error deleting menu item:", error);
     return errorResponse(res, "Internal server error", 500);
   }
 };
@@ -107,6 +118,7 @@ export const createMenuItem = async (req, res) => {
     if (error.name === 'ValidationError') {
       return errorResponse(res, error.message, 400);
     }
+     console.error("Error creating menu item:", error);
     return errorResponse(res, "Internal server error", 500);
   }
 };
