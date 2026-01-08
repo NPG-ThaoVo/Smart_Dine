@@ -8,15 +8,18 @@ export const getAllMenuItems = async (req, res) => {
 
   // Validate query params
   if (
-    (page && (!Number.isInteger(page) || page < 1)) ||
-    (limit && (!Number.isInteger(limit) || limit < 1))
+    (req.query.page && (!Number.isInteger(page) || page < 1)) ||
+    (req.query.limit && (!Number.isInteger(limit) || limit < 1))
   ) {
     return errorResponse(res, "Invalid pagination parameters", 400);
   }
-
   const safePage = page || 1;
   const safeLimit = Math.min(limit || 10, 100);
-
+// Prevent DOS via excessive skip values
+  const MAX_PAGE = 10000;
+  if (safePage > MAX_PAGE) {
+    return errorResponse(res, `Page number cannot exceed ${MAX_PAGE}`, 400);
+  }
   try {
     const result = await menuService.getAllMenuItems(
       safePage,
@@ -42,7 +45,7 @@ export const getMenuItemById = async (req, res) => {
     }
      return successResponse(res,menuItem);
   } catch (error) {
-    return errorResponse(res,error.message,500);
+    return errorResponse(res, "Internal server error", 500);
   }
 };
 //cập nhật menu item theo id
@@ -63,7 +66,7 @@ export const updateMenuItemById = async (req, res) => {
 
      return successResponse(res, { message: "Menu item updated successfully", data: menuItem });
   } catch (error) {
-    return errorResponse(res,error.message,500);
+    return errorResponse(res, "Internal server error", 500);
   }
 };
 //xóa menu item theo id
@@ -80,7 +83,7 @@ export const deleteMenuItemById = async (req, res) => {
     }
  return successResponse(res, { message: "Menu item deleted successfully", data: menuItem });
   } catch (error) {
-    return errorResponse(res,error.message,500);
+    return errorResponse(res, "Internal server error", 500);
   }
 };
 //tạo menu item
@@ -101,7 +104,9 @@ export const createMenuItem = async (req, res) => {
     const menuItem = await menuService.createMenuItem(menuItemData);
      return successResponse(res,menuItem);
   } catch (error) {
-    const statusCode = error.name === 'ValidationError' ? 400 : 500;
-    return errorResponse(res,error.message,statusCode);
+    if (error.name === 'ValidationError') {
+      return errorResponse(res, error.message, 400);
+    }
+    return errorResponse(res, "Internal server error", 500);
   }
 };
