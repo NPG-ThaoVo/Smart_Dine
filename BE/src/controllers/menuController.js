@@ -3,10 +3,12 @@ import {successResponse,errorResponse} from "../utils/response.js";
 //lấy tất cả menu items
 export const getAllMenuItems = async (req, res) => {
   try {
-    const menuItems = await menuService.getAllMenuItems();
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const menuItems = await menuService.getAllMenuItems(page, limit);
      return successResponse(res,menuItems);
   } catch (error) {
-    return errorResponse(res,error.message,400);
+    return errorResponse(res,error.message,500);
   }
 };
 //lấy menu item theo id
@@ -14,12 +16,12 @@ export const getMenuItemById = async (req, res) => {
   try {
     const menuItemId = req.params.menuItemId;
     const menuItem = await menuService.getMenuItemById(menuItemId);
-     if(!menuItem){
-       return errorResponse(res,"Menu item not found",404);
+   if (!mongoose.Types.ObjectId.isValid(menuItemId)) {
+      return errorResponse(res, "Invalid menu item ID format", 400);
     }
      return successResponse(res,menuItem);
   } catch (error) {
-    return errorResponse(res,error.message,400);
+    return errorResponse(res,error.message,500);
   }
 };
 //cập nhật menu item theo id
@@ -27,8 +29,8 @@ export const updateMenuItemById = async (req, res) => {
   try {
     const menuItemId = req.params.menuItemId;
     const menuItemData = req.body;
-    if (!menuItemId) {
-      return errorResponse(res, "Menu item ID is required", 400);
+    if (!mongoose.Types.ObjectId.isValid(menuItemId)) {
+      return errorResponse(res, "Invalid menu item ID format", 400);
     }
     if (!menuItemData || Object.keys(menuItemData).length === 0) {
       return errorResponse(res, "Update data is required", 400);
@@ -38,17 +40,18 @@ export const updateMenuItemById = async (req, res) => {
       return errorResponse(res,"Menu item not found",404);
     }
 
-     return successResponse(res,menuItem);
+     return successResponse(res, { message: "Menu item updated successfully", data: menuItem });
   } catch (error) {
-    return errorResponse(res,error.message,400);
+    return errorResponse(res,error.message,500);
   }
 };
 //xóa menu item theo id
 export const deleteMenuItemById = async (req, res) => {
   try {
     const menuItemId = req.params.menuItemId;
-       if (!menuItemId) {
-      return errorResponse(res, "Menu item ID is required", 400);
+   
+    if (!mongoose.Types.ObjectId.isValid(menuItemId)) {
+      return errorResponse(res, "Invalid menu item ID format", 400);
     }
     const menuItem = await menuService.deleteMenuItemById(menuItemId);
     if(!menuItem){
@@ -56,7 +59,7 @@ export const deleteMenuItemById = async (req, res) => {
     }
  return successResponse(res, { message: "Menu item deleted successfully", data: menuItem });
   } catch (error) {
-    return errorResponse(res,error.message,400);
+    return errorResponse(res,error.message,500);
   }
 };
 //tạo menu item
@@ -77,6 +80,7 @@ export const createMenuItem = async (req, res) => {
     const menuItem = await menuService.createMenuItem(menuItemData);
      return successResponse(res,menuItem);
   } catch (error) {
-    return errorResponse(res,error.message,400);
+    const statusCode = error.name === 'ValidationError' ? 400 : 500;
+    return errorResponse(res,error.message,statusCode);
   }
 };
