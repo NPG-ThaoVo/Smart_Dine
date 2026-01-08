@@ -30,7 +30,4 @@ const tableSchema = new mongoose.Schema(
 tableSchema.virtual("status").get(function () {
   return this.currentSessionId ? "OCCUPIED" : "EMPTY";
 });
-
-tableSchema.set("toJSON", { virtuals: true });
-tableSchema.set("toObject", { virtuals: true });
 export default mongoose.model("Table", tableSchema);
