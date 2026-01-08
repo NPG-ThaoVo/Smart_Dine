@@ -1,17 +1,17 @@
 import mongoose from "mongoose";
 const tableSchema = new mongoose.Schema(
   {
-    Name: {
+    name: {
       type: String,
       required: true,
       lowercase: true,
     },
-   number: {
+    number: {
       type: Number,
       required: true,
       unique: true,
     },
-      currentSessionId: {
+    currentSessionId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Session",
       default: null,
@@ -21,6 +21,12 @@ const tableSchema = new mongoose.Schema(
       default: true,
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
+
+tableSchema.virtual("status").get(function () {
+  return this.currentSessionId ? "OCCUPIED" : "EMPTY";
+});
 export default mongoose.model("Table", tableSchema);
