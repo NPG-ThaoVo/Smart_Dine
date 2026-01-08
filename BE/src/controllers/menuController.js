@@ -1,23 +1,44 @@
 import * as menuService from "../services/menuService.js";
 import {successResponse,errorResponse} from "../utils/response.js";
+import mongoose from "mongoose";
 //lấy tất cả menu items
 export const getAllMenuItems = async (req, res) => {
+  const page = Number(req.query.page);
+  const limit = Number(req.query.limit);
+
+  // Validate query params
+  if (
+    (page && (!Number.isInteger(page) || page < 1)) ||
+    (limit && (!Number.isInteger(limit) || limit < 1))
+  ) {
+    return errorResponse(res, "Invalid pagination parameters", 400);
+  }
+
+  const safePage = page || 1;
+  const safeLimit = Math.min(limit || 10, 100);
+
   try {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
-    const menuItems = await menuService.getAllMenuItems(page, limit);
-     return successResponse(res,menuItems);
+    const result = await menuService.getAllMenuItems(
+      safePage,
+      safeLimit
+    );
+
+    return successResponse(res, result);
   } catch (error) {
-    return errorResponse(res,error.message,500);
+    return errorResponse(res, "Internal server error", 500);
   }
 };
+
 //lấy menu item theo id
 export const getMenuItemById = async (req, res) => {
   try {
     const menuItemId = req.params.menuItemId;
-    const menuItem = await menuService.getMenuItemById(menuItemId);
-   if (!mongoose.Types.ObjectId.isValid(menuItemId)) {
-      return errorResponse(res, "Invalid menu item ID format", 400);
+    if (!mongoose.Types.ObjectId.isValid(menuItemId)) {
+       return errorResponse(res, "Invalid menu item ID format", 400);
+     }
+     const menuItem = await menuService.getMenuItemById(menuItemId);
+    if (!menuItem) {
+      return errorResponse(res, "Menu item not found", 404);
     }
      return successResponse(res,menuItem);
   } catch (error) {
