@@ -4,8 +4,7 @@ import connectDB from "./config/db.js"; // Remember the .js extension // Remembe
 import authRoutes from "./routes/authRoutes.js"; // Remember the .js extension
 import cors from "cors";
 import tableRoutes from "./routes/tableRoutes.js";
-
-
+import menuRoutes  from "./routes/menuRoutes.js";
 // Load environment variables
 dotenv.config();
 const app = express();
@@ -28,6 +27,8 @@ connectDB();
 app.use("/api/auth", authRoutes);
 app.use("/api/table", tableRoutes);
 
+app.use("/api/table", tableRoutes);
+app.use("/api/menu", menuRoutes);
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`🚀 Server is running at http://localhost:${PORT}`);
