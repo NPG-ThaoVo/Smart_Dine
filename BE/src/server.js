@@ -3,6 +3,9 @@ import dotenv from "dotenv";
 import connectDB from "./config/db.js"; // Remember the .js extension // Remember the .js extension
 import authRoutes from "./routes/authRoutes.js"; // Remember the .js extension
 import cors from "cors";
+import tableRoutes from "./routes/tableRoutes.js";
+import sessionsRoutes from "./routes/sessionsRoutes.js";
+
 
 // Load environment variables
 dotenv.config();
@@ -24,6 +27,8 @@ connectDB();
 // Root route
 // All requests starting with /api/users will go to userRoutes
 app.use("/api/auth", authRoutes);
+app.use("/api/table", tableRoutes);
+app.use("/api/session", sessionsRoutes);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
