@@ -26,7 +26,7 @@ connectDB();
 // All requests starting with /api/users will go to userRoutes
 app.use("/api/auth", authRoutes);
 
-app.use("/api/table", tableRoutes);
+
 app.use("/api/menu", menuRoutes);
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
