@@ -4,9 +4,6 @@ import {successResponse,errorResponse} from "../utils/response.js";
 export const getAllMenuItems = async (req, res) => {
   try {
     const menuItems = await menuService.getAllMenuItems();
-     if(!menuItems){
-      errorResponse(res,"Menu items not found",404);
-    }
      return successResponse(res,menuItems);
   } catch (error) {
     return errorResponse(res,error.message,400);
@@ -30,9 +27,15 @@ export const updateMenuItemById = async (req, res) => {
   try {
     const menuItemId = req.params.menuItemId;
     const menuItemData = req.body;
+    if (!menuItemId) {
+      return errorResponse(res, "Menu item ID is required", 400);
+    }
+    if (!menuItemData || Object.keys(menuItemData).length === 0) {
+      return errorResponse(res, "Update data is required", 400);
+    }
     const menuItem = await menuService.updateMenuItemById(menuItemId, menuItemData);
      if(!menuItem){
-      errorResponse(res,"Menu item not found",404);
+      return errorResponse(res,"Menu item not found",404);
     }
 
      return successResponse(res,menuItem);
@@ -57,10 +60,18 @@ export const deleteMenuItemById = async (req, res) => {
 export const createMenuItem = async (req, res) => {
   try {
     const menuItemData = req.body;
-    const menuItem = await menuService.createMenuItem(menuItemData);
-     if(!menuItem){
-      errorResponse(res,"Menu item not created",404);
+       if (!menuItemData || Object.keys(menuItemData).length === 0) {
+      return errorResponse(res, "Menu item data is required", 400);
     }
+    // Add specific field validation
+    if (!menuItemData.name || !menuItemData.price) {
+      return errorResponse(res, "Name and price are required fields", 400);
+    }
+    // Add more specific field validations if needed
+    if (menuItemData.price <= 0) {
+      return errorResponse(res, "Price must be greater than 0", 400);
+    }
+    const menuItem = await menuService.createMenuItem(menuItemData);
      return successResponse(res,menuItem);
   } catch (error) {
     return errorResponse(res,error.message,400);
