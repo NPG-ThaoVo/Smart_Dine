@@ -7,7 +7,7 @@ POST http://localhost:3001/api/menu
 Content-Type: application/json
 
 {
-  "name": "New Item 1",
+  "name": "New Item 2",
   "price": 9.99,
   "description": "A delicious new menu item",
   "image": "https://example.com/new-menu-item.jpg",
