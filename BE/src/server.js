@@ -4,8 +4,7 @@ import connectDB from "./config/db.js"; // Remember the .js extension // Remembe
 import authRoutes from "./routes/authRoutes.js"; // Remember the .js extension
 import cors from "cors";
 import tableRoutes from "./routes/tableRoutes.js";
-
-
+import "./models/sessionsModel.js";
 // Load environment variables
 dotenv.config();
 const app = express();

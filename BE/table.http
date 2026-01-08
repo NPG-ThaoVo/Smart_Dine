@@ -1,26 +1,41 @@
 POST http://localhost:3001/api/table
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTVmNWNmNTgwZmJiNjZmM2NhMDM3NDMiLCJpYXQiOjE3Njc4ODA4MjIsImV4cCI6MTc2Nzg4MTcyMn0.6xFlRl5zwleofpul7evdcJqfQWMIuSx4hc3YFueoxS8
 
 {
-  "number": 11,
-  "Name": "Bàn lỏ"
+  "number": 26,
+  "name": "Bàn VIP"
 }
 
 ###
 GET http://localhost:3001/api/table
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTVmNWNmNTgwZmJiNjZmM2NhMDM3NDMiLCJpYXQiOjE3Njc4ODA4MjIsImV4cCI6MTc2Nzg4MTcyMn0.6xFlRl5zwleofpul7evdcJqfQWMIuSx4hc3YFueoxS8
+
 ###
 GET http://localhost:3001/api/table?status=OCCUPIED
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTVmNWNmNTgwZmJiNjZmM2NhMDM3NDMiLCJpYXQiOjE3Njc4ODA4MjIsImV4cCI6MTc2Nzg4MTcyMn0.6xFlRl5zwleofpul7evdcJqfQWMIuSx4hc3YFueoxS8
+
 ###
 GET http://localhost:3001/api/table?search=VIP
-###
-GET http://localhost:3001/api/table/695ea705124492e3ba2a5b23
-###
-PUT http://localhost:3001/api/table/695f5666fd4ec837338da385
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTVmNWNmNTgwZmJiNjZmM2NhMDM3NDMiLCJpYXQiOjE3Njc4ODA4MjIsImV4cCI6MTc2Nzg4MTcyMn0.6xFlRl5zwleofpul7evdcJqfQWMIuSx4hc3YFueoxS8
+
+###
+GET http://localhost:3001/api/table/695ea7b9fc00e87d2bc7a7ad
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTVmNWNmNTgwZmJiNjZmM2NhMDM3NDMiLCJpYXQiOjE3Njc4ODA4MjIsImV4cCI6MTc2Nzg4MTcyMn0.6xFlRl5zwleofpul7evdcJqfQWMIuSx4hc3YFueoxS8
+
+###
+PUT http://localhost:3001/api/table/695fb8978cb7e6b55aef7243
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTVmNWNmNTgwZmJiNjZmM2NhMDM3NDMiLCJpYXQiOjE3Njc4ODA4MjIsImV4cCI6MTc2Nzg4MTcyMn0.6xFlRl5zwleofpul7evdcJqfQWMIuSx4hc3YFueoxS8
 
 {
-  "Name": "Bàn VIP"
+  "name": "Bàn 26"
 }
 ###
-DELETE http://localhost:3001/api/table/695ea5918467cb4c5939a5b8
-
+DELETE http://localhost:3001/api/table/695fb8978cb7e6b55aef7243
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTVmNWNmNTgwZmJiNjZmM2NhMDM3NDMiLCJpYXQiOjE3Njc4ODA4MjIsImV4cCI6MTc2Nzg4MTcyMn0.6xFlRl5zwleofpul7evdcJqfQWMIuSx4hc3YFueoxS8

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const tableSchema = new mongoose.Schema(
   {
-    Name: {
+    name: {
       type: String,
       required: true,
       lowercase: true,
@@ -13,7 +13,7 @@ const tableSchema = new mongoose.Schema(
     },
     currentSessionId: {
       type: mongoose.Schema.Types.ObjectId,
-      // ref: "Session",
+      ref: "Session",
       default: null,
     },
     isAvailable: {
@@ -29,7 +29,4 @@ const tableSchema = new mongoose.Schema(
 tableSchema.virtual("status").get(function () {
   return this.currentSessionId ? "OCCUPIED" : "EMPTY";
 });
-
-tableSchema.set("toJSON", { virtuals: true });
-tableSchema.set("toObject", { virtuals: true });
 export default mongoose.model("Table", tableSchema);
