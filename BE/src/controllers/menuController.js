@@ -65,12 +65,11 @@ export const updateMenuItemById = async (req, res) => {
      if (menuItemData.price !== undefined && menuItemData.price <= 0) {
       return errorResponse(res, "Giá phải lớn hơn 0", 400);
     }
+    
     const menuItem = await menuService.updateMenuItemById(menuItemId, menuItemData);
      if(!menuItem){
       return errorResponse(res,"Không tìm thấy món",404);
     }
- 
-
      return successResponse(res, { message: "Cập nhật món thành công", data: menuItem });
   } catch (error) {
     console.error("Error in updateMenuItemById:", error);
@@ -101,18 +100,21 @@ export const deleteMenuItemById = async (req, res) => {
 //tạo menu item
 export const createMenuItem = async (req, res) => {
   try {
-    const menuItemData = req.body;
-       if (!menuItemData || Object.keys(menuItemData).length === 0) {
-      return errorResponse(res, "Yêu cầu cung cấp dữ liệu món", 400);
-    }
-    // Add specific field validation
-    if (!menuItemData.name || !menuItemData.price) {
+    const { name, price, description, image, categoryId } = req.body;
+    if (!name || price === undefined) {
       return errorResponse(res, "Tên và giá là các trường bắt buộc", 400);
     }
-    // Add more specific field validations if needed
-    if (menuItemData.price <= 0) {
+    if (price <= 0) {
       return errorResponse(res, "Giá phải lớn hơn 0", 400);
     }
+    //giá phải là số
+    if (!Number.isFinite(price)) {
+      return errorResponse(res, "Giá phải là số hợp lệ", 400);
+    }
+    if (categoryId && !mongoose.Types.ObjectId.isValid(categoryId)) {
+      return errorResponse(res, "Định dạng ID danh mục không hợp lệ", 400);
+    }
+    const menuItemData = { name, price, description, image, categoryId };
     const menuItem = await menuService.createMenuItem(menuItemData);
      return successResponse(res,menuItem);
   } catch (error) {
