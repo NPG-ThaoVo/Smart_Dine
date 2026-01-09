@@ -7,7 +7,7 @@ import TableManagement from "./pages/TableManagement";
 import AdminLayout from "./components/AdminLayout";
 import { Toaster } from "react-hot-toast";
 import ConfirmPage from "./pages/ConfirmPage";
-
+import OrderManagementPage from "./pages/OrderManagement";
 function App() {
   return (
     <BrowserRouter>
@@ -20,6 +20,7 @@ function App() {
 
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="table-management" element={<TableManagement />} />
+          <Route path="order-management" element={<OrderManagementPage />} />
         </Route>
         <Route path="/order/confirm" element={<ConfirmPage />} />
       </Routes>
