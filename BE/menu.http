@@ -1,21 +1,27 @@
 ### Lấy tất cả menu items
 GET http://localhost:3001/api/menu
+Authorization: Bearer eyJhbGcieyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTYyMzQ4ZGJjMDNiOTVmNGUwOGRiNWUiLCJpYXQiOjE3NjgwNDU5NjksImV4cCI6MTc2ODA0Njg2OX0.tcQEtOpjeKlryhi7nDGhllcxhEKnDMuqzex24a_TfQU
+
 ### Lấy menu item theo ID
 GET http://localhost:3001/api/menu/695f84eefaf709ae0ae8c37f
+
 ### Tạo mới một menu item
 POST http://localhost:3001/api/menu
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTYyMzQ4ZGJjMDNiOTVmNGUwOGRiNWUiLCJpYXQiOjE3NjgwNDU5NjksImV4cCI6MTc2ODA0Njg2OX0.tcQEtOpjeKlryhi7nDGhllcxhEKnDMuqzex24a_TfQU
 
 {
-  "name": "New Item 2",
+  "name": "New Item 233",
   "price": 9.99,
   "description": "A delicious new menu item",
   "image": "https://example.com/new-menu-item.jpg",
-  "categoryId": "695f5666fd4ec837338da285"
+  "categoryId": "69623d53aeefff9670d1ded9"
 }
 ### Cập nhật một menu item theo ID
 PUT http://localhost:3001/api/menu/695fac5099356e329ba46cb7
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTYyMzQ4ZGJjMDNiOTVmNGUwOGRiNWUiLCJpYXQiOjE3NjgwNDQ5MTEsImV4cCI6MTc2ODA0NTgxMX0.COO2Bk2eywKYTaACTHCk40LtshMhHcxsDOr0gGp7Ue8
+
 
 {
   "name": "Updated Menu Item 1",
