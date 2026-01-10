@@ -7,6 +7,7 @@ import TableManagement from "./pages/TableManagement";
 import AdminLayout from "./components/AdminLayout";
 import { Toaster } from "react-hot-toast";
 import ConfirmPage from "./pages/ConfirmPage";
+import BillingPage from "./pages/BillingPage";
 
 function App() {
   return (
@@ -17,9 +18,11 @@ function App() {
         <Route path="/admin/login" element={<AdminLoginPage />} />
         <Route path="/order/1/item/item-1" element={<DetailsPage />} />
         <Route path="/smartdine" element={<SmartDineLanding />} />
+        
 
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="table-management" element={<TableManagement />} />
+          <Route path="billing" element={<BillingPage />} />
         </Route>
         <Route path="/order/confirm" element={<ConfirmPage />} />
       </Routes>
