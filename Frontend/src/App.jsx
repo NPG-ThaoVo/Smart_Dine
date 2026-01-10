@@ -5,6 +5,7 @@ import Menu from "./pages/Menu";
 import SmartDineLanding from "./pages/Smartdine-Landing-Page";
 import TableManagement from "./pages/TableManagement";
 import AdminLayout from "./components/AdminLayout";
+import MenuAdminPage from "./pages/MenuAdminPage";
 import { Toaster } from "react-hot-toast";
 import ConfirmPage from "./pages/ConfirmPage";
 
@@ -20,6 +21,7 @@ function App() {
 
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="table-management" element={<TableManagement />} />
+          <Route path="menu" element={<MenuAdminPage />} />
         </Route>
         <Route path="/order/confirm" element={<ConfirmPage />} />
       </Routes>
