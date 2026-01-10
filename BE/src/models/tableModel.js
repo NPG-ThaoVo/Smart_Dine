@@ -27,7 +27,7 @@ const tableSchema = new mongoose.Schema(
   }
 );
 
-tableSchema.virtual("status").get(function () {
-  return this.currentSessionId ? "OCCUPIED" : "EMPTY";
-});
+// tableSchema.virtual("status").get(function () {
+//   return this.currentSessionId ? "OCCUPIED" : "EMPTY";
+// });
 export default mongoose.model("Table", tableSchema);

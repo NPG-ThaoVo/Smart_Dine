@@ -1,6 +1,4 @@
-import { Dialog } from "@radix-ui/react-dialog";
 import React from "react";
-import { DialogCreateOrEditTable } from "../DialogCreateOrEditTable";
 import { Button } from "@/components/ui/button";
 import { Search, Plus } from "lucide-react";
 const HeaderContentAdmin = ({
