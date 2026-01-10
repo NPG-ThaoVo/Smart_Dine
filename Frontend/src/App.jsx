@@ -5,6 +5,7 @@ import Menu from "./pages/Menu";
 import SmartDineLanding from "./pages/Smartdine-Landing-Page";
 import TableManagement from "./pages/TableManagement";
 import AdminLayout from "./components/AdminLayout";
+import MenuAdminPage from "./pages/MenuAdminPage";
 import { Toaster } from "react-hot-toast";
 import ConfirmPage from "./pages/ConfirmPage";
 import OrderManagementPage from "./pages/OrderManagement";
@@ -25,6 +26,7 @@ function App() {
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<DashboardPage />} />
           <Route path="table-management" element={<TableManagement />} />
+          <Route path="menu" element={<MenuAdminPage />} />
           <Route path="order-management" element={<OrderManagementPage />} />
           <Route path="billing" element={<BillingPage />} />
         </Route>
