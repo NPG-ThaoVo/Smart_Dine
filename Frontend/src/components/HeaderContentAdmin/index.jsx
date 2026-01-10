@@ -4,6 +4,8 @@ import { DialogCreateOrEditTable } from "../DialogCreateOrEditTable";
 import { Button } from "@/components/ui/button";
 import { Search, Plus } from "lucide-react";
 const HeaderContentAdmin = ({ onOpenChange }) => {
+  const [searchValue, setSearchValue] = React.useState("");
+
   return (
     <div>
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -21,7 +23,8 @@ const HeaderContentAdmin = ({ onOpenChange }) => {
             <input
               className="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm glass-card pl-9 w-full md:w-[200px]"
               placeholder="Tìm kiếm bàn..."
-              value=""
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
             />
           </div>
           <Button

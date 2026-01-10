@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import AdminLoginPage from "./pages/AdminLoginPage";
 import DetailsPage from "./pages/DetailsPage";
 import Menu from "./pages/Menu";
@@ -8,6 +8,9 @@ import AdminLayout from "./components/AdminLayout";
 import { Toaster } from "react-hot-toast";
 import ConfirmPage from "./pages/ConfirmPage";
 import OrderManagementPage from "./pages/OrderManagement";
+import DashboardPage from "./pages/DashboardPage";
+import BillingPage from "./pages/BillingPage";
+
 function App() {
   return (
     <BrowserRouter>
@@ -17,10 +20,14 @@ function App() {
         <Route path="/admin/login" element={<AdminLoginPage />} />
         <Route path="/order/1/item/item-1" element={<DetailsPage />} />
         <Route path="/smartdine" element={<SmartDineLanding />} />
+        
 
         <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<Navigate to="dashboard" replace />} />
+          <Route path="dashboard" element={<DashboardPage />} />
           <Route path="table-management" element={<TableManagement />} />
           <Route path="order-management" element={<OrderManagementPage />} />
+          <Route path="billing" element={<BillingPage />} />
         </Route>
         <Route path="/order/confirm" element={<ConfirmPage />} />
       </Routes>
