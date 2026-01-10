@@ -1,7 +1,6 @@
-import { signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "../firebase";
 import api from "../services/api";
-
+import { signInWithPopup } from "firebase/auth";
 const testLoginGoogle = async () => {
   try {
     // 1. Login với Firebase UI
