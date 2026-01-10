@@ -10,6 +10,7 @@ import ConfirmPage from "./pages/ConfirmPage";
 import OrderManagementPage from "./pages/OrderManagement";
 import DashboardPage from "./pages/DashboardPage";
 import BillingPage from "./pages/BillingPage";
+import NotificationManagementPage from "./pages/notificationManagement";
 function App() {
   return (
     <BrowserRouter>
@@ -27,6 +28,7 @@ function App() {
           <Route path="table-management" element={<TableManagement />} />
           <Route path="order-management" element={<OrderManagementPage />} />
           <Route path="billing" element={<BillingPage />} />
+          <Route path="notification-management" element={<NotificationManagementPage />} />
         </Route>
         <Route path="/order/confirm" element={<ConfirmPage />} />
       </Routes>
