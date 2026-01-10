@@ -10,7 +10,6 @@ import ConfirmPage from "./pages/ConfirmPage";
 import OrderManagementPage from "./pages/OrderManagement";
 import DashboardPage from "./pages/DashboardPage";
 import BillingPage from "./pages/BillingPage";
-
 function App() {
   return (
     <BrowserRouter>
