@@ -2,7 +2,12 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { QrCode, PenLine, Trash2, ArrowRight } from "lucide-react";
 
-const ManageTable = ({ setOpenDeleteChange, onEdit, tables, onViewQR }) => {
+const ManageTable = ({
+  onEdit,
+  onDelete,
+  tables,
+  onViewQR,
+}) => {
   return (
     <div>
       <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
@@ -65,20 +70,14 @@ const ManageTable = ({ setOpenDeleteChange, onEdit, tables, onViewQR }) => {
                     <QrCode className="w-4 h-4" />
                   </Button>
                   <Button
-                    onClick={() =>
-                      onEdit({
-                        id: table._id,
-                        number: table.number,
-                        name: table.name,
-                      })
-                    }
+                    onClick={() => onEdit(table)}
                     className="bg-transparent text-gray-400 hover:bg-white/10 hover:text-blue-400"
                     title="Chỉnh sửa"
                   >
                     <PenLine className="w-4 h-4" />
                   </Button>
                   <Button
-                    onClick={() => setOpenDeleteChange(true)}
+                    onClick={() => onDelete(table)}
                     className="bg-transparent text-gray-400 hover:bg-white/10 hover:text-red-400"
                     title="Xóa"
                   >

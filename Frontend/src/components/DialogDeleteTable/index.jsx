@@ -9,11 +9,11 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-export function DialogDeleteTable({ open, onOpenChange }) {
+export function DialogDeleteTable({ open, onOpenChange, handleDeleteTable }) {
   return (
     <Dialog className=" sm:rounded-xl" open={open} onOpenChange={onOpenChange}>
       <DialogContent>
-        <form>
+        <form onSubmit={handleDeleteTable}>
           <DialogHeader>
             <DialogTitle>Xoá Bàn</DialogTitle>
             <DialogDescription>

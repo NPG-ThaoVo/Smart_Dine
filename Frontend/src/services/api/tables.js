@@ -14,3 +14,14 @@ export const getTableById = async (tableId) => {
   const response = await api.get(`/tables/${tableId}`);
   return response.data;
 };
+
+export const updateTable = async (tableId, tableData) => {
+  const response = await api.put(`/tables/${tableId}`, tableData);
+  return response.data;
+}
+
+export const deleteTable = async (tableId) => {
+  const response = await api.delete(`/tables/${tableId}`);
+  return response.data;
+};
+
