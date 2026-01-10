@@ -6,6 +6,7 @@ import cors from "cors";
 import menuRoutes  from "./routes/menuRoutes.js";
 import tableRoutes from "./routes/tableRoutes.js";
 import "./models/sessionsModel.js";
+import "./models/categoriesModel.js";
 // Load environment variables
 dotenv.config();
 const app = express();

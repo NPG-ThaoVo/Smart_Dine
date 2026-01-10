@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 const menuItemSchema = new mongoose.Schema(
   {
     categoryId: {
@@ -40,4 +41,5 @@ const menuItemSchema = new mongoose.Schema(
   { timestamps: true }
 );
 menuItemSchema.index({ categoryId: 1, isAvailable: 1 });
+
 export default mongoose.model("MenuItem", menuItemSchema);
