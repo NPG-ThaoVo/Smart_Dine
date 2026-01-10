@@ -12,7 +12,7 @@ export function DialogQR({ open, onOpenChange, table }) {
 
     const a = document.createElement("a");
     a.href = url;
-    a.download = `QR_${table.number}.png`;
+    a.download = `QR_${table._id}.png`;
     a.click();
   };
   return (
@@ -26,9 +26,11 @@ export function DialogQR({ open, onOpenChange, table }) {
                 className="text-lg font-semibold leading-none tracking-tight text-center"
               >
                 QR Code - Bàn {table.number}
-                <span className="text-muted-foreground ml-2">
-                  ({table.name})
-                </span>
+                {table.name && (
+                  <span className="text-muted-foreground ml-2">
+                    ({table.name})
+                  </span>
+                )}
               </h2>
             </div>
           </DialogHeader>
