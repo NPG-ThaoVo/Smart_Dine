@@ -1,6 +1,5 @@
 import CallToActionSection from "@/components/CallToActionSection";
 import FeaturesSection from "@/components/FeaturesSection";
-import FeatureCard from "@/components/FeatureCard";
 import HeroSection from "@/components/HeroSection";
 
 export default function SmartDineLanding() {

@@ -1,41 +1,40 @@
-POST http://localhost:3001/api/table
+POST http://localhost:3001/api/tables
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTVmNWNmNTgwZmJiNjZmM2NhMDM3NDMiLCJpYXQiOjE3Njc4ODA4MjIsImV4cCI6MTc2Nzg4MTcyMn0.6xFlRl5zwleofpul7evdcJqfQWMIuSx4hc3YFueoxS8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTVmNWNmNTgwZmJiNjZmM2NhMDM3NDMiLCJpYXQiOjE3NjgwNDIxNTMsImV4cCI6MTc2ODA0MzA1M30.wWBkxyC855UUJGTnSQst-32EZFifC07NU7rpQgvGXgo
 
 {
-  "number": 26,
-  "name": "Bàn VIP"
+  "number": 31,
+  "name": "Bàn đẹp"
 }
 
 ###
 GET http://localhost:3001/api/table
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTVmNWNmNTgwZmJiNjZmM2NhMDM3NDMiLCJpYXQiOjE3Njc4ODA4MjIsImV4cCI6MTc2Nzg4MTcyMn0.6xFlRl5zwleofpul7evdcJqfQWMIuSx4hc3YFueoxS8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTVmNWNmNTgwZmJiNjZmM2NhMDM3NDMiLCJpYXQiOjE3Njc5NDEzMDAsImV4cCI6MTc2Nzk0MjIwMH0.ZYPycanVKYiobgZipVems0bLY58mX2NCavYygZKJuPg
 
 ###
 GET http://localhost:3001/api/table?status=OCCUPIED
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTVmNWNmNTgwZmJiNjZmM2NhMDM3NDMiLCJpYXQiOjE3Njc4ODA4MjIsImV4cCI6MTc2Nzg4MTcyMn0.6xFlRl5zwleofpul7evdcJqfQWMIuSx4hc3YFueoxS8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTVmNWNmNTgwZmJiNjZmM2NhMDM3NDMiLCJpYXQiOjE3Njc5NDEzMDAsImV4cCI6MTc2Nzk0MjIwMH0.ZYPycanVKYiobgZipVems0bLY58mX2NCavYygZKJuPg
 
 ###
 GET http://localhost:3001/api/table?search=VIP
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTVmNWNmNTgwZmJiNjZmM2NhMDM3NDMiLCJpYXQiOjE3Njc4ODA4MjIsImV4cCI6MTc2Nzg4MTcyMn0.6xFlRl5zwleofpul7evdcJqfQWMIuSx4hc3YFueoxS8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTVmNWNmNTgwZmJiNjZmM2NhMDM3NDMiLCJpYXQiOjE3Njc5NDEzMDAsImV4cCI6MTc2Nzk0MjIwMH0.ZYPycanVKYiobgZipVems0bLY58mX2NCavYygZKJuPg
 
 ###
-GET http://localhost:3001/api/table/695ea7b9fc00e87d2bc7a7ad
+GET http://localhost:3001/api/tables/695ea7b9fc00e87d2bc7a7ad
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTVmNWNmNTgwZmJiNjZmM2NhMDM3NDMiLCJpYXQiOjE3Njc4ODA4MjIsImV4cCI6MTc2Nzg4MTcyMn0.6xFlRl5zwleofpul7evdcJqfQWMIuSx4hc3YFueoxS8
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTVmNWNmNTgwZmJiNjZmM2NhMDM3NDMiLCJpYXQiOjE3NjgwNDIxNTMsImV4cCI6MTc2ODA0MzA1M30.wWBkxyC855UUJGTnSQst-32EZFifC07NU7rpQgvGXgo
 ###
-PUT http://localhost:3001/api/table/695fb8978cb7e6b55aef7243
+PUT http://localhost:3001/api/tables/695ea7b9fc00e87d2bc7a7ad
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTVmNWNmNTgwZmJiNjZmM2NhMDM3NDMiLCJpYXQiOjE3Njc4ODA4MjIsImV4cCI6MTc2Nzg4MTcyMn0.6xFlRl5zwleofpul7evdcJqfQWMIuSx4hc3YFueoxS8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTVmNWNmNTgwZmJiNjZmM2NhMDM3NDMiLCJpYXQiOjE3NjgwNDIxNTMsImV4cCI6MTc2ODA0MzA1M30.wWBkxyC855UUJGTnSQst-32EZFifC07NU7rpQgvGXgo
 
 {
-  "name": "Bàn 26"
+  "name": "Bàn SUPER VIP"
 }
 ###
-DELETE http://localhost:3001/api/table/695fb8978cb7e6b55aef7243
+DELETE http://localhost:3001/api/tables/695ea7b9fc00e87d2bc7a7ad
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTVmNWNmNTgwZmJiNjZmM2NhMDM3NDMiLCJpYXQiOjE3Njc4ODA4MjIsImV4cCI6MTc2Nzg4MTcyMn0.6xFlRl5zwleofpul7evdcJqfQWMIuSx4hc3YFueoxS8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTVmNWNmNTgwZmJiNjZmM2NhMDM3NDMiLCJpYXQiOjE3NjgwNDIxNTMsImV4cCI6MTc2ODA0MzA1M30.wWBkxyC855UUJGTnSQst-32EZFifC07NU7rpQgvGXgo
