@@ -44,7 +44,7 @@ const menuItems = [
   },
   {
     title: "Hóa đơn",
-    url: "/admin/bills",
+    url: "/admin/billing",
     icon: Receipt,
   },
   {
