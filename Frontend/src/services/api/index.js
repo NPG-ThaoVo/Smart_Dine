@@ -29,9 +29,21 @@ api.interceptors.response.use(
         const res = await api.post("/auth/refresh-token");
 
         const newAccessToken = res.data.data.accessToken;
-
+        const userInformation = JSON.parse(
+          localStorage.getItem("userInformation")
+        );
+        const newUserInformation = {
+          ...userInformation,
+          data: {
+            ...userInformation.data,
+            accessToken: newAccessToken,
+          },
+        };
         // LƯU TOKEN MỚI
-        localStorage.setItem("accessToken", newAccessToken);
+        localStorage.setItem(
+          "userInformation",
+          JSON.stringify(newUserInformation)
+        );
 
         // GẮN TOKEN MỚI VÀO REQUEST CŨ
         originalRequest.headers = {
@@ -43,7 +55,7 @@ api.interceptors.response.use(
         return api(originalRequest);
       } catch (refreshError) {
         console.log("Refresh token hết hạn → logout");
-        localStorage.removeItem("accessToken");
+        localStorage.removeItem("userInformation");
         window.location.href = "/admin/login";
       }
     }

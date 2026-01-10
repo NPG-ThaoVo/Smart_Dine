@@ -54,12 +54,6 @@ const TableManagement = () => {
 
   const handleDeleteTable = async (event) => {
     event.preventDefault();
-
-    if (!deleteTableData?._id) {
-      toast.error("Không tìm thấy bàn cần xóa");
-      return;
-    }
-
     setLoading(true);
     try {
       const res = await deleteTable(deleteTableData._id);
@@ -76,12 +70,6 @@ const TableManagement = () => {
 
   const handleUpdateTable = async (tableId, tableData) => {
     const { number, name } = tableData;
-
-    if (!tableId) {
-      toast.error("Không tìm thấy bàn cần cập nhật");
-      return;
-    }
-
     if (!number) {
       toast.error("Số Bàn Không Được Để Trống");
       return;
@@ -91,17 +79,8 @@ const TableManagement = () => {
       toast.error("Số Bàn Phải Là Số Dương");
       return;
     }
-
-    const isDuplicate = tables.some(
-      (t) => String(t.number) === String(number) && t._id !== tableId
-    );
-    if (isDuplicate) {
-      toast.error("Số Bàn Đã Tồn Tại");
-      return;
-    }
-
-    setLoading(true);
     try {
+      setLoading(true);
       const res = await updateTable(tableId, {
         number: Number(number),
         name,
@@ -135,8 +114,8 @@ const TableManagement = () => {
       return;
     }
 
-    setLoading(true);
     try {
+      setLoading(true);
       const res = await createTable({
         number: Number(number),
         name,
