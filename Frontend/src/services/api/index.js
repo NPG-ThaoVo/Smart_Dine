@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -6,7 +6,8 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("accessToken");
+  const userInformation = JSON.parse(localStorage.getItem("userInformation"));
+  const token = userInformation?.data?.accessToken;
   if (token) {
     config.headers = {
       ...config.headers,
@@ -40,11 +41,10 @@ api.interceptors.response.use(
 
         // GỌI LẠI REQUEST CŨ
         return api(originalRequest);
-
       } catch (refreshError) {
         console.log("Refresh token hết hạn → logout");
         localStorage.removeItem("accessToken");
-        window.location.href = "/login";
+        window.location.href = "/admin/login";
       }
     }
 
