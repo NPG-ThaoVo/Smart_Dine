@@ -16,8 +16,8 @@ function Menu() {
   useEffect(() => {
     const fetchMenu = async () => {
       try {
+        setLoading(true);
         const res = await getAllMenu();
-
         const items = res.data.message.items.map((item) => ({
           id: item._id,
           name: item.name,
@@ -27,7 +27,6 @@ function Menu() {
           categoryId: item.categoryId?._id,
           categoryName: item.categoryId?.name,
         }));
-
         setMenuData(items);
       } catch (err) {
         console.error(err);
