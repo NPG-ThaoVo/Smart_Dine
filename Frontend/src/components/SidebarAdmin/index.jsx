@@ -39,7 +39,7 @@ const menuItems = [
   },
   {
     title: "Đơn hàng",
-    url: "/admin/orders",
+    url: "/admin/order-management",
     icon: ClipboardList,
   },
   {
@@ -49,7 +49,7 @@ const menuItems = [
   },
   {
     title: "Thông báo",
-    url: "/admin/notifications",
+    url: "/admin/notification-management",
     icon: Bell,
     badge: 3,
   },
