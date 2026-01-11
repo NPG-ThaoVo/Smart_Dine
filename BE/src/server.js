@@ -5,8 +5,11 @@ import authRoutes from "./routes/authRoutes.js"; // Remember the .js extension
 import cors from "cors";
 import menuRoutes  from "./routes/menuRoutes.js";
 import tableRoutes from "./routes/tableRoutes.js";
+import orderItemRoutes from "./routes/orderItemRoutes.js";
 import "./models/sessionsModel.js";
 import "./models/categoriesModel.js";
+import orderRoutes from "./routes/orderRoutes.js";
+
 // Load environment variables
 dotenv.config();
 const app = express();
@@ -29,6 +32,9 @@ connectDB();
 app.use("/api/auth", authRoutes);
 app.use("/api/tables", tableRoutes);
 app.use("/api/menu", menuRoutes);
+app.use("/api/order-items", orderItemRoutes);
+app.use("/api/orders", orderRoutes);
+
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
