@@ -3,10 +3,12 @@ import dotenv from "dotenv";
 import connectDB from "./config/db.js"; // Remember the .js extension // Remember the .js extension
 import authRoutes from "./routes/authRoutes.js"; // Remember the .js extension
 import cors from "cors";
-import menuRoutes  from "./routes/menuRoutes.js";
+import menuRoutes from "./routes/menuRoutes.js";
 import tableRoutes from "./routes/tableRoutes.js";
+import categoryRoutes from "./routes/categoryRoutes.js";
 import "./models/sessionsModel.js";
 import "./models/categoriesModel.js";
+
 // Load environment variables
 dotenv.config();
 const app = express();
@@ -29,6 +31,7 @@ connectDB();
 app.use("/api/auth", authRoutes);
 app.use("/api/tables", tableRoutes);
 app.use("/api/menu", menuRoutes);
+app.use("/api/categories", categoryRoutes);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
