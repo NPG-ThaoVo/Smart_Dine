@@ -39,8 +39,8 @@ const TableManagement = () => {
   });
 
   const getAllTable = async () => {
-    setLoading(true);
     try {
+      setLoading(true);
       const res = await getAllTables();
       setTables(res.data || []);
     } catch (error) {
@@ -54,8 +54,8 @@ const TableManagement = () => {
 
   const handleDeleteTable = async (event) => {
     event.preventDefault();
-    setLoading(true);
     try {
+      setLoading(true);
       const res = await deleteTable(deleteTableData._id);
       toast.success(res.message || "Xoá Bàn Thành Công");
       setOpenDelete(false);
