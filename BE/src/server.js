@@ -5,6 +5,7 @@ import authRoutes from "./routes/authRoutes.js"; // Remember the .js extension
 import cors from "cors";
 import menuRoutes  from "./routes/menuRoutes.js";
 import tableRoutes from "./routes/tableRoutes.js";
+import billRoutes from "./routes/billRoutes.js";
 import "./models/sessionsModel.js";
 import "./models/categoriesModel.js";
 // Load environment variables
@@ -29,6 +30,7 @@ connectDB();
 app.use("/api/auth", authRoutes);
 app.use("/api/tables", tableRoutes);
 app.use("/api/menu", menuRoutes);
+app.use("/api/bills", billRoutes);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
