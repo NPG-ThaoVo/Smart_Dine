@@ -81,6 +81,7 @@ export const getBillStats = async () => {
         $group: {
           _id: null,
           todayRevenue: { $sum: { $cond: [{ $eq: ["$status", "PAID"] }, "$totalAmount", 0] } },
+          todayBills: { $sum: 1 }
         }
       }
     ])
@@ -91,10 +92,12 @@ export const getBillStats = async () => {
     totalBills: 0,
     paidBills: 0,
     unpaidBills: 0
+    
   };
 
   const today = todayStats.length > 0 ? todayStats[0] : {
     todayRevenue: 0
+    , todayBills: 0
   };
 
   return {

@@ -22,7 +22,7 @@ export const createBill = async (req, res) => {
     const billData = { sessionId, totalAmount, status: req.body.status };
     const bill = await billService.createBill(billData);
     
-    return successResponse(res, bill, 201);
+    return successResponse(res, "Tạo hóa đơn thành công", bill);
   } catch (error) {
     if (error.name === 'ValidationError') {
       return errorResponse(res, error.message, 400);
@@ -61,7 +61,7 @@ export const getAllBills = async (req, res) => {
   
   try {
     const result = await billService.getAllBills(safePage, safeLimit, status);
-    return successResponse(res, result);
+    return successResponse(res, "Lấy danh sách hóa đơn thành công", result);
   } catch (error) {
     console.error("Lỗi lấy danh sách hóa đơn:", error);
     return errorResponse(res, "Lỗi máy chủ nội bộ", 500);
@@ -83,7 +83,7 @@ export const getBillById = async (req, res) => {
       return errorResponse(res, "Không tìm thấy hóa đơn", 404);
     }
     
-    return successResponse(res, bill);
+    return successResponse(res, "Lấy chi tiết hóa đơn thành công", bill);
   } catch (error) {
     console.error("Lỗi lấy chi tiết hóa đơn:", error);
     return errorResponse(res, "Lỗi máy chủ nội bộ", 500);
@@ -94,7 +94,7 @@ export const getBillById = async (req, res) => {
 export const getBillStats = async (req, res) => {
   try {
     const stats = await billService.getBillStats();
-    return successResponse(res, stats);
+    return successResponse(res, "Lấy thống kê doanh thu thành công", stats);
   } catch (error) {
     console.error("Lỗi lấy thống kê doanh thu:", error);
     return errorResponse(res, "Lỗi máy chủ nội bộ", 500);

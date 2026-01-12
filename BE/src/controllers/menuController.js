@@ -26,7 +26,7 @@ export const getAllMenuItems = async (req, res) => {
       safeLimit
     );
 
-    return successResponse(res, result);
+    return successResponse(res, "Lấy tất cả món thành công", result);
   } catch (error) {
     console.error("Error fetching menu items:", error);
     return errorResponse(res, "Lỗi máy chủ nội bộ", 500);
@@ -44,7 +44,7 @@ export const getMenuItemById = async (req, res) => {
     if (!menuItem) {
       return errorResponse(res, "Không tìm thấy món", 404);
     }
-     return successResponse(res,menuItem);
+     return successResponse(res, "Lấy món thành công", menuItem);
   } catch (error) {
     console.error("Error fetching menu item:", error);
     return errorResponse(res, "Lỗi máy chủ nội bộ", 500);
@@ -116,7 +116,7 @@ export const createMenuItem = async (req, res) => {
     }
     const menuItemData = { name, price, description, image, categoryId };
     const menuItem = await menuService.createMenuItem(menuItemData);
-     return successResponse(res,menuItem);
+     return successResponse(res, "Tạo món thành công", menuItem);
   } catch (error) {
     if (error.name === 'ValidationError') {
       return errorResponse(res, error.message, 400);
