@@ -2,7 +2,7 @@ import React from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Plus, Edit2, Trash2, Sparkles } from "lucide-react";
+import { Search, Plus, Edit2, Trash2, Sparkles, Loader2 } from "lucide-react";
 
 const MenuFood = ({
   items,
@@ -14,7 +14,11 @@ const MenuFood = ({
   getCount,
   searchQuery,
   onSearchChange,
-  onAddClick,
+  handleAddClick,
+  onEdit,
+  onDelete,
+  onQuickSuggest,
+  generatingItemId,
 }) => {
   return (
     <div className="flex-1 pb-3 md:pb-6">
@@ -41,8 +45,8 @@ const MenuFood = ({
               />
             </div>
             <Button
-              className="bg-[#E9560C] hover:bg-[#E9560C]/90 text-white shadow-lg shadow-orange-500/20"
-              onClick={onAddClick}
+              className="bg-[#E9560C] hover:bg-[#E9560C]/90 text-white shadow-lg shadow-orange-500/20 cursor-pointer"
+              onClick={() => handleAddClick()}
             >
               <Plus className="w-4 h-4 mr-2" />
               Thêm món mới
@@ -95,24 +99,24 @@ const MenuFood = ({
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-20">
             {items.map((item) => (
               <div
-                key={item.id}
-                className={`group relative rounded-[32px] overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col h-full border ${item.available
+                key={item._id}
+                className={`group relative rounded-[32px] overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col h-full border ${item.isAvailable
                   ? "bg-[#EFFAF4] hover:bg-[#E0F2E9] border-[#A7F3D0]"
                   : "bg-[#FFF5F5] hover:bg-[#FFE5E5] border-red-200"
                   }`}
               >
                 <div className="flex items-center justify-between px-6 pt-4 pb-2">
                   <Badge
-                    className={`${item.available
+                    className={`${item.isAvailable
                       ? "bg-[#A7F3D0] text-[#065F46] hover:bg-[#ECA97C] border-transparent"
                       : "bg-red-100 text-red-700 hover:bg-[#F87171] border-transparent"
                       } shadow-none font-semibold px-3 py-1 text-xs uppercase tracking-wide rounded-full transition-colors duration-300 cursor-pointer`}
                   >
-                    {item.available ? "CÒN HÀNG" : "HẾT HÀNG"}
+                    {item.isAvailable ? "CÒN HÀNG" : "HẾT HÀNG"}
                   </Badge>
 
                   <span
-                    className={`block w-4 h-4 rounded-full ring-4 ring-white/50 ${item.available ? "bg-[#10B981]" : "bg-red-500"
+                    className={`block w-4 h-4 rounded-full ring-4 ring-white/50 ${item.isAvailable ? "bg-[#10B981]" : "bg-red-500"
                       }`}
                   />
                 </div>
@@ -137,18 +141,18 @@ const MenuFood = ({
                   </p>
 
                   <div className="flex items-baseline gap-1 mb-2">
-                    <span className={`text-2xl font-bold ${item.available ? "text-[#10B981]" : "text-red-500"}`}>
+                    <span className={`text-2xl font-bold ${item.isAvailable ? "text-[#10B981]" : "text-red-500"}`}>
                       {item.price.toLocaleString()}
                     </span>
-                    <span className={`text-xl font-medium ${item.available ? "text-[#10B981]/80" : "text-red-400"} underline decoration-2 underline-offset-4`}>đ</span>
+                    <span className={`text-xl font-medium ${item.isAvailable ? "text-[#10B981]/80" : "text-red-400"} underline decoration-2 underline-offset-4`}>đ</span>
                   </div>
 
-                  {item.suggestion && (
+                  {(item.upsellSuggestions && item.upsellSuggestions.length > 0) && (
                     <div className="bg-[#FDF4EB] border border-[#FED7AA] rounded-2xl p-4 mb-2">
                       <div className="flex gap-2.5 items-start">
                         <Sparkles className="w-4 h-4 text-[#EA580C] shrink-0 mt-0.5 fill-[#EA580C]" />
                         <p className="text-xs text-[#9A3412] font-medium leading-relaxed">
-                          {item.suggestion}
+                          {item.upsellSuggestions[0]}
                         </p>
                       </div>
                     </div>
@@ -159,23 +163,31 @@ const MenuFood = ({
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="text-xs font-medium text-gray-500 hover:bg-[#E9D5FF] hover:text-purple-600 gap-2 px-4 ml-12 rounded-full"
+                    className="text-xs font-medium text-gray-500 hover:bg-[#E9D5FF] hover:text-purple-600 gap-2 px-4 ml-12 rounded-full cursor-pointer"
+                    onClick={() => onQuickSuggest && onQuickSuggest(item)}
+                    disabled={generatingItemId === item._id}
                   >
-                    <Sparkles className="w-4 h-4" />
+                    {generatingItemId === item._id ? (
+                      <Loader2 className="w-4 h-4 animate-spin text-purple-600" />
+                    ) : (
+                      <Sparkles className="w-4 h-4" />
+                    )}
                     AI
                   </Button>
                   <div className="flex items-center gap-2">
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-9 w-9 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-full"
+                      className="h-9 w-9 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-full cursor-pointer"
+                      onClick={() => onEdit && onEdit(item)}
                     >
                       <Edit2 className="w-4 h-4" />
                     </Button>
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-9 w-9 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-full"
+                      className="h-9 w-9 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-full cursor-pointer"
+                      onClick={() => onDelete && onDelete(item)}
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>

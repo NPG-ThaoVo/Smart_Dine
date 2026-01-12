@@ -1,10 +1,9 @@
 import { DialogCreateOrEditTable } from "@/components/DialogCreateOrEditTable";
-import { DialogDeleteTable } from "@/components/DialogDeleteTable";
+import { DialogDeleteConfirm } from "@/components/DialogDeleteTable";
 import { DialogQR } from "@/components/DialogQR";
 import HeaderContentAdmin from "@/components/HeaderContentAdmin";
 import ManageTable from "@/components/ManageTable";
 import React from "react";
-import toast from "react-hot-toast";
 const TableManagement = () => {
   const [openCreateOrEdit, setOpenCreateOrEdit] = React.useState(false);
   const [openQR, setOpenQR] = React.useState(false);
@@ -53,7 +52,16 @@ const TableManagement = () => {
           onOpenChange={setOpenQR}
           handleDownload={handleDownload}
         />
-        <DialogDeleteTable open={openDelete} onOpenChange={setOpenDelete} />
+        <DialogDeleteConfirm
+          open={openDelete}
+          onOpenChange={setOpenDelete}
+          title="Xoá Bàn"
+          description="Bạn có chắc chắn muốn xóa bàn này? Hành động này không thể hoàn tác."
+          confirmText="Xoá"
+          onConfirm={() => {
+            setOpenDelete(false);
+          }}
+        />
       </div>
     </div>
   );

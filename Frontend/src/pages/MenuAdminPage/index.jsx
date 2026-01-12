@@ -1,160 +1,326 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 import MenuFood from "@/components/MenuFood";
 import DialogCreateMenu from "@/components/DialogCreateMenu";
+import { DialogDeleteConfirm } from "@/components/DialogDeleteTable";
+import {
+  getMenuItems,
+  createMenuItem,
+  updateMenuItem,
+  deleteMenuItem,
+} from "@/services/api/menu";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const menuItems = [
-  {
-    id: 1,
-    name: "Gỏi cuốn tôm thịt",
-    category: "Khai vị",
-    price: 45000,
-    description:
-      "Cuốn gỏi tinh tế với tôm biển tươi ngọt, thịt heo mềm mại cùng rau thơm xanh mát, chấm cùng nước mắm chua ngọt.",
-    image:
-      "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=800&h=800&fit=crop",
-    available: true,
-    suggestion: "Thêm một ly nước dừa tươi để làm mát vị giác!",
-  },
-  {
-    id: 2,
-    name: "Chả giò Sài Gòn",
-    category: "Khai vị",
-    price: 55000,
-    description: "Chả giò giòn rụm với nhân thịt heo, tôm và khoai môn.",
-    image:
-      "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=800&h=800&fit=crop",
-    available: true,
-    suggestion: "Thêm một ly nước dừa tươi để làm mát vị giác!",
-  },
-  {
-    id: 3,
-    name: "Phở bò tái",
-    category: "Món chính",
-    price: 75000,
-    description:
-      "Tô phở đậm đà với thịt bò tái mềm tan, nước dùng ninh xương trong vắt, thơm lừng hương quế hồi...",
-    image:
-      "https://images.unsplash.com/photo-1555126634-323283e090fa?w=800&h=800&fit=crop",
-    available: true,
-    suggestion: "Dùng kèm một ly cà phê sữa đá để trọn vẹn bữa sáng!",
-  },
-  {
-    id: 4,
-    name: "Bún chả Hà Nội",
-    category: "Món chính",
-    price: 70000,
-    description: "Bún chả với thịt nướng than hoa thơm lừng, nước chấm đậm đà.",
-    image:
-      "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&h=800&fit=crop",
-    available: true,
-    suggestion: "Dùng kèm một ly cà phê sữa đá để trọn vẹn bữa ăn!",
-  },
-  {
-    id: 5,
-    name: "Cơm sườn bì chả",
-    category: "Món chính",
-    price: 65000,
-    description: "Cơm tấm với sườn nướng, bì và chả trứng truyền thống.",
-    image:
-      "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&h=800&fit=crop",
-    available: false,
-    suggestion: "Dùng kèm một ly cà phê sữa đá để trọn vẹn bữa ăn!",
-  },
-  {
-    id: 6,
-    name: "Trà đá",
-    category: "Đồ uống",
-    price: 10000,
-    description: "Trà đá mát lạnh giải nhiệt.",
-    image:
-      "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=800&h=800&fit=crop",
-    available: true,
-  },
-  {
-    id: 7,
-    name: "Cà phê sữa đá",
-    category: "Đồ uống",
-    price: 35000,
-    description: "Cà phê phin pha sữa đặc thơm ngon đặc biệt.",
-    image:
-      "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&h=800&fit=crop",
-    available: true,
-  },
-  {
-    id: 8,
-    name: "Nước dừa tươi",
-    category: "Đồ uống",
-    price: 30000,
-    description: "Nước dừa xiêm tươi mát ngọt lịm.",
-    image:
-      "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=800&h=800&fit=crop",
-    available: true,
-  },
-  {
-    id: 9,
-    name: "Chè ba màu",
-    category: "Tráng miệng",
-    price: 25000,
-    description: "Chè đậu xanh, đậu đỏ, thạch rau câu cốt dừa.",
-    image:
-      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&h=800&fit=crop",
-    available: true,
-  },
-  {
-    id: 10,
-    name: "Bánh flan",
-    category: "Tráng miệng",
-    price: 20000,
-    description: "Bánh flan caramel mềm mịn béo ngậy.",
-    image:
-      "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=800&h=800&fit=crop",
-    available: true,
-  },
-];
+const CATEGORIES = ["Khai vị", "Món chính", "Đồ uống", "Tráng miệng"];
+const CATEGORY_IDS = {
+  "Khai vị": "69623d53aeefff9670d1dedb",
+  "Món chính": "69623d53aeefff9670d1dedc",
+  "Đồ uống": "69623d53aeefff9670d1dedd",
+  "Tráng miệng": "69623d53aeefff9670d1dede",
+};
 
-const categories = ["Khai vị", "Món chính", "Đồ uống", "Tráng miệng"];
+const INITIAL_FORM_DATA = {
+  name: "",
+  category: "",
+  price: "",
+  description: "",
+  upsell: "",
+  available: true,
+  image: "",
+};
 
 const MenuAdminPage = () => {
   const [activeCategory, setActiveCategory] = useState("Khai vị");
-  const [SearchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [file, setFile] = useState(null);
+  const [menuItems, setMenuItems] = useState([]);
+  const [editingId, setEditingId] = useState(null);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [deletingItem, setDeletingItem] = useState(null);
+  const [formData, setFormData] = useState(INITIAL_FORM_DATA);
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+  const [isGenerating, setIsGenerating] = useState({ description: false, upsell: false });
+  const [generatingItemId, setGeneratingItemId] = useState(null);
+
+  const uploadImageToCloudinary = async (file) => {
+    if (!file) return null;
+    const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+    const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", uploadPreset);
+    const res = await fetch(
+      `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+      { method: "POST", body: formData }
+    );
+    if (!res.ok) throw new Error("Upload failed");
+    const result = await res.json();
+    return result.secure_url;
+  };
+
+  const generateGeminiText = async (prompt) => {
+    const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const result = await model.generateContent(prompt);
+    return result.response.text().trim();
+  };
+
+  useEffect(() => {
+    fetchMenuItems();
+  }, []);
+  const fetchMenuItems = async () => {
+    try {
+      const res = await getMenuItems();
+      if (res.data?.data?.items) {
+        setMenuItems(res.data.data.items);
+      }
+    } catch (error) {
+      console.error("Failed to fetch menu items:", error);
+      toast.error("Không thể tải danh sách món ăn");
+    }
+  };
+
+  const handleSaveItem = async () => {
+    if (!formData.category) {
+      toast.error("Vui lòng chọn danh mục!");
+      return;
+    }
+    let imageUrl = "";
+    try {
+      if (file) {
+        imageUrl = await uploadImageToCloudinary(file);
+      } else if (editingId) {
+        const existingItem = menuItems.find((i) => i._id === editingId);
+        imageUrl = existingItem?.image;
+      }
+    } catch (error) {
+      console.error("Cloudinary upload failed", error);
+      toast.error(`Upload ảnh thất bại: ${error.message}`);
+      return;
+    }
+    const payload = {
+      name: formData.name,
+      price: Number(formData.price),
+      description: formData.description,
+      image: imageUrl || "https://placehold.co/600x400?text=No+Image",
+      categoryId: CATEGORY_IDS[formData.category],
+      isAvailable: formData.available,
+      upsellSuggestions: formData.upsell ? [formData.upsell] : [],
+    };
+    try {
+      if (editingId) {
+        await updateExistingItem(editingId, payload);
+      } else {
+        await createNewItem(payload);
+      }
+      resetForm();
+    } catch (error) {
+      console.error("Failed to save menu item:", error);
+      toast.error(error.response?.data?.message || "Có lỗi xảy ra!");
+    }
+  };
+
+  const updateExistingItem = async (id, payload) => {
+    const res = await updateMenuItem(id, payload);
+    if (res.data?.data) {
+      const updatedItem = res.data.data;
+      setMenuItems((prev) =>
+        prev.map((item) => (item._id === id ? updatedItem : item))
+      );
+      toast.success("Cập nhật món thành công!");
+    }
+  };
+
+  const createNewItem = async (payload) => {
+    const res = await createMenuItem(payload);
+    const newItemBackend = res.data.data || res.data.message;
+    if (newItemBackend) {
+      setMenuItems((prev) => [...prev, newItemBackend]);
+      toast.success("Thêm món thành công!");
+    }
+  };
+
+  const handleDeleteClick = (item) => {
+    setDeletingItem(item);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!deletingItem) return;
+    try {
+      await deleteMenuItem(deletingItem._id);
+      setMenuItems((prev) => prev.filter((i) => i._id !== deletingItem._id));
+      toast.success("Đã xóa món ăn");
+      setIsDeleteDialogOpen(false);
+    } catch (error) {
+      console.error("Failed to delete item:", error);
+      toast.error(error.response?.data?.message || "Lỗi khi xóa món!");
+    }
+  };
+
+  const resetForm = () => {
+    setIsCreateDialogOpen(false);
+    setFile(null);
+    setEditingId(null);
+    setFormData(INITIAL_FORM_DATA);
+  };
+
+  const handleAddClick = () => {
+    setEditingId(null);
+    setFile(null);
+    setFormData(INITIAL_FORM_DATA);
+    setIsCreateDialogOpen(true);
+  };
+
+  const handleEditClick = (item) => {
+    setEditingId(item._id);
+    const categoryName =
+      Object.keys(CATEGORY_IDS).find(
+        (key) => CATEGORY_IDS[key] === item.categoryId
+      ) || "Khai vị";
+    setFormData({
+      name: item.name,
+      category: categoryName,
+      price: item.price,
+      description: item.description,
+      upsell: item.upsellSuggestions?.[0] || "",
+      available: item.isAvailable,
+      image: "",
+    });
+    setFile(null);
+    setIsCreateDialogOpen(true);
+  };
+
+  const handleFormChange = (field, value) =>
+    setFormData((prev) => ({ ...prev, [field]: value }));
 
   const itemsMatchingSearch = menuItems.filter(
     (item) =>
-      item.name.toLowerCase().includes(SearchQuery.toLowerCase()) ||
-      item.description.toLowerCase().includes(SearchQuery.toLowerCase())
+      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.description.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const filteredItems = itemsMatchingSearch.filter(
-    (item) => item.category === activeCategory
+    (item) => item.categoryId === CATEGORY_IDS[activeCategory]
   );
 
   const getCount = (cat) =>
-    itemsMatchingSearch.filter((item) => item.category === cat).length;
-  const totalItems = itemsMatchingSearch.length;
-  const availableItems = itemsMatchingSearch.filter((i) => i.available).length;
+    itemsMatchingSearch.filter(
+      (item) => item.categoryId === CATEGORY_IDS[cat]
+    ).length;
 
-  const handleAddClick = () => {
-    setIsCreateDialogOpen(true);
+  const handleSuggestDescription = async () => {
+    if (!formData.name) {
+      toast.error("Vui lòng nhập tên món ăn trước!");
+      return;
+    }
+    setIsGenerating((prev) => ({ ...prev, description: true }));
+    try {
+      const prompt = `Bạn là chuyên gia ẩm thực viết copy cho menu nhà hàng. Hãy viết mô tả ngắn (30-40 từ), hấp dẫn, kích thích vị giác cho món: "${formData.name}". Chỉ trả về nội dung mô tả, không có dấu ngoặc kép hay lời dẫn.`;
+      const text = await generateGeminiText(prompt);
+      setFormData((prev) => ({ ...prev, description: text }));
+      toast.success("Đã tạo mô tả từ Gemini!");
+    } catch (error) {
+      console.error("Gemini error:", error);
+      toast.error("Lỗi khi tạo mô tả: " + (error.message || "Không xác định"));
+    } finally {
+      setIsGenerating((prev) => ({ ...prev, description: false }));
+    }
+  };
+
+  const handleSuggestUpsell = async () => {
+    if (!formData.name) {
+      toast.error("Vui lòng nhập tên món ăn trước!");
+      return;
+    }
+    setIsGenerating((prev) => ({ ...prev, upsell: true }));
+    try {
+      const prompt = `Gợi ý duy nhất 1 loại đồ uống (viết hoa chữ cái đầu) phù hợp nhất để uống kèm với món: "${formData.name}". Chỉ trả về tên đồ uống, không giải thích.`;
+      const text = await generateGeminiText(prompt);
+      setFormData((prev) => ({ ...prev, upsell: text }));
+      toast.success("Đã tạo gợi ý đồ uống!");
+    } catch (error) {
+      console.error("Gemini error:", error);
+      toast.error("Lỗi khi tạo gợi ý: " + (error.message || "Không xác định"));
+    } finally {
+      setIsGenerating((prev) => ({ ...prev, upsell: false }));
+    }
+  };
+
+  const handleQuickSuggest = async (item) => {
+    setGeneratingItemId(item._id);
+    try {
+      const prompt = `Bạn là chuyên gia ẩm thực viết copy cho menu nhà hàng. Hãy viết mô tả ngắn (30-40 từ), hấp dẫn, kích thích vị giác cho món: "${item.name}". Chỉ trả về nội dung mô tả, không có dấu ngoặc kép hay lời dẫn.`;
+      const text = await generateGeminiText(prompt);
+      const payload = {
+        ...item,
+        description: text,
+        upsellSuggestions: item.upsellSuggestions || [],
+      };
+      const res = await updateMenuItem(item._id, payload);
+      const newItem = res?.data?.data;
+      if (newItem) {
+        setMenuItems((prev) => prev.map((i) => (i._id === item._id ? newItem : i)));
+        toast.success("Đã cập nhật mô tả mới!");
+      } else {
+        await fetchMenuItems();
+      }
+    } catch (error) {
+      console.error("Quick suggest error:", error);
+      toast.error("Lỗi khi tạo mô tả: " + error.message);
+    } finally {
+      setGeneratingItemId(null);
+    }
   };
 
   return (
     <>
       <MenuFood
         items={filteredItems}
-        categories={categories}
+        categories={CATEGORIES}
         activeCategory={activeCategory}
         onCategoryChange={setActiveCategory}
-        totalItems={totalItems}
-        availableItems={availableItems}
+        totalItems={itemsMatchingSearch.length}
+        availableItems={itemsMatchingSearch.filter((i) => i.isAvailable).length}
         getCount={getCount}
-        searchQuery={SearchQuery}
+        searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
-        onAddClick={handleAddClick}
+        handleAddClick={handleAddClick}
+        handleUploadFile={setFile}
+        handleCreateBlog={handleSaveItem}
+        menuItems={menuItems}
+        onEdit={handleEditClick}
+        onDelete={handleDeleteClick}
+        onQuickSuggest={handleQuickSuggest}
+        generatingItemId={generatingItemId}
       />
       <DialogCreateMenu
         open={isCreateDialogOpen}
         onOpenChange={setIsCreateDialogOpen}
+        handleCreateBlog={handleSaveItem}
+        handleUploadFile={setFile}
+        formData={formData}
+        onFormChange={handleFormChange}
+        categories={CATEGORIES}
+        isEditing={!!editingId}
+        onImageRemove={() => {
+          setFormData(prev => ({ ...prev, image: "" }));
+          setFile(null);
+        }}
+        isCategoryOpen={isCategoryOpen}
+        setIsCategoryOpen={setIsCategoryOpen}
+        onSuggestDescription={handleSuggestDescription}
+        onSuggestUpsell={handleSuggestUpsell}
+        isGenerating={isGenerating}
+      />
+      <DialogDeleteConfirm
+        open={isDeleteDialogOpen}
+        onOpenChange={setIsDeleteDialogOpen}
+        onConfirm={confirmDelete}
+        title="Xóa món"
+        description={`Bạn có chắc chắn muốn xóa "${deletingItem?.name}"? Hành động này không thể hoàn tác.`}
+        confirmText="Xóa"
       />
     </>
   );
