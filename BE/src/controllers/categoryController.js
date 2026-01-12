@@ -4,7 +4,7 @@ import * as categoryService from "../services/categoryService.js";
 export const create = async (req, res) => {
   try {
     const category = await categoryService.createCategory(req.body);
-    return successResponse(res, "Tạo danh mục món ăn công", category, 201);
+    return successResponse(res, "Tạo danh mục món ăn thành công", category, 201);
   } catch (err) {
     return errorResponse(res, "Lỗi tạo danh mục món ăn", 500, err.message);
   }
