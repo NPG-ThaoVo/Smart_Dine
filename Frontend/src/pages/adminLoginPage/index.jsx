@@ -12,9 +12,11 @@ const AdminLoginPage = () => {
       setLoading(true);
       const data = await testLoginGoogle();
       console.log("Login success:", data);
-      //save token to local storage
       localStorage.setItem("userInformation", JSON.stringify(data));
-      navigate("/admin/table-management");
+      if (data.data?.accessToken) {
+        localStorage.setItem("accessToken", data.data.accessToken);
+      }
+      navigate("/admin/dashboard");
     } catch (error) {
       console.log("Google login flow failed", error);
     } finally {

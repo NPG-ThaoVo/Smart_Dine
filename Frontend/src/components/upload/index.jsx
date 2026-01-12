@@ -19,6 +19,12 @@ export default function CloudinaryUpload({ onUpload, defaultImage, onRemove }) {
     const file = e.target.files[0];
     if (!file) return;
 
+    const validTypes = ["image/jpeg", "image/png", "image/webp", "image/jpg"];
+    if (!validTypes.includes(file.type)) {
+      alert("Định dạng file không được hỗ trợ. Vui lòng chọn .jpg, .jpeg, .png hoặc .webp");
+      return;
+    }
+
     if (file.size > 5 * 1024 * 1024) {
       alert("File quá lớn! Vui lòng chọn file dưới 5MB.");
       return;

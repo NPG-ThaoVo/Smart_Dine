@@ -298,7 +298,7 @@ const MenuAdminPage = () => {
       <DialogCreateMenu
         open={isCreateDialogOpen}
         onOpenChange={setIsCreateDialogOpen}
-        handleCreateBlog={handleSaveItem}
+        handleCreateImage={handleSaveItem}
         handleUploadFile={setFile}
         formData={formData}
         onFormChange={handleFormChange}

@@ -16,7 +16,7 @@ import CloudinaryUpload from "@/components/upload";
 const DialogCreateMenu = ({
   open,
   onOpenChange,
-  handleCreateBlog,
+  handleCreateImage,
   handleUploadFile,
   formData,
   onFormChange,
@@ -201,7 +201,7 @@ const DialogCreateMenu = ({
           </DialogClose>
           <Button
             disabled={!formData.name || !formData.category || !formData.price}
-            onClick={() => handleCreateBlog()}
+            onClick={() => handleCreateImage()}
             className={`rounded-xl text-white transition-all duration-300 ${(!formData.name || !formData.category || !formData.price)
               ? "bg-[#F4A47E] opacity-70 cursor-not-allowed"
               : "bg-[#E9560C] hover:bg-[#d84e0b] shadow-lg shadow-orange-500/30"
