@@ -6,13 +6,15 @@ import {
   update,
   remove,
 } from "../controllers/categoryController.js";
+import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.post("/", create);
-router.get("/", getAll);
-router.get("/:id", getDetail);
-router.put("/:id", update);
-router.delete("/:id", remove);
+// 🔒 PROTECTED
+router.post("/", protect, create);
+router.get("/", protect, getAll);
+router.get("/:id", protect, getDetail);
+router.put("/:id", protect, update);
+router.delete("/:id", protect, remove);
 
 export default router;
