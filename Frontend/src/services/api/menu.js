@@ -15,3 +15,7 @@ export const updateMenuItem = async (id, data) => {
 export const deleteMenuItem = async (id) => {
     return await api.delete(`/menu/${id}`);
 };
+
+export const getAllMenu = async (params) => {
+  return api.get("/menu", { params });
+};
