@@ -2,7 +2,6 @@ import express from "express";
 import {
   create,
   getAll,
-  getDetail,
   update,
   remove,
 } from "../controllers/categoryController.js";
@@ -13,7 +12,6 @@ const router = express.Router();
 // 🔒 PROTECTED
 router.post("/", protect, create);
 router.get("/", protect, getAll);
-router.get("/:id", protect, getDetail);
 router.put("/:id", protect, update);
 router.delete("/:id", protect, remove);
 

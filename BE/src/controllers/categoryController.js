@@ -63,19 +63,3 @@ export const remove = async (req, res) => {
     return errorResponse(res, "Lỗi xóa danh mục", 500, err.message);
   }
 };
-
-export const getDetail = async (req, res) => {
-  try {
-    const category = await categoryService.getCategoryById(req.params.id);
-    if (!category)
-      return errorResponse(
-        res,
-        "Không tìm thấy danh mục",
-        404,
-        "CATEGORY_NOT_FOUND"
-      );
-    return successResponse(res, "Lấy danh mục thành công", category);
-  } catch (err) {
-    return errorResponse(res, "Lỗi hệ thống", 500, err.message);
-  }
-};
