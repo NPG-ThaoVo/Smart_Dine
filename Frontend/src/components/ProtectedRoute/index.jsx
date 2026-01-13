@@ -8,7 +8,6 @@ const ProtectedRoute = ({ children }) => {
   if (!userInfo) {
     return <Navigate to="/admin/login" />;
   }
-console.log("AuthContext =", useContext(AuthContext));
 
   return children;
 };
