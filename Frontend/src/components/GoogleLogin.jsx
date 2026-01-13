@@ -10,14 +10,13 @@ const testLoginGoogle = async () => {
     console.log("1. Đã lấy được Firebase Token");
 
     // 2. Gửi token xuống Backend xác thực
-    const res = await api.post('/auth/google-login', {
-      token: idToken
+    const res = await api.post("/auth/google-login", {
+      token: idToken,
     });
 
     // 3. Gọi hàm callback của cha để lưu user và token
     console.log("2. Backend xác thực thành công", res.data);
     return res.data;
-
   } catch (error) {
     console.error("Lỗi đăng nhập:", error);
     alert(`Đăng nhập thất bại: ${error.message}`);

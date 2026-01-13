@@ -1,0 +1,27 @@
+### Tạo danh mục món ăn
+POST http://localhost:3001/api/categories
+Content-Type: application/json
+
+{
+  "name": "Trái cây",
+  "description": "Các loại trái cây"
+}
+
+### Lấy tất cả danh mục món ăn
+GET http://localhost:3001/api/categories
+
+### Lấy danh mục món ăn theo ID
+GET http://localhost:3001/api/categories/69623d53aeefff9670d1ded8
+### Cập nhật danh mục món ăn theo ID
+PUT http://localhost:3001/api/categories/6963d032205bc2e97b2b13fd
+Content-Type: application/json
+
+{
+  "name": "Trái Thơm",
+  "description": "Các loại trái thơm"
+}
+
+### Xóa danh mục món ăn theo ID
+DELETE http://localhost:3001/api/categories/6963d032205bc2e97b2b13fd
+
+
