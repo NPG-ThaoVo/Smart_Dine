@@ -21,7 +21,7 @@ export const updateStatus = async (req, res) => {
   try {
     const { status } = req.body;
 
-    if (!["PENDING", "CONFIRMED", "COMPLETED", "CANCELLED"].includes(status)) {
+    if (!["PREPARING", "SERVED"].includes(status)) {
       return errorResponse(
         res,
         "Trạng Thái Món Không Hợp Lệ",

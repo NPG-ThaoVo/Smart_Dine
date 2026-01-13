@@ -1,7 +1,7 @@
 import express from "express";
 import {
-    getByOrder,
-    updateStatus,
+  getByOrder,
+  updateStatus,
 } from "../controllers/orderItemController.js";
 
 const router = express.Router();

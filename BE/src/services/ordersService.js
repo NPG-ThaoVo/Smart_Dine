@@ -20,11 +20,15 @@ export const updateOrderStatus = async (id, status) => {
     );
 };
 
-export const getOrdersByTableId = async (id) => {
-    return await ordersModel.find({ id });
+export const getOrdersByTableId = async (orderId, status) => {
+    return await ordersModel.findByIdAndDelete(
+        orderId,
+        { status },
+        { new: true }
+    );
 };
 
 
-export const getOrdersBySessionId = async (id) => {
-    return await ordersModel.find({ sessionId: id });
+export const getOrdersBySessionId = async (sessionId) => {
+    return await ordersModel.find({ sessionId });
 }   
