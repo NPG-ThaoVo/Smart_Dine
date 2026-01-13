@@ -2,24 +2,24 @@ import * as billService from "../services/billService.js";
 import { successResponse, errorResponse } from "../utils/response.js";
 import mongoose from "mongoose";
 
-// Tạo hóa đơn từ session
+// Tạo hóa đơn từ bàn
 export const createBill = async (req, res) => {
   try {
-    const { sessionId, totalAmount } = req.body;
+    const { tableId, totalAmount } = req.body;
     
-    if (!sessionId || totalAmount === undefined) {
-      return errorResponse(res, "Session ID và tổng tiền là các trường bắt buộc", 400);
+    if (!tableId || totalAmount === undefined) {
+      return errorResponse(res, "Table ID và tổng tiền là các trường bắt buộc", 400);
     }
     
-    if (!mongoose.Types.ObjectId.isValid(sessionId)) {
-      return errorResponse(res, "Định dạng Session ID không hợp lệ", 400);
+    if (!mongoose.Types.ObjectId.isValid(tableId)) {
+      return errorResponse(res, "Định dạng Table ID không hợp lệ", 400);
     }
     
     if (!Number.isFinite(totalAmount) || totalAmount < 0) {
       return errorResponse(res, "Tổng tiền phải là số không âm", 400);
     }
     
-    const billData = { sessionId, totalAmount, status: req.body.status };
+    const billData = { tableId, totalAmount, status: req.body.status };
     const bill = await billService.createBill(billData);
     
     return successResponse(res, "Tạo hóa đơn thành công", bill);

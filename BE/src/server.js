@@ -7,7 +7,6 @@ import menuRoutes from "./routes/menuRoutes.js";
 import tableRoutes from "./routes/tableRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import billRoutes from "./routes/billRoutes.js";
-import "./models/sessionsModel.js";
 import "./models/categoriesModel.js";
 
 // Load environment variables

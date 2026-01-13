@@ -6,8 +6,9 @@ export const createTable = async (data) => {
 
 export const getAllTables = async ({ status, search }) => {
   let query = {};
-  if (status === "EMPTY") query.currentSessionId = null;
-  if (status === "OCCUPIED") query.currentSessionId = { $ne: null };
+  if (status === "open" || status === "close") {
+    query.status = status;
+  }
   if (search) {
     query.name = { $regex: search, $options: "i" };
   }
@@ -15,7 +16,7 @@ export const getAllTables = async ({ status, search }) => {
 };
 
 export const getTableById = async (id) => {
-  return await Table.findById(id).populate("currentSessionId");
+  return await Table.findById(id);
 };
 
 export const updateTable = async (id, data) => {
