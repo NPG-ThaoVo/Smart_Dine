@@ -1,0 +1,21 @@
+### Tạo hóa đơn mới
+POST http://localhost:3001/api/bills
+Content-Type: application/json
+
+{
+  "sessionId": "695f5666fd4ec837338d2284",
+  "totalAmount": 150000,
+  "status": "UNPAID"
+}
+
+### Lấy danh sách hóa đơn
+GET http://localhost:3001/api/bills?page=1&limit=10
+Authorization: Bearer YOUR_TOKEN_HERE
+
+### Lấy chi tiết hóa đơn theo ID
+GET http://localhost:3001/api/bills/6963b28ccde9efec3ce8899f
+Authorization: Bearer YOUR_TOKEN_HERE
+
+### Lấy thống kê doanh thu
+GET http://localhost:3001/api/bills/stats
+Authorization: Bearer YOUR_TOKEN_HERE
