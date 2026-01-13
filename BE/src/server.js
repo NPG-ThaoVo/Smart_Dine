@@ -6,7 +6,6 @@ import cors from "cors";
 import menuRoutes from "./routes/menuRoutes.js";
 import tableRoutes from "./routes/tableRoutes.js";
 import orderItemRoutes from "./routes/orderItemRoutes.js";
-import "./models/sessionsModel.js";
 import "./models/categoriesModel.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";

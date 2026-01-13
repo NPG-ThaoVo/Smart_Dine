@@ -1,10 +1,15 @@
 import mongoose from "mongoose";
 const orderItemSchema = new mongoose.Schema(
   {
+    tableId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Table",
+      required: true,
+    },
     orderId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Order",
-      required: true,
+      default: null,
     },
     menuItemId: {
       type: mongoose.Schema.Types.ObjectId,
