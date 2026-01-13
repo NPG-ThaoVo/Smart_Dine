@@ -11,7 +11,6 @@ import "./models/categoriesModel.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import billRoutes from "./routes/billRoutes.js";
-import "./models/sessionsModel.js";
 import "./models/categoriesModel.js";
 
 // Load environment variables

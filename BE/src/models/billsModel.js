@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 const billSchema = new mongoose.Schema(
     {
-        sessionId: {
+        tableId: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Session",
+            ref: "Table",
             required: true,
         },
         totalAmount: {

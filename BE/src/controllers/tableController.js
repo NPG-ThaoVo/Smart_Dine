@@ -13,11 +13,7 @@ export const create = async (req, res) => {
 export const getAll = async (req, res) => {
   try {
     const tables = await tableService.getAllTables(req.query);
-    const result = tables.map((table) => ({
-      ...table.toObject(),
-      status: table.currentSessionId ? "OCCUPIED" : "EMPTY",
-    }));
-    return successResponse(res, "Lấy danh sách bàn thành công", result);
+    return successResponse(res, "Lấy danh sách bàn thành công", tables);
   } catch (err) {
     return errorResponse(res, "Lỗi hệ thống", 500, err.message);
   }
@@ -30,7 +26,6 @@ export const getDetail = async (req, res) => {
       return errorResponse(res, "Không tìm thấy bàn", 404, "TABLE_NOT_FOUND");
     return successResponse(res, "Lấy chi tiết bàn thành công", {
       ...table.toObject(),
-      status: table.currentSessionId ? "OCCUPIED" : "EMPTY",
       qrUrl: `https://smartdine.com/table/${table._id}`,
     });
   } catch (err) {
@@ -46,10 +41,7 @@ export const update = async (req, res) => {
     );
     if (!updatedTable)
       return errorResponse(res, "Không tìm thấy bàn", 404, "TABLE_NOT_FOUND");
-    return successResponse(res, "Cập nhật bàn thành công", {
-      ...updatedTable.toObject(),
-      status: updatedTable.currentSessionId ? "OCCUPIED" : "EMPTY",
-    });
+    return successResponse(res, "Cập nhật bàn thành công", updatedTable);
   } catch (err) {
     return errorResponse(res, "Lỗi cập nhật bàn", 500, err.message);
   }
