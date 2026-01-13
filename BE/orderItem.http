@@ -1,0 +1,42 @@
+### Gọi món (chưa chốt đơn)
+POST http://localhost:3001/api/order-items/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTYyMmI5ZWEwNGNmYzRlY2RjYjNhYWIiLCJpYXQiOjE3NjgzMTEwNDMsImV4cCI6MTc2ODMxMTk0M30.0cnHg_l1J-yLCnAik-YVuTRCGbVm3v77o7OP63Xra6c
+
+{
+    "tableId": "695ea817fc00e87d2bc7a7b4",
+    "orderItems": [
+        {
+            "menuItemId": "6964dec23f6e7b42fc078011",
+            "quantity": 2,
+            "price": 1
+        },
+        {
+            "menuItemId": "6964df043f6e7b42fc078016",
+            "quantity": 1,
+            "price": 1
+        }
+    ]
+}
+
+###
+### Lấy tất cả món theo bàn (trước khi chốt đơn)
+GET http://localhost:3001/api/order-items/table/695ea817fc00e87d2bc7a7b4
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTYyMmI5ZWEwNGNmYzRlY2RjYjNhYWIiLCJpYXQiOjE3NjgzMTEwNDMsImV4cCI6MTc2ODMxMTk0M30.0cnHg_l1J-yLCnAik-YVuTRCGbVm3v77o7OP63Xra6c
+
+###
+### Lấy món theo Order (sau khi chốt đơn)
+GET http://localhost:3001/api/order-items/order/696650512d1b35bc8024bed5
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTYyMmI5ZWEwNGNmYzRlY2RjYjNhYWIiLCJpYXQiOjE3NjgzMTEwNDMsImV4cCI6MTc2ODMxMTk0M30.0cnHg_l1J-yLCnAik-YVuTRCGbVm3v77o7OP63Xra6c
+
+###
+### Cập nhật trạng thái món
+PATCH http://localhost:3001/api/order-items/696650512d1b35bc8024bed6/status
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTYyMmI5ZWEwNGNmYzRlY2RjYjNhYWIiLCJpYXQiOjE3NjgzMTEwNDMsImV4cCI6MTc2ODMxMTk0M30.0cnHg_l1J-yLCnAik-YVuTRCGbVm3v77o7OP63Xra6c
+
+{
+    "status": "PREPARING"
+}
