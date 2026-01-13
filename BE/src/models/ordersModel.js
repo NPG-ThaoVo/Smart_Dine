@@ -1,24 +1,25 @@
 import mongoose from "mongoose";
 const orderSchema = new mongoose.Schema(
   {
+    orderItems: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "OrderItem",
+      },
+    ],
     tableId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Table",
       required: true,
     },
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-     note: {
+    note: {
       type: String,
       default: null,
       trim: true,
     },
-     status: {
+    status: {
       type: String,
-      enum: ["PENDING", "COMPLETED","CONFIRMED","CANCELLED"],
+      enum: ["PENDING", "COMPLETED", "CONFIRMED", "CANCELLED"],
       default: "PENDING",
       required: true,
     },

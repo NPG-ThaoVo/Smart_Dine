@@ -38,3 +38,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTVmN
 DELETE http://localhost:3001/api/tables/695ea7b9fc00e87d2bc7a7ad
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTVmNWNmNTgwZmJiNjZmM2NhMDM3NDMiLCJpYXQiOjE3NjgwNDIxNTMsImV4cCI6MTc2ODA0MzA1M30.wWBkxyC855UUJGTnSQst-32EZFifC07NU7rpQgvGXgo
+
+###
+POST http://localhost:3001/api/orders/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTVmNWNmNTgwZmJiNjZmM2NhMDM3NDMiLCJpYXQiOjE3NjgwNDIxNTMsImV4cCI6MTc2ODA0MzA1M30.wWBkxyC855UUJGTnSQst-32EZFifC07NU7rpQgvGXgo
+
+{
+  "orderId": "695f5cf580ffb66f3ca03743"
+}
