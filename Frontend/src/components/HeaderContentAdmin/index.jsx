@@ -1,11 +1,13 @@
-import { Dialog } from "@radix-ui/react-dialog";
 import React from "react";
-import { DialogCreateOrEditTable } from "../DialogCreateOrEditTable";
 import { Button } from "@/components/ui/button";
 import { Search, Plus } from "lucide-react";
-const HeaderContentAdmin = ({ onOpenChange }) => {
-  const [searchValue, setSearchValue] = React.useState("");
-
+const HeaderContentAdmin = ({
+  onOpenChange,
+  search,
+  onSearchChange,
+  total,
+  busy,
+}) => {
   return (
     <div>
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -14,17 +16,17 @@ const HeaderContentAdmin = ({ onOpenChange }) => {
             Quản lý bàn
           </h1>
           <p className="text-muted-foreground mt-1">
-            Tổng số: 8 bàn • Đang phục vụ: 2
+            Tổng Số: {total} Bàn • Đang phục vụ: {busy} Bàn
           </p>
         </div>
         <div className="flex items-center gap-3">
           <div className="relative">
             <Search className="absolute z-10 left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <input
-              className="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm glass-card pl-9 w-full md:w-[200px]"
+              className="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e96523] focus-visible:ring-offset-2  disabled:cursor-not-allowed disabled:opacity-50 md:text-sm glass-card pl-9 w-full md:w-[200px]"
               placeholder="Tìm kiếm bàn..."
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
+              value={search}
+              onChange={(e) => onSearchChange(e.target.value)}
             />
           </div>
           <Button
