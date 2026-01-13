@@ -26,14 +26,14 @@ function App() {
         <Route path="/smartdine" element={<SmartDineLanding />} />
         
           
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<ProtectedRoute><Navigate to="dashboard" replace /></ProtectedRoute>} />
-          <Route path="dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
-          <Route path="table-management" element={<ProtectedRoute><TableManagement /></ProtectedRoute>} />
-          <Route path="menu" element={<ProtectedRoute><MenuAdminPage /></ProtectedRoute>} />
-          <Route path="order-management" element={<ProtectedRoute><OrderManagementPage /></ProtectedRoute>} />
-          <Route path="billing" element={<ProtectedRoute><BillingPage /></ProtectedRoute>} />
-          <Route path="notification-management" element={<ProtectedRoute><NotificationManagementPage /></ProtectedRoute>} />
+        <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
+          <Route index element={<Navigate to="dashboard" replace />} />
+          <Route path="dashboard" element={<DashboardPage />} />
+          <Route path="table-management" element={<TableManagement />} />
+          <Route path="menu" element={<MenuAdminPage />} />
+          <Route path="order-management" element={<OrderManagementPage />} />
+          <Route path="billing" element={<BillingPage />} />
+          <Route path="notification-management" element={<NotificationManagementPage />} />
         </Route>
         <Route path="/order/confirm" element={<ConfirmPage />} />
       </Routes>
