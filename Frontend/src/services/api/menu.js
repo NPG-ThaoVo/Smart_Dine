@@ -19,3 +19,7 @@ export const deleteMenuItem = async (id) => {
 export const getAllMenu = async (params) => {
   return api.get("/menu", { params });
 };
+
+export const getMenuById = async (id) => {
+  return api.get(`/menu/${id}`);
+}

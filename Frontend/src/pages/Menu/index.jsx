@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import HeaderMenu from "@/components/HeaderMenu";
 import FoodCard from "@/components/FoodCard";
 import OrderSidebar from "@/components/OrderSidebar";
@@ -7,6 +8,7 @@ import { ShoppingCart } from "lucide-react";
 import { getAllMenu } from "@/services/api/menu";
 
 function Menu() {
+  const navigate = useNavigate();
   const [menuData, setMenuData] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -18,7 +20,7 @@ function Menu() {
       try {
         setLoading(true);
         const res = await getAllMenu();
-        const items = res.data.message.items.map((item) => ({
+        const items = res.data.data.items.map((item) => ({
           id: item._id,
           name: item.name,
           price: item.price,
@@ -114,6 +116,7 @@ function Menu() {
                     quantity={getItemQuantity(item.id)}
                     onAdd={() => addToCart(item)}
                     onRemove={() => removeFromCart(item.id)}
+                    onClick={() => navigate(`/order/1/item/${item.id}`)}
                   />
                 ))}
               </div>
