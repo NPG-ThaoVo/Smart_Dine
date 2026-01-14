@@ -12,18 +12,20 @@ import OrderManagementPage from "./pages/OrderManagement";
 import DashboardPage from "./pages/DashboardPage";
 import BillingPage from "./pages/BillingPage";
 import NotificationManagementPage from "./pages/notificationManagement";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { AuthProvider } from "./contexts/authContext";
 function App() {
   return (
     <BrowserRouter>
       <Toaster position="top-right" reverseOrder={false} />
+      <AuthProvider>
       <Routes>
         <Route path="/" element={<Menu />} />
         <Route path="/admin/login" element={<AdminLoginPage />} />
-        <Route path="/order/1/item/item-1" element={<DetailsPage />} />
+        <Route path="/order/:tableId/item/:itemId" element={<DetailsPage />} />
         <Route path="/smartdine" element={<SmartDineLanding />} />
         
-
-        <Route path="/admin" element={<AdminLayout />}>
+        <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<DashboardPage />} />
           <Route path="table-management" element={<TableManagement />} />
@@ -34,6 +36,7 @@ function App() {
         </Route>
         <Route path="/order/confirm" element={<ConfirmPage />} />
       </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 }
