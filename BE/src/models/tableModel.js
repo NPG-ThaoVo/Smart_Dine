@@ -12,10 +12,11 @@ const tableSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    currentSessionId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Session",
-      default: null,
+    status: {
+      type: String,
+      enum: ["open", "close"],
+      default: "open",
+      required: true,
     },
     isAvailable: {
       type: Boolean,
@@ -27,7 +28,4 @@ const tableSchema = new mongoose.Schema(
   }
 );
 
-// tableSchema.virtual("status").get(function () {
-//   return this.currentSessionId ? "OCCUPIED" : "EMPTY";
-// });
 export default mongoose.model("Table", tableSchema);

@@ -25,6 +25,7 @@ function App() {
         <Route path="/order/:tableId/item/:itemId" element={<DetailsPage />} />
         <Route path="/smartdine" element={<SmartDineLanding />} />
         
+          
         <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<DashboardPage />} />

@@ -1,0 +1,32 @@
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTYyMmI5ZWEwNGNmYzRlY2RjYjNhYWIiLCJpYXQiOjE3NjgzMTEwNDMsImV4cCI6MTc2ODMxMTk0M30.0cnHg_l1J-yLCnAik-YVuTRCGbVm3v77o7OP63Xra6c
+###
+GET http://localhost:3001/api/orders/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTYyMmI5ZWEwNGNmYzRlY2RjYjNhYWIiLCJpYXQiOjE3NjgzMTEwNDMsImV4cCI6MTc2ODMxMTk0M30.0cnHg_l1J-yLCnAik-YVuTRCGbVm3v77o7OP63Xra6c
+
+###
+POST http://localhost:3001/api/orders/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTYyMmI5ZWEwNGNmYzRlY2RjYjNhYWIiLCJpYXQiOjE3NjgzMTEwNDMsImV4cCI6MTc2ODMxMTk0M30.0cnHg_l1J-yLCnAik-YVuTRCGbVm3v77o7OP63Xra6c
+
+{
+    "tableId": "695ea817fc00e87d2bc7a7b4",
+    "note": "Please deliver between 5-6 PM",
+    "status": "PENDING"
+}
+
+###
+//update order status
+PATCH http://localhost:3001/api/orders/696650512d1b35bc8024bed5/status
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTYyMmI5ZWEwNGNmYzRlY2RjYjNhYWIiLCJpYXQiOjE3NjgzMTEwNDMsImV4cCI6MTc2ODMxMTk0M30.0cnHg_l1J-yLCnAik-YVuTRCGbVm3v77o7OP63Xra6c
+
+{
+    "status": "CONFIRMED"
+}
+
+###
+//get order by id
+GET http://localhost:3001/api/orders/table/695ea817fc00e87d2bc7a7b4
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTYyMmI5ZWEwNGNmYzRlY2RjYjNhYWIiLCJpYXQiOjE3NjgzMTEwNDMsImV4cCI6MTc2ODMxMTk0M30.0cnHg_l1J-yLCnAik-YVuTRCGbVm3v77o7OP63Xra6c

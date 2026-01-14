@@ -3,7 +3,7 @@ import Bill from "../models/billsModel.js";
 // tạo bill
 export const createBill = async (billData) => {
   const bill = await Bill.create(billData);
-  return Bill.findById(bill._id).populate('sessionId');
+  return Bill.findById(bill._id).populate('tableId');
 };
 
 // lấy tất cả bills
@@ -13,13 +13,7 @@ export const getAllBills = async (page = 1, limit = 10, status = null) => {
 
   const [bills, total] = await Promise.all([
     Bill.find(filter)
-      .populate({
-        path: 'sessionId',
-        populate: {
-          path: 'tableId',
-          select: 'tableNumber'
-        }
-      })
+      .populate('tableId', 'name number')
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit),
@@ -39,13 +33,7 @@ export const getAllBills = async (page = 1, limit = 10, status = null) => {
 
 // lấy bill theo id
 export const getBillById = async (billId) => {
-  return Bill.findById(billId).populate({
-    path: 'sessionId',
-    populate: {
-      path: 'tableId',
-      select: 'tableNumber'
-    }
-  });
+  return Bill.findById(billId).populate('tableId', 'name number');
 };
 
 // lấy thống kê doanh thu

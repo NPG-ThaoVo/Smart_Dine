@@ -35,15 +35,18 @@ export function DialogCreateOrEditTable({
   }, [isEditing, editDataTable, open]);
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    const tableData = {
+      number,
+      name,
+    };
     if (isEditing) {
-      onSubmitEdit();
+      onSubmitEdit(editDataTable._id, tableData);
     } else {
-      onSubmit();
+      onSubmit(tableData);
     }
-
     onOpenChange(false);
   };
+
   return (
     <Dialog className=" sm:rounded-xl " open={open} onOpenChange={onOpenChange}>
       <DialogContent>
@@ -79,7 +82,10 @@ export function DialogCreateOrEditTable({
             <DialogClose asChild>
               <Button variant="outline">Huỷ</Button>
             </DialogClose>
-            <Button className="bg-[#e96523] hover:bg-[#e96523]/90 text-white" type="submit" > 
+            <Button
+              className="bg-[#e96523] hover:bg-[#e96523]/90 text-white"
+              type="submit"
+            >
               {isEditing ? "Cập Nhật Bàn" : "Thêm Bàn"}
             </Button>
           </DialogFooter>
