@@ -2,7 +2,7 @@ import { Button } from "../ui/button";
 import { Plus, Minus } from "lucide-react";
 import { Badge } from "../ui/badge";
 
-const FoodCard = ({ item, quantity, onAdd, onRemove, onClick }) => {
+const FoodCard = ({ item, quantity, onAdd, onRemove, onViewDetails }) => {
   const isSelected = quantity > 0;
 
   return (
@@ -14,7 +14,7 @@ const FoodCard = ({ item, quantity, onAdd, onRemove, onClick }) => {
           ? "border-primary shadow-lg shadow-primary/20"
           : "border-border hover:border-primary/50 hover:shadow-md"
         }`}
-      onClick={onClick}
+      onClick={onViewDetails}
     >
       <div className="relative aspect-square bg-muted overflow-hidden">
         <img

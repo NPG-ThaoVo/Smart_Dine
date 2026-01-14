@@ -116,7 +116,7 @@ function Menu() {
                     quantity={getItemQuantity(item.id)}
                     onAdd={() => addToCart(item)}
                     onRemove={() => removeFromCart(item.id)}
-                    onClick={() => navigate(`/order/1/item/${item.id}`)}
+                    onViewDetails={() => navigate(`/order/1/item/${item.id}`)}
                   />
                 ))}
               </div>
