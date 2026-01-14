@@ -24,15 +24,9 @@ function App() {
         <Route path="/admin/login" element={<AdminLoginPage />} />
         <Route path="/order/:tableId/item/:itemId" element={<DetailsPage />} />
         <Route path="/smartdine" element={<SmartDineLanding />} />
-<<<<<<< HEAD
-
-
-        <Route path="/admin" element={<AdminLayout />}>
-=======
         
           
         <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
->>>>>>> ccb5d2c73597a7e7b836e7a9ec7e83cbb27e7b7e
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<DashboardPage />} />
           <Route path="table-management" element={<TableManagement />} />

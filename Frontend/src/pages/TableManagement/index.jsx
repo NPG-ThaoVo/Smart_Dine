@@ -53,7 +53,7 @@ const TableManagement = () => {
   };
 
   const handleDeleteTable = async (event) => {
-    event.preventDefault();
+    if (event) event.preventDefault();
     try {
       setLoading(true);
       const res = await deleteTable(deleteTableData._id);
@@ -173,20 +173,13 @@ const TableManagement = () => {
           onSubmitEdit={handleUpdateTable}
         />
         <DialogQR open={openQR} onOpenChange={setOpenQR} table={qrTable} />
-        <DialogDeleteTable
-          open={openDelete}
-          onOpenChange={setOpenDelete}
-          handleDeleteTable={handleDeleteTable}
-        />
         <DialogDeleteConfirm
           open={openDelete}
           onOpenChange={setOpenDelete}
           title="Xoá Bàn"
           description="Bạn có chắc chắn muốn xóa bàn này? Hành động này không thể hoàn tác."
           confirmText="Xoá"
-          onConfirm={() => {
-            setOpenDelete(false);
-          }}
+          onConfirm={handleDeleteTable}
         />
       </div>
     </div>
