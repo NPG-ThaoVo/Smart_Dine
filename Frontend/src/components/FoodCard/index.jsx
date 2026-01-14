@@ -2,7 +2,7 @@ import { Button } from "../ui/button";
 import { Plus, Minus } from "lucide-react";
 import { Badge } from "../ui/badge";
 
-const FoodCard = ({ item, quantity, onAdd, onRemove }) => {
+const FoodCard = ({ item, quantity, onAdd, onRemove, onViewDetails }) => {
   const isSelected = quantity > 0;
 
   return (
@@ -10,11 +10,11 @@ const FoodCard = ({ item, quantity, onAdd, onRemove }) => {
       className={`group relative flex flex-col rounded-3xl overflow-hidden
       bg-card border-2 transition-all duration-300
       ${!item.available ? "opacity-60" : ""}
-      ${
-        isSelected
+      ${isSelected
           ? "border-primary shadow-lg shadow-primary/20"
           : "border-border hover:border-primary/50 hover:shadow-md"
-      }`}
+        } cursor-pointer`}
+      onClick={onViewDetails}
     >
       <div className="relative aspect-square bg-muted overflow-hidden">
         <img
@@ -52,14 +52,20 @@ const FoodCard = ({ item, quantity, onAdd, onRemove }) => {
                     size="icon"
                     variant="outline"
                     className="h-8 w-8 rounded-full"
-                    onClick={onRemove}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onRemove();
+                    }}
                   >
                     <Minus className="w-4 h-4" />
                   </Button>
                   <Button
                     size="icon"
                     className="h-8 w-8 rounded-full"
-                    onClick={onAdd}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onAdd();
+                    }}
                   >
                     <Plus className="w-4 h-4" />
                   </Button>
@@ -68,7 +74,10 @@ const FoodCard = ({ item, quantity, onAdd, onRemove }) => {
                 <Button
                   size="icon"
                   className="h-9 w-9 rounded-full"
-                  onClick={onAdd}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onAdd();
+                  }}
                 >
                   <Plus className="w-4 h-4" />
                 </Button>

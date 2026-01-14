@@ -159,5 +159,4 @@ const MenuAdminPage = () => {
     </>
   );
 };
-
 export default MenuAdminPage;

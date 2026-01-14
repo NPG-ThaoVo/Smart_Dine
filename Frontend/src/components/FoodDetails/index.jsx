@@ -1,9 +1,10 @@
 import React from "react";
 import { Button } from "../ui/button";
 import { ArrowLeft } from "lucide-react";
-import image from "../../assets/image.png";
 
-const FoodDetails = ({ quantity, onIncrease, onDecrease, totalPrice }) => {
+
+const FoodDetails = ({ item, quantity, onIncrease, onDecrease, totalPrice, onAddToCart, onBack }) => {
+  if (!item) return <div>Loading...</div>;
   return (
     <div className="min-h-screen gradient-bg pb-32">
       <header
@@ -23,6 +24,7 @@ const FoodDetails = ({ quantity, onIncrease, onDecrease, totalPrice }) => {
     focus-visible:ring-[#E9560C]
     cursor-pointer
   "
+            onClick={onBack}
           >
             <ArrowLeft className="w-5 h-5" />
           </Button>
@@ -31,21 +33,23 @@ const FoodDetails = ({ quantity, onIncrease, onDecrease, totalPrice }) => {
       </header>
       <div className="relative w-full aspect-square bg-muted">
         <img
-          src={image}
-          alt="Gỏi cuốn tôm thịt"
+          src={item.image}
+          alt={item.name}
           className="w-full h-full object-cover"
         />
         <div className="absolute top-4 left-4 right-4 flex items-start justify-between">
           <div className="flex flex-col gap-2">
-            <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-black/60 backdrop-blur-sm text-white border-none w-fit">
-              Khai vị
-            </div>
+            {item.categoryName && (
+              <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-black/60 backdrop-blur-sm text-white border-none w-fit">
+                {item.categoryName}
+              </div>
+            )}
           </div>
         </div>
         <div className="px-4 py-6 space-y-6">
           <div>
             <h2 className="text-3xl font-black text-foreground mb-2 leading-tight">
-              Gỏi cuốn tôm thịt
+              {item.name}
             </h2>
             <div className="flex items-baseline gap-2">
               <span
@@ -57,16 +61,14 @@ const FoodDetails = ({ quantity, onIncrease, onDecrease, totalPrice }) => {
       bg-clip-text
       text-transparent"
               >
-                45.000&nbsp;₫
+                {item.price?.toLocaleString()} ₫
               </span>
             </div>
           </div>
           <div className="space-y-3">
             <h3 className="text-lg font-bold text-foreground">Mô tả</h3>
             <p className="text-muted-foreground leading-relaxed">
-              Gỏi cuốn tôm thịt là một món ăn phổ biến ở Việt Nam, thường được
-              chế biến từ tôm, thịt, rau củ và nước mắm. Món ăn này thường được
-              ăn kèm với rau sống và rau củ khác.
+              {item.description || "Chưa có mô tả cho món ăn này."}
             </p>
           </div>
           <div className="p-4 bg-gradient-to-r from-amber-500/10 to-orange-500/10 rounded-2xl border-2 border-amber-500/20">
@@ -222,6 +224,7 @@ const FoodDetails = ({ quantity, onIncrease, onDecrease, totalPrice }) => {
               </p>
             </div>
             <Button
+              onClick={onAddToCart}
               className="flex-1 h-14 rounded-2xl px-8
     flex items-center justify-center gap-2
     text-white text-lg font-semibold

@@ -12,28 +12,31 @@ import OrderManagementPage from "./pages/OrderManagement";
 import DashboardPage from "./pages/DashboardPage";
 import BillingPage from "./pages/BillingPage";
 import NotificationManagementPage from "./pages/notificationManagement";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { AuthProvider } from "./contexts/authContext";
 function App() {
   return (
     <BrowserRouter>
       <Toaster position="top-right" reverseOrder={false} />
-      <Routes>
-        <Route path="/" element={<Menu />} />
-        <Route path="/admin/login" element={<AdminLoginPage />} />
-        <Route path="/order/1/item/item-1" element={<DetailsPage />} />
-        <Route path="/smartdine" element={<SmartDineLanding />} />
-        
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<Menu />} />
+          <Route path="/admin/login" element={<AdminLoginPage />} />
+          <Route path="/order/:tableId/item/:itemId" element={<DetailsPage />} />
+          <Route path="/smartdine" element={<SmartDineLanding />} />
 
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<Navigate to="dashboard" replace />} />
-          <Route path="dashboard" element={<DashboardPage />} />
-          <Route path="table-management" element={<TableManagement />} />
-          <Route path="menu" element={<MenuAdminPage />} />
-          <Route path="order-management" element={<OrderManagementPage />} />
-          <Route path="billing" element={<BillingPage />} />
-          <Route path="notification-management" element={<NotificationManagementPage />} />
-        </Route>
-        <Route path="/order/confirm" element={<ConfirmPage />} />
-      </Routes>
+          <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
+            <Route index element={<Navigate to="dashboard" replace />} />
+            <Route path="dashboard" element={<DashboardPage />} />
+            <Route path="table-management" element={<TableManagement />} />
+            <Route path="menu" element={<MenuAdminPage />} />
+            <Route path="order-management" element={<OrderManagementPage />} />
+            <Route path="billing" element={<BillingPage />} />
+            <Route path="notification-management" element={<NotificationManagementPage />} />
+          </Route>
+          <Route path="/order/confirm" element={<ConfirmPage />} />
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 }
