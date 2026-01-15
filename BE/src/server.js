@@ -10,6 +10,7 @@ import "./models/categoriesModel.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import billRoutes from "./routes/billRoutes.js";
+import notificationRoutes from "./routes/notificationRoutes.js";
 import "./models/categoriesModel.js";
 
 // Load environment variables
@@ -39,6 +40,7 @@ app.use("/api/orders", orderRoutes);
 
 app.use("/api/categories", categoryRoutes);
 app.use("/api/bills", billRoutes);
+app.use("/api/notifications", notificationRoutes);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
