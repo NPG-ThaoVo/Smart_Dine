@@ -18,7 +18,7 @@ function Menu() {
       try {
         setLoading(true);
         const res = await getAllMenu();
-        const items = res.data.message.items.map((item) => ({
+        const items = res.data.data.items.map((item) => ({
           id: item._id,
           name: item.name,
           price: item.price,
