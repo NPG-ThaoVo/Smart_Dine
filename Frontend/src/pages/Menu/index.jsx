@@ -12,28 +12,6 @@ function Menu() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  /* ================= SET DEFAULT TABLE FOR TESTING ================= */
-  useEffect(() => {
-    // Set default tableId for testing if not exists
-    if (!localStorage.getItem("tableId")) {
-      // TODO: Replace with actual tableId from your database or QR scan
-      // For now, get from URL params or set a test value
-      const urlParams = new URLSearchParams(window.location.search);
-      const tableIdFromUrl = urlParams.get("tableId");
-
-      if (tableIdFromUrl) {
-        localStorage.setItem("tableId", tableIdFromUrl);
-        console.log("TableId set from URL:", tableIdFromUrl);
-      } else {
-        console.warn(
-          "⚠️ No tableId found! Please scan QR or set tableId in URL: ?tableId=YOUR_TABLE_ID"
-        );
-      }
-    } else {
-      console.log("Current tableId:", localStorage.getItem("tableId"));
-    }
-  }, []);
-
   /* ================= FETCH MENU ================= */
   useEffect(() => {
     const fetchMenu = async () => {
@@ -44,21 +22,7 @@ function Menu() {
         // Debug: check response structure
         console.log("API Response:", res.data);
 
-        // Handle different response structures
-        let itemsData = [];
-        if (res.data?.data?.items) {
-          itemsData = res.data.data.items;
-        } else if (res.data?.message?.items) {
-          itemsData = res.data.message.items;
-        } else if (res.data?.items) {
-          itemsData = res.data.items;
-        } else if (Array.isArray(res.data?.data)) {
-          itemsData = res.data.data;
-        } else if (Array.isArray(res.data)) {
-          itemsData = res.data;
-        }
-
-        const items = itemsData.map((item) => ({
+        const items = res.data?.data?.items.map((item) => ({
           id: item._id,
           name: item.name,
           price: item.price,
