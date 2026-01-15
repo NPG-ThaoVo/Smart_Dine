@@ -20,6 +20,9 @@ import {
 } from "@/components/ui/sidebar";
 import { NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import AuthContext from "@/contexts/authContext";
+import { useContext } from "react";
+
 // Menu items.
 const menuItems = [
   {
@@ -56,6 +59,8 @@ const menuItems = [
 ];
 
 export function SidebarAdmin() {
+  const { userInfo, AdminLogout, loginAsAdmin } = useContext(AuthContext);
+
   return (
     <Sidebar>
       <SidebarContent className="bg-[#ffffff] backdrop-blur-0">
@@ -125,9 +130,11 @@ export function SidebarAdmin() {
             />
 
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold truncate">Admin Demo</p>
+              <p className="text-sm font-semibold truncate">
+                {userInfo?.name || "Guest"}
+              </p>
               <p className="text-[10px] text-muted-foreground truncate font-medium">
-                admin@smartdine.com
+                {userInfo?.email || "admin@smartdine.com"}
               </p>
             </div>
           </div>
@@ -136,6 +143,7 @@ export function SidebarAdmin() {
           <Button
             variant="ghost"
             className="w-full justify-start text-muted-foreground hover:text-destructive hover:bg-destructive/10 h-8 px-2"
+            onClick={AdminLogout}
           >
             <LogOut className="h-4 w-4 mr-2" />
             Đăng xuất

@@ -2,8 +2,12 @@ import React from "react";
 import { Spinner } from "../ui/spinner";
 import { Button } from "../ui/button";
 import { User } from "lucide-react";
+import AuthContext from "@/contexts/authContext";
+import { useContext } from "react";
 
 const AdminLogin = ({ loading, handleGoogleLoginWrapper }) => {
+  const { loginAsAdmin } = useContext(AuthContext);
+
   return (
     <div className="rounded-xl border border-border/30 bg-card/80 text-card-foreground backdrop-blur-xl shadow-md transition-all duration-300 hover:shadow-lg hover:border-border/50 w-full max-w-md">
       <div className="flex flex-col space-y-1.5 p-6 text-center">
@@ -63,6 +67,7 @@ const AdminLogin = ({ loading, handleGoogleLoginWrapper }) => {
     bg-[#E9560C] hover:bg-[#d94f0b]
     text-white
     focus-visible:ring-[#E9560C]cursor-pointer"
+          onClick={() => loginAsAdmin()}
         >
           <User className="w-5 h-5 mr-2" />
           Đăng nhập Demo

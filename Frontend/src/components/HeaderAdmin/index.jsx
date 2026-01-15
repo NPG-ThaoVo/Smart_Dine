@@ -1,8 +1,12 @@
 import React from "react";
 import { Button } from "../ui/button";
 import { PanelLeft } from "lucide-react";
+import AuthContext from "@/contexts/authContext";
+import { useContext } from "react";
 
 const HeaderAdmin = () => {
+  const { userInfo } = useContext(AuthContext);
+  
   return (
     <div>
       <header className="bg-[#f9f9f9] sticky top-0 z-10 px-3 md:px-6 py-3 md:py-4 shadow-sm border-border flex items-center justify-between">
@@ -17,7 +21,7 @@ const HeaderAdmin = () => {
             </Button>
             <div className="min-w-0">
               <h2 className="text-sm md:text-lg font-semibold text-foreground truncate">
-                Xin chào, Admin Demo 👋
+                Xin chào, {userInfo?.name || "Admin Demo"} 👋
               </h2>
               <p className="text-xs md:text-sm text-muted-foreground hidden sm:block">
                 Chúc bạn một ngày làm việc hiệu quả
