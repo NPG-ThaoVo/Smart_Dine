@@ -37,27 +37,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // tạo mock user data
-  const mockUserData = {
-    id: "12345",
-    name: "John Doe",
-    email: "johndoe@example.com",
-    role: "admin",
-  };
-
-  //thêm function mockuserdata vào authprovider
-  const loginAsAdmin = () => {
-    setUserInfo(mockUserData);
-    const userInformation = {
-      data: {
-        accessToken: "mockAccessToken",
-        user: mockUserData,
-      },
-    };
-    localStorage.setItem("userInformation", JSON.stringify(userInformation));
-    toast.success("Đăng nhập Admin thành công!");
-    navigate("/admin");
-  };
   //tạo function AdminLogout
   const AdminLogout = () => {
     setUserInfo(null);
@@ -67,9 +46,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider
-      value={{ userInfo, loginWithGoogle, AdminLogout, loginAsAdmin }}
-    >
+    <AuthContext.Provider value={{ userInfo, loginWithGoogle, AdminLogout }}>
       {children}
     </AuthContext.Provider>
   );

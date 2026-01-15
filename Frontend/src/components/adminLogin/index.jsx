@@ -2,12 +2,8 @@ import React from "react";
 import { Spinner } from "../ui/spinner";
 import { Button } from "../ui/button";
 import { User } from "lucide-react";
-import AuthContext from "@/contexts/authContext";
-import { useContext } from "react";
 
 const AdminLogin = ({ loading, handleGoogleLoginWrapper }) => {
-  const { loginAsAdmin } = useContext(AuthContext);
-
   return (
     <div className="rounded-xl border border-border/30 bg-card/80 text-card-foreground backdrop-blur-xl shadow-md transition-all duration-300 hover:shadow-lg hover:border-border/50 w-full max-w-md">
       <div className="flex flex-col space-y-1.5 p-6 text-center">
@@ -54,24 +50,8 @@ const AdminLogin = ({ loading, handleGoogleLoginWrapper }) => {
           )}
           <span>Đăng nhập với Google</span>
         </Button>
-        <div className="relative">
-          <div className="shrink-0 bg-border h-[1px] w-full"></div>
-          <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-card px-2 text-xs text-muted-foreground">
-            Hoặc
-          </span>
-        </div>
-        <Button
-          variant="default"
-          className="w-full h-12 px-4 text-lg
-    rounded-xl shadow-sm
-    bg-[#E9560C] hover:bg-[#d94f0b]
-    text-white
-    focus-visible:ring-[#E9560C]cursor-pointer"
-          onClick={() => loginAsAdmin()}
-        >
-          <User className="w-5 h-5 mr-2" />
-          Đăng nhập Demo
-        </Button>
+        <div className="relative"></div>
+
         <p className="font-medium text-center text-sm text-muted-foreground mt-1">
           Chỉ dành cho quản trị viên nhà hàng
         </p>

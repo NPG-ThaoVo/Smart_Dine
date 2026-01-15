@@ -59,7 +59,7 @@ const menuItems = [
 ];
 
 export function SidebarAdmin() {
-  const { userInfo, AdminLogout, loginAsAdmin } = useContext(AuthContext);
+  const { userInfo, AdminLogout } = useContext(AuthContext);
 
   return (
     <Sidebar>
