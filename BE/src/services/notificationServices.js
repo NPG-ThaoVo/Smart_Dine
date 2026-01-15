@@ -9,7 +9,7 @@ export const createNotification = async (payload) => {
 export const getAllNotifications = async () => {
   return await notificationModel.find()
     .populate('tableId', 'number')
-    .populate('orderId')
+    .populate('orderId', 'status orderItems note')
     .sort({ createdAt: -1 });
 };
 
@@ -19,7 +19,5 @@ export const markNotificationAsRead = async (id) => {
     id, 
     { status: 'READ' }, 
     { new: true }
-  )
-    .populate('tableId', 'number')
-    .populate('orderId');
+  );
 };
