@@ -1,6 +1,6 @@
 import { DialogCreateOrEditTable } from "@/components/DialogCreateOrEditTable";
-import { DialogDeleteConfirm } from "@/components/DialogDeleteTable";
 // import { DialogDeleteTable } from "@/components/DialogDeleteTable";
+import { DialogDeleteConfirm } from "@/components/DialogDeleteConfirm";
 import { DialogQR } from "@/components/DialogQR";
 import HeaderContentAdmin from "@/components/HeaderContentAdmin";
 import ManageTable from "@/components/ManageTable";
@@ -53,8 +53,7 @@ const TableManagement = () => {
     }
   };
 
-  const handleDeleteTable = async (event) => {
-    event.preventDefault();
+  const handleDeleteTable = async () => {
     try {
       setLoading(true);
       const res = await deleteTable(deleteTableData._id);
@@ -185,9 +184,7 @@ const TableManagement = () => {
           title="Xoá Bàn"
           description="Bạn có chắc chắn muốn xóa bàn này? Hành động này không thể hoàn tác."
           confirmText="Xoá"
-          onConfirm={() => {
-            setOpenDelete(false);
-          }}
+          onConfirm={handleDeleteTable}
         />
       </div>
     </div>

@@ -2,19 +2,19 @@ import { Button } from "../ui/button";
 import { Plus, Minus } from "lucide-react";
 import { Badge } from "../ui/badge";
 
-const FoodCard = ({ item, quantity, onAdd, onRemove }) => {
+const FoodCard = ({ item, quantity, onAdd, onRemove, onViewDetails }) => {
   const isSelected = quantity > 0;
 
   return (
     <div
       className={`group relative flex flex-col rounded-3xl overflow-hidden
-      bg-card border-2 transition-all duration-300
+      bg-card border-2 transition-all duration-300 cursor-pointer
       ${!item.available ? "opacity-60" : ""}
-      ${
-        isSelected
+      ${isSelected
           ? "border-primary shadow-lg shadow-primary/20"
           : "border-border hover:border-primary/50 hover:shadow-md"
-      }`}
+        }`}
+      onClick={onViewDetails}
     >
       <div className="relative aspect-square bg-muted overflow-hidden">
         <img
@@ -45,7 +45,7 @@ const FoodCard = ({ item, quantity, onAdd, onRemove }) => {
           </span>
 
           {item.available && (
-            <div className="flex gap-1.5">
+            <div className="flex gap-1.5" onClick={(e) => e.stopPropagation()}>
               {isSelected ? (
                 <>
                   <Button

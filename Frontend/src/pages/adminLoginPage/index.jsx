@@ -1,20 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AdminLogin from "../../components/AdminLogin";
-import testLoginGoogle from "../../components/GoogleLogin";
+import AuthContext  from "../../contexts/authContext";
 
 const AdminLoginPage = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { loginWithGoogle } = useContext(AuthContext);
 
   const handleGoogleLoginWrapper = async () => {
     try {
       setLoading(true);
-      const data = await testLoginGoogle();
+      const data = await loginWithGoogle();
       console.log("Login success:", data);
-      //save token to local storage
-      localStorage.setItem("userInformation", JSON.stringify(data));
-      navigate("/admin/table-management");
+      navigate("/admin/dashboard");
     } catch (error) {
       console.log("Google login flow failed", error);
     } finally {

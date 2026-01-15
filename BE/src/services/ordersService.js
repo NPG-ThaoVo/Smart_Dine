@@ -24,11 +24,30 @@ export const createOrder = async (data) => {
 };
 
 export const getAllOrders = async () => {
-    return await ordersModel.find();
+    return await ordersModel.find()
+        .populate({
+            path: 'orderItems',
+            populate: {
+                path: 'menuItemId',
+                select: 'name'
+            },
+            select: 'quantity menuItemId price'
+        })
+        .populate('tableId', 'number')
+        .sort({ createdAt: -1 });
 };
 
 export const getOrderById = async (id) => {
-    return await ordersModel.findById(id);
+    return await ordersModel.findById(id)
+        .populate({
+            path: 'orderItems',
+            populate: {
+                path: 'menuItemId',
+                select: 'name'
+            },
+            select: 'quantity menuItemId price'
+        })
+        .populate('tableId', 'number');
 };
 
 export const updateOrderStatus = async (id, status) => {

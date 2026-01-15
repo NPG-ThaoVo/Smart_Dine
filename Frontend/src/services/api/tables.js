@@ -24,4 +24,3 @@ export const deleteTable = async (tableId) => {
   const response = await api.delete(`/tables/${tableId}`);
   return response.data;
 };
-
