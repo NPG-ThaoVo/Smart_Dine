@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import MenuFood from "@/components/MenuFood";
 import DialogCreateMenu from "@/components/DialogCreateMenu";
-import { DialogDeleteConfirm } from "@/components/DialogDeleteTable";
+import { DialogDeleteConfirm } from "@/components/DialogDeleteConfirm";
 import {
   getMenuItems,
   createMenuItem,

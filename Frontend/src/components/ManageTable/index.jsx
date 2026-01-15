@@ -64,7 +64,7 @@ const ManageTable = ({
                 <div className="flex gap-1">
                   <Button
                     onClick={() => onViewQR(table)}
-                    className="bg-transparent text-gray-400 hover:bg-white/10 hover:text-white "
+                    className="bg-transparent text-gray-400 hover:bg-white/10 hover:text-primary "
                     title="QR Code"
                   >
                     <QrCode className="w-4 h-4" />

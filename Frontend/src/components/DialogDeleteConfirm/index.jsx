@@ -17,11 +17,6 @@ export function DialogDeleteConfirm({
   description = "Bạn có chắc chắn muốn xóa? Hành động này không thể hoàn tác.",
   confirmText = "Xóa",
 }) {
-  const handleConfirm = (e) => {
-    e.preventDefault();
-    if (onConfirm) onConfirm();
-  };
-
   return (
     <Dialog className=" sm:rounded-xl" open={open} onOpenChange={onOpenChange}>
       <DialogContent>
@@ -35,7 +30,7 @@ export function DialogDeleteConfirm({
           </DialogClose>
           <Button
             className="bg-red-600 hover:bg-red-700 text-white"
-            onClick={handleConfirm}
+            onClick={() => onConfirm()}
           >
             {confirmText}
           </Button>
