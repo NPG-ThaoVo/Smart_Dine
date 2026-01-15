@@ -10,6 +10,9 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Separator } from "../ui/separator";
 import { useState } from "react";
+import { createOrder } from "@/services/api/order";
+import { addOrderItems } from "@/services/api/orderItem";
+import { useNavigate } from "react-router-dom";
 
 export default function OrderSidebar({
   open,
@@ -22,6 +25,8 @@ export default function OrderSidebar({
   getTotalPrice,
 }) {
   const [notes, setNotes] = useState({});
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleNoteChange = (itemId, note) => {
     setNotes((prev) => ({ ...prev, [itemId]: note }));
@@ -47,6 +52,87 @@ export default function OrderSidebar({
   const totalPrice = getTotalPrice
     ? getTotalPrice()
     : cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  const handleSubmitOrder = async () => {
+    if (cartItems.length === 0) {
+      console.log("⚠️ Giỏ hàng trống!");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      // Get tableId from localStorage (from QR scan or manual selection)
+      const tableId = "695ea817fc00e87d2bc7a7b4";
+
+      console.log("🔍 TableId from localStorage:", tableId);
+
+      if (!tableId || tableId === "YOUR_ACTUAL_TABLE_ID") {
+        console.log(
+          "⚠️ TableId không hợp lệ! Cần scan QR hoặc chọn bàn trước."
+        );
+        alert("Vui lòng quét mã QR bàn hoặc chọn bàn trước khi đặt món!");
+        setLoading(false);
+        return;
+      }
+
+      // Step 1: Add order items to table (pending state)
+      const orderItemsData = {
+        tableId: tableId,
+        orderItems: cartItems.map((item) => ({
+          menuItemId: item.id,
+          quantity: item.quantity,
+          price: item.price,
+        })),
+      };
+
+      console.log("📤 Sending order items:", orderItemsData);
+      const orderItemsResponse = await addOrderItems(orderItemsData);
+      console.log("✅ Order items added:", orderItemsResponse);
+
+      // Step 2: Create order (backend will link pending items automatically)
+      const orderData = {
+        tableId: tableId,
+        note: "", // General order note if needed
+      };
+
+      const orderResponse = await createOrder(orderData);
+
+      if (orderResponse.data.success) {
+        console.log("✅ Đặt món thành công!");
+
+        // Save order info for ConfirmPage
+        localStorage.setItem(
+          "lastOrder",
+          JSON.stringify({
+            orderId: orderResponse.data.data._id,
+            items: cartItems,
+            notes: notes,
+            totalPrice: totalPrice,
+            totalItems: totalItems,
+          })
+        );
+
+        // Clear cart and notes
+        setCartItems([]);
+        setNotes({});
+        onOpenChange(false);
+
+        // Navigate to confirm page
+        navigate("/order/confirm");
+      }
+    } catch (error) {
+      console.error("❌ Error creating order:", error);
+      console.error(
+        "Error details:",
+        error.response?.data?.message || "Có lỗi xảy ra khi đặt món!"
+      );
+      alert(error.response?.data?.message || "Có lỗi xảy ra khi đặt món!");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
@@ -157,7 +243,13 @@ export default function OrderSidebar({
                 </span>
               </div>
             </div>
-            <Button className="w-full">Gửi order</Button>
+            <Button
+              className="w-full"
+              onClick={handleSubmitOrder}
+              disabled={loading}
+            >
+              {loading ? "Đang gửi..." : "Gửi order"}
+            </Button>
           </div>
         )}
 
