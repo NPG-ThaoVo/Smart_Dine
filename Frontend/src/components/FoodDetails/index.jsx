@@ -1,9 +1,11 @@
 import React from "react";
 import { Button } from "../ui/button";
 import { ArrowLeft } from "lucide-react";
-import image from "../../assets/image.png";
+import { useNavigate } from "react-router-dom";
 
-const FoodDetails = ({ quantity, onIncrease, onDecrease, totalPrice }) => {
+const FoodDetails = ({ item, quantity, onIncrease, onDecrease, totalPrice }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen gradient-bg pb-32">
       <header
@@ -16,6 +18,7 @@ const FoodDetails = ({ quantity, onIncrease, onDecrease, totalPrice }) => {
           <Button
             variant="ghost"
             size="icon"
+            onClick={() => navigate(-1)}
             className="
     rounded-full
     hover:bg-[#FFF4E5]
@@ -31,21 +34,23 @@ const FoodDetails = ({ quantity, onIncrease, onDecrease, totalPrice }) => {
       </header>
       <div className="relative w-full aspect-square bg-muted">
         <img
-          src={image}
-          alt="Gỏi cuốn tôm thịt"
+          src={item.image || "https://placehold.co/600x400?text=No+Image"}
+          alt={item.name}
           className="w-full h-full object-cover"
         />
         <div className="absolute top-4 left-4 right-4 flex items-start justify-between">
           <div className="flex flex-col gap-2">
-            <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-black/60 backdrop-blur-sm text-white border-none w-fit">
-              Khai vị
-            </div>
+            {item.categoryId && (
+              <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-black/60 backdrop-blur-sm text-white border-none w-fit">
+                {item.categoryId.name || "Danh mục"}
+              </div>
+            )}
           </div>
         </div>
         <div className="px-4 py-6 space-y-6">
           <div>
             <h2 className="text-3xl font-black text-foreground mb-2 leading-tight">
-              Gỏi cuốn tôm thịt
+              {item.name}
             </h2>
             <div className="flex items-baseline gap-2">
               <span
@@ -57,50 +62,52 @@ const FoodDetails = ({ quantity, onIncrease, onDecrease, totalPrice }) => {
       bg-clip-text
       text-transparent"
               >
-                45.000&nbsp;₫
+                {item.price?.toLocaleString()} ₫
               </span>
             </div>
           </div>
           <div className="space-y-3">
             <h3 className="text-lg font-bold text-foreground">Mô tả</h3>
             <p className="text-muted-foreground leading-relaxed">
-              Gỏi cuốn tôm thịt là một món ăn phổ biến ở Việt Nam, thường được
-              chế biến từ tôm, thịt, rau củ và nước mắm. Món ăn này thường được
-              ăn kèm với rau sống và rau củ khác.
+              {item.description || "Chưa có mô tả cho món ăn này."}
             </p>
           </div>
-          <div className="p-4 bg-gradient-to-r from-amber-500/10 to-orange-500/10 rounded-2xl border-2 border-amber-500/20">
-            <div className="flex items-start gap-3">
-              <div className="p-2 bg-amber-500/20 rounded-xl">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-sparkles w-5 h-5 text-amber-500"
-                >
-                  <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path>
-                  <path d="M20 3v4"></path>
-                  <path d="M22 5h-4"></path>
-                  <path d="M4 17v2"></path>
-                  <path d="M5 18H3"></path>
-                </svg>
-              </div>
-              <div className="flex-1">
-                <h4 className="font-bold text-amber-600 dark:text-amber-400 mb-1">
-                  Gợi ý từ đầu bếp
-                </h4>
-                <p className="text-sm text-amber-700 dark:text-amber-300">
-                  Thêm một ly nước dừa tươi để làm mát vị giác!
-                </p>
+
+          {item.upsellSuggestions && item.upsellSuggestions.length > 0 && (
+            <div className="p-4 bg-gradient-to-r from-amber-500/10 to-orange-500/10 rounded-2xl border-2 border-amber-500/20">
+              <div className="flex items-start gap-3">
+                <div className="p-2 bg-amber-500/20 rounded-xl">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-sparkles w-5 h-5 text-amber-500"
+                  >
+                    <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path>
+                    <path d="M20 3v4"></path>
+                    <path d="M22 5h-4"></path>
+                    <path d="M4 17v2"></path>
+                    <path d="M5 18H3"></path>
+                  </svg>
+                </div>
+                <div className="flex-1">
+                  <h4 className="font-bold text-amber-600 dark:text-amber-400 mb-1">
+                    Gợi ý từ đầu bếp
+                  </h4>
+                  <p className="text-sm text-amber-700 dark:text-amber-300">
+                    {item.upsellSuggestions[0]}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
+          )}
+
           <div className="space-y-3">
             <h3 className="text-lg font-bold text-foreground">Số lượng</h3>
             <div className="flex items-center gap-4">
