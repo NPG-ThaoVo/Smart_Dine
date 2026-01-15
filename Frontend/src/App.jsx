@@ -22,7 +22,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Menu />} />
         <Route path="/admin/login" element={<AdminLoginPage />} />
-        <Route path="/order/1/item/item-1" element={<DetailsPage />} />
+        <Route path="/order/:tableId/item/:itemId" element={<DetailsPage />} />
         <Route path="/smartdine" element={<SmartDineLanding />} />
         
           
