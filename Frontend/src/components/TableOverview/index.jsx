@@ -7,18 +7,8 @@ import {
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-const tables = [
-  { id: 1, status: "available" },
-  { id: 2, status: "occupied" },
-  { id: 3, status: "available" },
-  { id: 4, status: "available" },
-  { id: 5, status: "occupied" },
-  { id: 6, status: "available" },
-  { id: 7, status: "available" },
-  { id: 8, status: "available" },
-];
 
-export function TableOverview() {
+export function TableOverview({ tables = [] }) {
   return (
     <Card className="rounded-xl border border-border/30 bg-card/80 text-card-foreground backdrop-blur-xl transition-all duration-300 hover:shadow-lg hover:border-border/50 glass-card border-none shadow-2xl">
       <CardHeader className="space-y-1.5 p-6 flex flex-row items-center justify-between pb-6">

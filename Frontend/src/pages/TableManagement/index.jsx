@@ -1,5 +1,6 @@
 import { DialogCreateOrEditTable } from "@/components/DialogCreateOrEditTable";
 import { DialogDeleteConfirm } from "@/components/DialogDeleteTable";
+// import { DialogDeleteTable } from "@/components/DialogDeleteTable";
 import { DialogQR } from "@/components/DialogQR";
 import HeaderContentAdmin from "@/components/HeaderContentAdmin";
 import ManageTable from "@/components/ManageTable";
@@ -173,11 +174,11 @@ const TableManagement = () => {
           onSubmitEdit={handleUpdateTable}
         />
         <DialogQR open={openQR} onOpenChange={setOpenQR} table={qrTable} />
-        <DialogDeleteTable
+        {/* <DialogDeleteTable
           open={openDelete}
           onOpenChange={setOpenDelete}
           handleDeleteTable={handleDeleteTable}
-        />
+        /> */}
         <DialogDeleteConfirm
           open={openDelete}
           onOpenChange={setOpenDelete}

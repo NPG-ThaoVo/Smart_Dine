@@ -94,3 +94,13 @@ export const getBillStats = async () => {
     todayBills: today.todayBills
   };
 };
+export const payBill = async (billId) => {
+  return await Bill.findByIdAndUpdate(
+    billId,
+    {
+      status: "PAID",
+      paidAt: new Date(),
+    },
+    { new: true }
+  );
+};

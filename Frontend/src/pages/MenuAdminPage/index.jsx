@@ -34,7 +34,10 @@ const MenuAdminPage = () => {
   const [deletingItem, setDeletingItem] = useState(null);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
-  const [isGenerating, setIsGenerating] = useState({ description: false, upsell: false });
+  const [isGenerating, setIsGenerating] = useState({
+    description: false,
+    upsell: false,
+  });
   const [generatingItemId, setGeneratingItemId] = useState(null);
 
   const uploadImageToCloudinary = async (file) => {
@@ -68,14 +71,17 @@ const MenuAdminPage = () => {
     try {
       const [menuRes, catRes] = await Promise.all([
         getMenuItems(),
-        getAllCategories()
+        getAllCategories(),
       ]);
       if (menuRes.data?.data?.items) {
         setMenuItems(menuRes.data.data.items);
       }
       let fetchedCategories = [];
       if (catRes.data?.data) {
-        if (catRes.data.data.categories && Array.isArray(catRes.data.data.categories)) {
+        if (
+          catRes.data.data.categories &&
+          Array.isArray(catRes.data.data.categories)
+        ) {
           fetchedCategories = catRes.data.data.categories;
         } else if (Array.isArray(catRes.data.data)) {
           fetchedCategories = catRes.data.data;
@@ -122,7 +128,9 @@ const MenuAdminPage = () => {
       toast.error(`Upload ảnh thất bại: ${error.message}`);
       return;
     }
-    const selectedCategory = categories.find(c => c.name === formData.category);
+    const selectedCategory = categories.find(
+      (c) => c.name === formData.category
+    );
     const payload = {
       name: formData.name,
       price: Number(formData.price),
@@ -199,8 +207,9 @@ const MenuAdminPage = () => {
 
   const handleEditClick = (item) => {
     setEditingId(item._id);
-    const category = categories.find(c => c._id === item.categoryId) ||
-      categories.find(c => c._id === item.categoryId?._id);
+    const category =
+      categories.find((c) => c._id === item.categoryId) ||
+      categories.find((c) => c._id === item.categoryId?._id);
     const categoryName = category ? category.name : "";
     setFormData({
       name: item.name,
@@ -224,22 +233,29 @@ const MenuAdminPage = () => {
       item.description.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const categoryNames = categories.map(c => c.name);
+  const categoryNames = categories.map((c) => c.name);
 
   const filteredItems = itemsMatchingSearch.filter((item) => {
     if (activeCategory === "Chưa phân loại") {
       return !item.categoryId;
     }
-    const cat = categories.find(c => c.name === activeCategory);
-    return cat && (item.categoryId === cat._id || item.categoryId?._id === cat._id);
+    const cat = categories.find((c) => c.name === activeCategory);
+    return (
+      cat && (item.categoryId === cat._id || item.categoryId?._id === cat._id)
+    );
   });
 
   const getCount = (catName) => {
     if (catName === "Chưa phân loại") {
-      return itemsMatchingSearch.filter(i => !i.categoryId).length;
+      return itemsMatchingSearch.filter((i) => !i.categoryId).length;
     }
-    const cat = categories.find(c => c.name === catName);
-    return cat ? itemsMatchingSearch.filter(item => item.categoryId === cat._id || item.categoryId?._id === cat._id).length : 0;
+    const cat = categories.find((c) => c.name === catName);
+    return cat
+      ? itemsMatchingSearch.filter(
+          (item) =>
+            item.categoryId === cat._id || item.categoryId?._id === cat._id
+        ).length
+      : 0;
   };
 
   const handleSuggestDescription = async () => {
@@ -293,7 +309,9 @@ const MenuAdminPage = () => {
       const res = await updateMenuItem(item._id, payload);
       const newItem = res?.data?.data;
       if (newItem) {
-        setMenuItems((prev) => prev.map((i) => (i._id === item._id ? newItem : i)));
+        setMenuItems((prev) =>
+          prev.map((i) => (i._id === item._id ? newItem : i))
+        );
         toast.success("Đã cập nhật mô tả mới!");
       } else {
         await fetchMenuItems();
@@ -306,7 +324,9 @@ const MenuAdminPage = () => {
     }
   };
 
-  const uncategorizedItems = itemsMatchingSearch.filter(item => !item.categoryId);
+  const uncategorizedItems = itemsMatchingSearch.filter(
+    (item) => !item.categoryId
+  );
 
   return (
     <>
@@ -337,10 +357,10 @@ const MenuAdminPage = () => {
         handleUploadFile={setFile}
         formData={formData}
         onFormChange={handleFormChange}
-        categories={categories.map(c => c.name)}
+        categories={categories.map((c) => c.name)}
         isEditing={!!editingId}
         onImageRemove={() => {
-          setFormData(prev => ({ ...prev, image: "" }));
+          setFormData((prev) => ({ ...prev, image: "" }));
           setFile(null);
         }}
         isCategoryOpen={isCategoryOpen}

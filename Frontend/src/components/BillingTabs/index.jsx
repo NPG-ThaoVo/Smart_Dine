@@ -1,78 +1,74 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { OrderCard } from "@/components/OrderCard";
 
-export function BillingTabs() {
+export function BillingTabs({ bills = [], loading, handlePay }) {
   const [searchQuery, setSearchQuery] = useState("");
+  const mappedBills = useMemo(() => {
+    return bills.map((bill) => ({
+      id: bill._id,
+      table: bill.tableId?.number,
+      time: new Date(bill.createdAt).toLocaleTimeString("vi-VN", {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+      status: bill.status === "UNPAID" ? "Đang phục vụ" : "Đã thanh toán",
+      total: bill.totalAmount.toLocaleString("vi-VN") + " ₫",
+      rawStatus: bill.status,
+    }));
+  }, [bills]);
 
-  // Mock data - replace with actual data
-  const activeOrders = [
-    {
-      id: 1,
-      table: 2,
-      time: "19:33",
-      status: "Đang phục vụ",
-      orders: 1,
-      dishes: 3,
-      total: "165.000 ₫",
-    },
-    {
-      id: 2,
-      table: 5,
-      time: "19:13",
-      status: "Đang phục vụ",
-      orders: 2,
-      dishes: 6,
-      total: "250.000 ₫",
-    },
-  ];
+  const activeOrders = mappedBills.filter((b) => b.rawStatus === "UNPAID");
 
-  const historyOrders = [];
+  const historyOrders = mappedBills.filter((b) => b.rawStatus === "PAID");
+
+  const filterBySearch = (list) =>
+    list.filter((b) => String(b.table).includes(searchQuery.trim()));
 
   return (
     <Tabs defaultValue="active" className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <TabsList className="inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground glass-card">
-          <TabsTrigger
-            value="active"
-            className="data-[state=active]:bg-primary/20 data-[state=active]:text-primary"
-          >
+      <div className="flex justify-between gap-4">
+        <TabsList className="glass-card">
+          <TabsTrigger value="active">
             Đang phục vụ ({activeOrders.length})
           </TabsTrigger>
-          <TabsTrigger
-            value="history"
-            className="data-[state=active]:bg-primary/20 data-[state=active]:text-primary"
-          >
+          <TabsTrigger value="history">
             Lịch sử ({historyOrders.length})
           </TabsTrigger>
         </TabsList>
 
-        <div className="flex items-center gap-3">
-          <div className="relative">
-            <Search className="absolute z-10 left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <Input
-              placeholder="Tìm kiếm..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="glass-card pl-9 w-full md:w-[200px]"
-            />
-          </div>
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" />
+          <Input
+            placeholder="Tìm bàn..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-9 w-[200px]"
+          />
         </div>
       </div>
 
-      <TabsContent value="active" className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {activeOrders.map((order) => (
-            <OrderCard key={order.id} order={order} />
+      <TabsContent value="active">
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+          {filterBySearch(activeOrders).map((o) => (
+            <OrderCard key={o.id} order={o} handlePay={handlePay} />
           ))}
+          {!loading && activeOrders.length === 0 && (
+            <p className="text-muted-foreground">Không có bàn đang phục vụ</p>
+          )}
         </div>
       </TabsContent>
 
-      <TabsContent value="history" className="space-y-4">
-        <div className="text-center text-muted-foreground py-8">
-          Chưa có lịch sử hóa đơn
+      <TabsContent value="history">
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+          {filterBySearch(historyOrders).map((o) => (
+            <OrderCard key={o.id} order={o} />
+          ))}
+          {!loading && historyOrders.length === 0 && (
+            <p className="text-muted-foreground">Chưa có lịch sử</p>
+          )}
         </div>
       </TabsContent>
     </Tabs>

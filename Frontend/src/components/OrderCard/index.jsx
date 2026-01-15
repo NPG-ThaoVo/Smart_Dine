@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Eye, Check } from "lucide-react";
 
-export function OrderCard({ order }) {
+export function OrderCard({ order, handlePay }) {
   return (
     <div className="group relative flex flex-col justify-between rounded-3xl transition-all duration-300 overflow-hidden border h-[280px] bg-emerald-500/5 hover:bg-emerald-500/10 border-emerald-500/20 hover:border-emerald-500/40">
       {/* Gradient overlay on hover */}
@@ -11,10 +11,16 @@ export function OrderCard({ order }) {
       <div className="p-6 relative z-10">
         {/* Status badge and indicator */}
         <div className="flex justify-between items-start mb-4">
-          <div className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border bg-emerald-500/10 text-emerald-500 border-emerald-500/20">
-            Đang mở
+          <div
+            className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border
+    ${
+      order.status === "Đang phục vụ"
+        ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/20"
+        : "bg-gray-500/10 text-gray-400 border-gray-500/20"
+    }`}
+          >
+            {order.status}
           </div>
-          <div className="w-3 h-3 rounded-full ring-4 ring-black/40 bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.6)] animate-pulse" />
         </div>
 
         {/* Table number */}
@@ -53,10 +59,15 @@ export function OrderCard({ order }) {
             <Eye className="w-4 h-4 mr-1" />
             Xem
           </Button>
-          <Button className="flex-1 bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white border border-white/10 shadow-lg shadow-emerald-500/20">
-            <Check className="w-4 h-4 mr-1" />
-            Thanh toán
-          </Button>
+          {order.status === "Đang phục vụ" && (
+            <Button
+              onClick={() => handlePay(order.id)}
+              className="flex-1 bg-gradient-to-r from-emerald-500 to-green-600"
+            >
+              <Check className="w-4 h-4 mr-1" />
+              Thanh toán
+            </Button>
+          )}
         </div>
       </div>
     </div>
