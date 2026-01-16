@@ -5,7 +5,7 @@ let io;
 export const initSocket = (server) => {
     io = new Server(server, {
         cors: {
-            origin: "*", // Cho phép mọi frontend kết nối (hoặc điền cụ thể "http://localhost:5173")
+            origin: process.env.FRONTEND_URL || "http://localhost:3000",
             methods: ["GET", "POST"]
         }
     });
