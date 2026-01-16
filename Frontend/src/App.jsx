@@ -14,7 +14,36 @@ import BillingPage from "./pages/BillingPage";
 import NotificationManagementPage from "./pages/notificationManagement";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./contexts/authContext";
+import React, { useEffect, useState } from 'react';
+import { io } from 'socket.io-client';
+
 function App() {
+  useEffect(() => {
+    // Kết nối đến Server Backend (PHẢI nằm TRONG useEffect)
+    const socket = io("http://localhost:3001");
+
+    socket.on("connect", () => {
+      console.log("✅ Socket connected:", socket.id);
+    });
+
+    // Lắng nghe sự kiện "NEW_USER_LOGIN" từ Backend
+    socket.on("NEW_USER_LOGIN", (data) => {
+      console.log("📩 Nhận được thông báo đăng nhập:", data);
+      
+      // Hiển thị Alert
+      alert(`🔔 Thông báo: ${data.message}`);
+    });
+
+    // Dọn dẹp khi component unmount
+    return () => {
+      socket.off("connect");
+      socket.off("NEW_USER_LOGIN");
+      socket.off("disconnect");
+      socket.disconnect();
+      console.log("🔌 Socket connection closed");
+    };
+  }, []);
+
   return (
     <BrowserRouter>
       <Toaster position="top-right" reverseOrder={false} />
