@@ -73,14 +73,12 @@ export const googleLoginController = async (req, res) => {
     // Gửi sự kiện socket thông báo user đăng nhập
     try {
       const io = getIO();
+      // Consider using rooms to send this notification only to admins
+      // For now, avoid sending sensitive user data in a global broadcast
       io.emit('NEW_USER_LOGIN', {
         message: isNewUser ? `User mới đăng ký: ${user.name}` : `User đăng nhập: ${user.name}`,
-        user: { 
-          id: user._id, 
-          name: user.name, 
-          email: user.email,
-          isNewUser: isNewUser
-        }
+        userName: user.name,
+        isNewUser: isNewUser
       });
       console.log(`✅ Socket sent - ${isNewUser ? 'New user registered' : 'User logged in'}:`, user.email);
     } catch (socketError) {

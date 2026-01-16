@@ -19,8 +19,8 @@ import { io } from 'socket.io-client';
 
 function App() {
   useEffect(() => {
-    // Kết nối đến Server Backend (PHẢI nằm TRONG useEffect)
-    const socket = io("http://localhost:3001");
+    // Use environment variable for the backend URL
+    const socket = io(import.meta.env.VITE_API_URL || "http://localhost:3001");
 
     socket.on("connect", () => {
       console.log("✅ Socket connected:", socket.id);
@@ -29,7 +29,7 @@ function App() {
     // Lắng nghe sự kiện "NEW_USER_LOGIN" từ Backend
     socket.on("NEW_USER_LOGIN", (data) => {
       console.log("📩 Nhận được thông báo đăng nhập:", data);
-      
+    
       // Hiển thị Alert
       alert(`🔔 Thông báo: ${data.message}`);
     });
@@ -38,7 +38,6 @@ function App() {
     return () => {
       socket.off("connect");
       socket.off("NEW_USER_LOGIN");
-      socket.off("disconnect");
       socket.disconnect();
       console.log("🔌 Socket connection closed");
     };
