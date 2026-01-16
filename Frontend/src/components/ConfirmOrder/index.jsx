@@ -1,13 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import {
-  CheckCircle2,
-  Clock,
-  ChefHat,
-  ArrowLeft,
-} from "lucide-react";
+import { CheckCircle2, Clock, ChefHat, ArrowLeft } from "lucide-react";
 
 const ConfirmOrder = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/10 relative overflow-hidden">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -55,9 +53,7 @@ const ConfirmOrder = () => {
 
               <div className="flex justify-between font-medium mt-4 pt-4 border-t border-border">
                 <span>Tổng cộng</span>
-                <span className="text-[#E9560C] font-semibold">
-                  45.000 ₫
-                </span>
+                <span className="text-[#E9560C] font-semibold">45.000 ₫</span>
               </div>
             </div>
           </div>
@@ -90,14 +86,13 @@ const ConfirmOrder = () => {
         </div>
 
         <div className="space-y-3">
-          <Button
-            className="w-full h-14 rounded-2xl bg-[#F15A0A] hover:bg-[#E24F00] text-white text-lg font-semibold cursor-pointer"
-          >
+          <Button className="w-full h-14 rounded-2xl bg-[#F15A0A] hover:bg-[#E24F00] text-white text-lg font-semibold cursor-pointer">
             Theo dõi đơn hàng
           </Button>
 
           <Button
             variant="outline"
+            onClick={() => navigate("/")}
             className="w-full h-14 rounded-2xl bg-[#F9FAFB] border border-gray-200 text-gray-900 text-lg font-semibold hover:bg-gray-100 cursor-pointer"
           >
             <ArrowLeft className="w-5 h-5 mr-2" />
