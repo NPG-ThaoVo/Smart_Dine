@@ -32,7 +32,7 @@ function App() {
             path="/order/:tableId/item/:itemId"
             element={<DetailsPage />}
           />
-          <Route path="/tracking" element={<TrackingPage />} />
+          <Route path="/order/:tableId/tracking" element={<TrackingPage />} />
           <Route path="/smartdine" element={<SmartDineLanding />} />
           <Route path="/user/billing" element={<UserBillingPage />} />
 

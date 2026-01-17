@@ -75,7 +75,7 @@ const NotificationManagementPage = () => {
       console.log('✅ Đã kết nối Socket.IO:', socket.id);
     });
 
-    socket.on('NEW_ORDER','FOOD_READY', (notification) => {
+    socket.on('newNotification', (notification) => {
       
       console.log('📢 Nhận thông báo mới:', notification);
       
@@ -90,6 +90,10 @@ const NotificationManagementPage = () => {
         });
       } else if (notification.type === 'FOOD_READY') {
         toast.success(`🍽️ ${notification.title}`, {
+          duration: 5000,
+        });
+      } else if (notification.type === 'SERVICE_REQUEST') {
+        toast.success(`🚶‍♂️ ${notification.title}`, {
           duration: 5000,
         });
       }

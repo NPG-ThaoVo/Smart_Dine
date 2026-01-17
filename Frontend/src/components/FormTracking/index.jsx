@@ -1,6 +1,6 @@
 import React from "react";
 
-const FormTracking = () => {
+const FormTracking = ({ estimatedTime, items, handleCallStaff }) => {
   return (
     <>
       <div class="rounded-xl border border-border/30 bg-card/80 text-card-foreground backdrop-blur-xl shadow-md transition-all duration-300 hover:shadow-lg hover:border-border/50 glass-card overflow-hidden !pb-0">
@@ -65,7 +65,10 @@ const FormTracking = () => {
           </div>
         </div>
       </div>
-      <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 w-full py-6 text-lg glass-button">
+      <button 
+        onClick={handleCallStaff}
+        className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 w-full py-6 text-lg glass-button"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"

@@ -2,7 +2,12 @@ import notificationModel from '../models/notificationsModel.js';
 
 // Tạo thông báo mới
 export const createNotification = async (payload) => {
-  return await notificationModel.create(payload);
+  const notification = await notificationModel.create(payload);
+  
+  // Populate ngay sau khi tạo
+  return await notificationModel.findById(notification._id)
+    .populate('tableId', 'number')
+    .populate('orderId', 'status orderItems note');
 };
 
 // Lấy tất cả thông báo (sắp xếp theo mới nhất)

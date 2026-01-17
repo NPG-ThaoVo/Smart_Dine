@@ -3,7 +3,7 @@ import * as notificationController from '../controllers/notificationController.j
 import { protect } from '../middleware/authMiddleware.js';
 const router = express.Router();
 
-router.post('/', protect, notificationController.createNotification);
+router.post('/', notificationController.createNotification); // Bỏ protect để cho phép tạo thông báo từ client
 router.get('/', protect, notificationController.getAllNotifications);
 router.patch('/:id/read', protect, notificationController.markAsRead);
 

@@ -1,10 +1,21 @@
 import * as notificationService from '../services/notificationServices.js';
 import { successResponse, errorResponse } from '../utils/response.js';
+import { getIO } from '../socket/socket.js';
 
 // Tạo thông báo mới
 export const createNotification = async (req, res) => {
   try {
+    // createNotification đã trả về notification đã populate
     const notification = await notificationService.createNotification(req.body);
+    
+    // Broadcast thông báo qua Socket.IO
+    try {
+      const io = getIO();
+      io.emit('newNotification', notification);
+    } catch (socketError) {
+      console.error('Lỗi khi broadcast notification:', socketError);
+    }
+    
     return successResponse(res, 'Tạo thông báo thành công', notification);
   } catch (error) {
     console.error('Lỗi khi tạo thông báo:', error);

@@ -39,7 +39,7 @@ export const createOrder = async (data) => {
         // Broadcast thông báo qua Socket.IO
         try {
             const io = getIO();
-            io.emit('NEW_ORDER', notification);
+            io.emit('newNotification', notification);
         } catch (socketError) {
             console.error('Lỗi khi broadcast notification:', socketError);
         }
@@ -100,7 +100,7 @@ export const updateOrderStatus = async (id, status) => {
             // Broadcast thông báo qua Socket.IO
             try {
                 const io = getIO();
-                io.emit('FOOD_READY', notification);
+                io.emit('newNotification', notification);
             } catch (socketError) {
                 console.error('Lỗi khi broadcast notification:', socketError);
             }
