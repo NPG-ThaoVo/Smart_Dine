@@ -54,7 +54,7 @@ const [orderDetail, setOrderDetail] = useState(null);
   };
   //
   return (
-    <OrderManagement orders={getAllOrder} getOrderDetail={getOrderDetail} updateOrderStatus={updateOrderStatusHandler} />
+    <OrderManagement orders={getAllOrder} getOrderDetail={getOrderDetail} updateOrderStatus={updateOrderStatusHandler} loading={loading} />
   )
 }
 

@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, Plus, Edit2, Trash2, Sparkles, Loader2, AlertCircle } from "lucide-react";
+import { Spinner } from "@/components/ui/spinner";
 
 const MenuFood = ({
   items,
@@ -20,6 +21,7 @@ const MenuFood = ({
   onQuickSuggest,
   generatingItemId,
   uncategorizedItems,
+  loading = false,
 }) => {
   const renderItemCard = (item) => (
     <div
@@ -122,6 +124,11 @@ const MenuFood = ({
 
   return (
     <div className="flex-1 pb-3 md:pb-6">
+      {loading ? (
+        <div className="flex items-center justify-center py-20">
+          <Spinner className="w-8 h-8" />
+        </div>
+      ) : (
       <div className="space-y-4">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
@@ -212,6 +219,7 @@ const MenuFood = ({
           </div>
         )}
       </div>
+      )}
     </div>
   );
 };

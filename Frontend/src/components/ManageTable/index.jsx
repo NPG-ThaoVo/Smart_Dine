@@ -1,15 +1,21 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { QrCode, PenLine, Trash2, ArrowRight } from "lucide-react";
-
+import { Spinner } from "@/components/ui/spinner";
 const ManageTable = ({
   onEdit,
   onDelete,
   tables,
   onViewQR,
+  loading = false,
 }) => {
   return (
     <div>
+      {loading ? (
+        <div className="flex items-center justify-center py-20">
+          <Spinner className="w-8 h-8 text-orange-500" />
+        </div>
+      ) : (
       <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
         {tables.map((table) => (
           <div
@@ -97,6 +103,7 @@ const ManageTable = ({
           </div>
         ))}
       </div>
+      )}
     </div>
   );
 };

@@ -148,6 +148,7 @@ const TableManagement = () => {
         />
         <ManageTable
           tables={filteredTables}
+          loading={loading}
           setOpenQRChange={setOpenQR}
           onViewQR={(table) => {
             setQrTable(table);

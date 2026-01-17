@@ -8,11 +8,13 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Clock, ChefHat, X, CheckCircle2 } from "lucide-react";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function OrderManagement({
   orders,
   getOrderDetail,
   updateOrderStatus,
+  loading = false,
 }) {
   // Đảm bảo orders là array
   const orderList = Array.isArray(orders) ? orders : [];
@@ -52,6 +54,11 @@ export default function OrderManagement({
   return (
     <main>
       <h1 className="text-2xl font-bold mb-4">Quản lý đơn hàng</h1>
+      {loading ? (
+        <div className="flex items-center justify-center py-20">
+          <Spinner className="w-8 h-8" />
+        </div>
+      ) : (
       <Tabs
         defaultValue="pending"
         className="overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0"
@@ -285,6 +292,7 @@ export default function OrderManagement({
           )}
         </TabsContent>
       </Tabs>
+      )}
     </main>
   );
 }
