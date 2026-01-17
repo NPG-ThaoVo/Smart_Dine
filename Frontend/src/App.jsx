@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import AdminLoginPage from "./pages/AdminLoginPage";
+import AdminLoginPage from "./pages/adminLoginPage";
 import DetailsPage from "./pages/DetailsPage";
 import Menu from "./pages/Menu";
 import SmartDineLanding from "./pages/Smartdine-Landing-Page";
