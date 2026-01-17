@@ -1,61 +1,127 @@
 import { OverviewStats } from "@/components/OverviewStats";
 import { TableOverview } from "@/components/TableOverview";
 import { RecentOrders } from "@/components/RecentOrders";
-import { useState } from "react";
-import { useEffect } from "react";
 import { getAllTables } from "@/services/api/tables";
-import { getAllMenu } from "@/services/api/menu";
+import { getMenuItems } from "@/services/api/menu";
+import { getAllOrders } from "@/services/api/order";
+import { useEffect, useState } from "react";
+
 export default function DashboardPage() {
+  const [stats, setStats] = useState({
+    activeTables: 0,
+    totalTables: 0,
+    availableItems: 0,
+    totalItems: 0,
+    pendingOrders: 0,
+    revenue: 0,
+  });
   const [tables, setTables] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [menuItems, setMenuItems] = useState([]);
-
-  const getAllTable = async () => {
-    try {
-      setLoading(true);
-      const res = await getAllTables();
-      setTables(res.data || []);
-    } catch (error) {
-      toast.error(
-        error.response?.data?.message || "Không thể tải danh sách bàn"
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-  const fetchMenuStats = async () => {
-    try {
-      const res = await getAllMenu();
-
-      const items = res.data?.data?.items || [];
-
-      setMenuItems(items);
-    } catch (error) {
-      toast.error("Không thể tải thống kê menu");
-    }
-  };
-
-  const tableOverviewData = tables.map((table) => ({
-    id: table.number,
-    status: table.isAvailable ? "available" : "occupied",
-  }));
+  const [recentOrders, setRecentOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getAllTable();
-    fetchMenuStats();
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const [tablesData, menuData, ordersData] = await Promise.all([
+          getAllTables(),
+          getMenuItems(),
+          getAllOrders(),
+        ]);
+
+        const tablesList = Array.isArray(tablesData)
+          ? tablesData
+          : (Array.isArray(tablesData?.data) ? tablesData.data : []);
+
+        const totalTables = tablesList.length;
+        const activeTables = tablesList.filter((t) => !t.isAvailable).length;
+        setTables(tablesList);
+        const menuItems = Array.isArray(menuData?.data?.data)
+          ? menuData.data.data
+          : (Array.isArray(menuData?.data) ? menuData.data : []);
+
+        const totalItems = menuItems.length;
+        const availableItems = menuItems.filter((i) => i.isAvailable).length;
+
+        const orders = Array.isArray(ordersData?.data?.data)
+          ? ordersData.data.data
+          : (Array.isArray(ordersData?.data) ? ordersData.data : []);
+
+        const pendingOrders = orders.filter((o) => o.status === "PENDING").length;
+
+        const revenue = orders
+          .filter((o) => o.status === "COMPLETED")
+          .reduce((total, order) => {
+            const orderTotal =
+              order.orderItems?.reduce(
+                (sum, item) => sum + (item.price || 0) * (item.quantity || 0),
+                0
+              ) || 0;
+            return total + orderTotal;
+          }, 0);
+
+        const sortedOrders = [...orders]
+          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+          .slice(0, 10)
+          .map((order) => {
+            const itemsCount = order.orderItems ? order.orderItems.length : 0;
+            let statusText = order.status;
+            let statusColor = "primary";
+
+            if (order.status === "PENDING") {
+              statusText = "Chờ xác nhận";
+              statusColor = "amber";
+            } else if (order.status === "CONFIRMED") {
+              statusText = "Đang nấu";
+              statusColor = "primary";
+            } else if (order.status === "COMPLETED") {
+              statusText = "Đã ra món";
+              statusColor = "success";
+            }
+
+            return {
+              id: order._id,
+              table: order.tableId?.number || "?",
+              status: statusText,
+              items: itemsCount,
+              time: new Date(order.createdAt).toLocaleTimeString("vi-VN", {
+                hour: "2-digit",
+                minute: "2-digit",
+              }),
+              statusColor: statusColor,
+            };
+          });
+        setRecentOrders(sortedOrders);
+
+        setStats({
+          activeTables,
+          totalTables,
+          availableItems,
+          totalItems,
+          pendingOrders,
+          revenue,
+        });
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
     <main className="flex-1 p-3 md:p-6 overflow-auto">
       <div className="space-y-6">
-        <OverviewStats tables={tables} menuItems={menuItems} />
+        <OverviewStats stats={stats} loading={loading} />
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           <div className="lg:col-span-7">
-            <TableOverview tables={tableOverviewData} />
+            <TableOverview tables={tables} loading={loading} />
           </div>
           <div className="lg:col-span-5">
-            <RecentOrders />
+            <RecentOrders orders={recentOrders} loading={loading} />
           </div>
         </div>
       </div>

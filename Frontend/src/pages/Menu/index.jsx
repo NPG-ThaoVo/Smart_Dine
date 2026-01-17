@@ -95,10 +95,21 @@ function Menu() {
   const getTotalPrice = () =>
     cartItems.reduce((sum, i) => sum + i.price * i.quantity, 0);
 
+  /* ================= CHECK IF ORDER EXISTS ================= */
+  const [hasOrder, setHasOrder] = useState(false);
+
+  useEffect(() => {
+    const checkOrder = () => {
+      const lastOrder = localStorage.getItem("lastOrder");
+      setHasOrder(lastOrder !== null);
+    };
+    checkOrder();
+  }, [sidebarOpen]);
+
   /* ================= RENDER ================= */
   return (
     <div className="min-h-screen gradient-bg pb-24">
-      <HeaderMenu />
+      <HeaderMenu hasOrder={hasOrder} />
 
       <main className="px-3 md:px-4 py-4 md:py-6">
         {loading && <div>Đang tải menu...</div>}
