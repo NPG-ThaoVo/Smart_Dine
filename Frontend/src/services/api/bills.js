@@ -1,6 +1,6 @@
 import api from "@/services/api";
 
-export const getAllBills = ({ page = 1, limit = 20, status } = {}) => {
+export const getAllBills = ({ page = 1, limit = 100, status } = {}) => {
   return api.get("/bills", {
     params: { page, limit, status },
   });

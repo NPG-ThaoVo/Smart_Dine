@@ -6,11 +6,16 @@ const billSchema = new mongoose.Schema(
             ref: "Table",
             required: true,
         },
+        orderId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Order",
+            required: true,
+        },
         totalAmount: {
             type: Number,
             required: true,
-             min: 0,
-        },      
+            min: 0,
+        },
         status: {
             type: String,
             enum: ["UNPAID", "PAID"],

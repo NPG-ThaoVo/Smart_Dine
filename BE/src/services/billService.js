@@ -85,19 +85,19 @@ export const getBillStats = async () => {
     allStats.length > 0
       ? allStats[0]
       : {
-          totalRevenue: 0,
-          totalBills: 0,
-          paidBills: 0,
-          unpaidBills: 0,
-        };
+        totalRevenue: 0,
+        totalBills: 0,
+        paidBills: 0,
+        unpaidBills: 0,
+      };
 
   const today =
     todayStats.length > 0
       ? todayStats[0]
       : {
-          todayRevenue: 0,
-          todayBills: 0,
-        };
+        todayRevenue: 0,
+        todayBills: 0,
+      };
 
   return {
     ...all,
