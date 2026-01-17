@@ -2,7 +2,6 @@ import { successResponse, errorResponse } from "../utils/response.js";
 import admin from "../config/firebase.js";
 import User from "../models/userModel.js";
 import { generateTokens } from "../services/authService.js";
-import { getIO } from '../socket/socket.js';
 const COOKIE_OPTIONS = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
@@ -36,7 +35,6 @@ export const googleLoginController = async (req, res) => {
 
     // Tìm user theo email
     let user = await User.findOne({ email });
-    let isNewUser = false;
 
     if (user) {
       // Nếu user có rồi → bổ sung thông tin Google nếu thiếu
@@ -59,7 +57,6 @@ export const googleLoginController = async (req, res) => {
         password: randomPassword,
       });
 
-      isNewUser = true;
     }
 
     // Tạo token đăng nhập
@@ -70,20 +67,7 @@ export const googleLoginController = async (req, res) => {
       refreshToken: tokens.refreshToken,
     });
 
-    // Gửi sự kiện socket thông báo user đăng nhập
-    try {
-      const io = getIO();
-      // Consider using rooms to send this notification only to admins
-      // For now, avoid sending sensitive user data in a global broadcast
-      io.emit('NEW_USER_LOGIN', {
-        message: isNewUser ? `User mới đăng ký: ${user.name}` : `User đăng nhập: ${user.name}`,
-        userName: user.name,
-        isNewUser: isNewUser
-      });
-      console.log(`✅ Socket sent - ${isNewUser ? 'New user registered' : 'User logged in'}:`, user.email);
-    } catch (socketError) {
-      console.error('❌ Socket error:', socketError.message);
-    }
+   
 
     // Set cookie
     res.cookie("refreshToken", tokens.refreshToken, COOKIE_OPTIONS);
