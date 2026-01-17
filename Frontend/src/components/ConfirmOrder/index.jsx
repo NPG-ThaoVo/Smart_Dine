@@ -19,10 +19,10 @@ const ConfirmOrder = () => {
         setOrderData(parsedOrder);
       } catch (error) {
         console.error("Error parsing order data:", error);
+      } finally {
+        setLoading(false);
       }
     }
-
-    setLoading(false);
   }, []);
 
   if (loading) {
