@@ -5,11 +5,11 @@ import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 // import { getme } from "@/services/api/user";
 import testLoginGoogle from "@/components/GoogleLogin";
-const AuthContext = createContext();
+const authContext = createContext();
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState(
-    JSON.parse(localStorage.getItem("userInformation"))?.data?.user || null
+    JSON.parse(localStorage.getItem("userInformation"))?.data?.user || null,
   );
   const loginWithGoogle = async () => {
     try {
@@ -46,9 +46,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ userInfo, loginWithGoogle, AdminLogout }}>
+    <authContext.Provider value={{ userInfo, loginWithGoogle, AdminLogout }}>
       {children}
-    </AuthContext.Provider>
+    </authContext.Provider>
   );
 };
-export default AuthContext;
+export default authContext;

@@ -17,11 +17,17 @@ import "./models/categoriesModel.js";
 dotenv.config();
 const app = express();
 
+//accept list of origin
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://smart-dine-ki3m.vercel.app",
+  process.env.FRONTEND_URL,
+];
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:3000",
+    origin: allowedOrigins,
     credentials: true,
-  })
+  }),
 );
 // Important middleware: Helps Express understand JSON data
 // If this line is missing, req.body will be undefined
