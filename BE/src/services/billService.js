@@ -3,7 +3,7 @@ import Bill from "../models/billsModel.js";
 // tạo bill
 export const createBill = async (billData) => {
   const bill = await Bill.create(billData);
-  return Bill.findById(bill._id).populate('tableId');
+  return Bill.findById(bill._id).populate("tableId");
 };
 
 // lấy tất cả bills
@@ -13,11 +13,11 @@ export const getAllBills = async (page = 1, limit = 10, status = null) => {
 
   const [bills, total] = await Promise.all([
     Bill.find(filter)
-      .populate('tableId', 'name number')
+      .populate("tableId", "name number")
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit),
-    Bill.countDocuments(filter)
+    Bill.countDocuments(filter),
   ]);
 
   return {
@@ -26,14 +26,14 @@ export const getAllBills = async (page = 1, limit = 10, status = null) => {
       page,
       limit,
       total,
-      totalPages: Math.ceil(total / limit)
-    }
+      totalPages: Math.ceil(total / limit),
+    },
   };
 };
 
 // lấy bill theo id
 export const getBillById = async (billId) => {
-  return Bill.findById(billId).populate('tableId', 'name number');
+  return Bill.findById(billId).populate("tableId", "name number");
 };
 
 // lấy thống kê doanh thu
@@ -48,59 +48,74 @@ export const getBillStats = async () => {
       {
         $group: {
           _id: null,
-          totalRevenue: { $sum: "$totalAmount" },
+          totalRevenue: {
+            $sum: {
+              $cond: [{ $eq: ["$status", "PAID"] }, "$totalAmount", 0],
+            },
+          },
           totalBills: { $sum: 1 },
           paidBills: {
-            $sum: { $cond: [{ $eq: ["$status", "PAID"] }, 1, 0] }
+            $sum: { $cond: [{ $eq: ["$status", "PAID"] }, 1, 0] },
           },
           unpaidBills: {
-            $sum: { $cond: [{ $eq: ["$status", "UNPAID"] }, 1, 0] }
-          }
-        }
-      }
+            $sum: { $cond: [{ $eq: ["$status", "UNPAID"] }, 1, 0] },
+          },
+        },
+      },
     ]),
     Bill.aggregate([
       {
         $match: {
-          createdAt: { $gte: startOfDay, $lte: endOfDay }
-        }
+          createdAt: { $gte: startOfDay, $lte: endOfDay },
+        },
       },
       {
         $group: {
           _id: null,
-          todayRevenue: { $sum: { $cond: [{ $eq: ["$status", "PAID"] }, "$totalAmount", 0] } },
-          todayBills: { $sum: 1 }
-        }
-      }
-    ])
+          todayRevenue: {
+            $sum: { $cond: [{ $eq: ["$status", "PAID"] }, "$totalAmount", 0] },
+          },
+          todayBills: { $sum: 1 },
+        },
+      },
+    ]),
   ]);
 
-  const all = allStats.length > 0 ? allStats[0] : {
-    totalRevenue: 0,
-    totalBills: 0,
-    paidBills: 0,
-    unpaidBills: 0
-    
-  };
+  const all =
+    allStats.length > 0
+      ? allStats[0]
+      : {
+          totalRevenue: 0,
+          totalBills: 0,
+          paidBills: 0,
+          unpaidBills: 0,
+        };
 
-  const today = todayStats.length > 0 ? todayStats[0] : {
-    todayRevenue: 0
-    , todayBills: 0
-  };
+  const today =
+    todayStats.length > 0
+      ? todayStats[0]
+      : {
+          todayRevenue: 0,
+          todayBills: 0,
+        };
 
   return {
     ...all,
     todayRevenue: today.todayRevenue,
-    todayBills: today.todayBills
+    todayBills: today.todayBills,
   };
 };
 export const payBill = async (billId) => {
-  return await Bill.findByIdAndUpdate(
-    billId,
-    {
-      status: "PAID",
-      paidAt: new Date(),
-    },
-    { new: true }
-  );
+  const bill = await Bill.findById(billId);
+
+  if (!bill) return null;
+
+  if (bill.status === "PAID") {
+    throw new Error("ALREADY_PAID");
+  }
+
+  bill.status = "PAID";
+  bill.paidAt = new Date();
+  await bill.save();
+  return bill;
 };

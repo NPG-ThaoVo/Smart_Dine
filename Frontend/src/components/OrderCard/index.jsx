@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Eye, Check } from "lucide-react";
 
-export function OrderCard({ order, handlePay }) {
+export function OrderCard({ order, handlePay, loading }) {
   return (
     <div className="group relative flex flex-col justify-between rounded-3xl transition-all duration-300 overflow-hidden border h-[280px] bg-emerald-500/5 hover:bg-emerald-500/10 border-emerald-500/20 hover:border-emerald-500/40">
       {/* Gradient overlay on hover */}
@@ -61,6 +61,7 @@ export function OrderCard({ order, handlePay }) {
           </Button>
           {order.status === "Đang phục vụ" && (
             <Button
+              disabled={loading}
               onClick={() => handlePay(order.id)}
               className="flex-1 bg-gradient-to-r from-emerald-500 to-green-600"
             >

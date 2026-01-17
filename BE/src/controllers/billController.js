@@ -1,3 +1,4 @@
+import billsModel from "../models/billsModel.js";
 import * as billService from "../services/billService.js";
 import { successResponse, errorResponse } from "../utils/response.js";
 import mongoose from "mongoose";
@@ -113,26 +114,26 @@ export const payBill = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const bill = await billModel.findById(id);
+    const bill = await billsModel.findById(id);
     if (!bill) {
-      return res.status(404).json({ message: "Khong tim thay hoa don" });
+      return res.status(404).json({ message: "Không tìm thấy hóa đơn" });
     }
 
-    if (bill.status === "paid") {
-      return res.status(400).json({ message: "Hoa don da duoc thanh toan" });
+    if (bill.status === "PAID") {
+      return res.status(400).json({ message: "Hóa đơn đã được thanh toán" });
     }
 
-    bill.status = "paid";
+    bill.status = "PAID";
     bill.paidAt = new Date();
 
     await bill.save();
 
     res.json({
-      message: "Thanh toan thanh cong",
+      message: "Thanh Toán Thành Công",
       data: bill,
     });
   } catch (error) {
     console.error("payBill error:", error);
-    res.status(500).json({ message: "Loi server" });
+    res.status(500).json({ message: "Lỗi máy chủ nội bộ" });
   }
 };

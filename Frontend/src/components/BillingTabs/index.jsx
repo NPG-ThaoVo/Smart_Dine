@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { OrderCard } from "@/components/OrderCard";
 
-export function BillingTabs({ bills = [], loading, handlePay }) {
+export function BillingTabs({ bills = [], loading, payingLoading, handlePay }) {
   const [searchQuery, setSearchQuery] = useState("");
   const mappedBills = useMemo(() => {
     return bills.map((bill) => ({
@@ -53,7 +53,7 @@ export function BillingTabs({ bills = [], loading, handlePay }) {
       <TabsContent value="active">
         <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
           {filterBySearch(activeOrders).map((o) => (
-            <OrderCard key={o.id} order={o} handlePay={handlePay} />
+            <OrderCard key={o.id} order={o} loading={payingLoading} handlePay={handlePay} />
           ))}
           {!loading && activeOrders.length === 0 && (
             <p className="text-muted-foreground">Không có bàn đang phục vụ</p>
