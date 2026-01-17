@@ -3,7 +3,14 @@ import { Button } from "../ui/button";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const FoodDetails = ({ item, quantity, onIncrease, onDecrease, totalPrice }) => {
+const FoodDetails = ({
+  item,
+  quantity,
+  onIncrease,
+  onDecrease,
+  totalPrice,
+  onAddToCart,
+}) => {
   const navigate = useNavigate();
 
   return (
@@ -229,6 +236,7 @@ const FoodDetails = ({ item, quantity, onIncrease, onDecrease, totalPrice }) => 
               </p>
             </div>
             <Button
+              onClick={() => onAddToCart()}
               className="flex-1 h-14 rounded-2xl px-8
     flex items-center justify-center gap-2
     text-white text-lg font-semibold

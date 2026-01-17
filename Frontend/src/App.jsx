@@ -15,6 +15,7 @@ import UserBillingPage from "./pages/UserBillingPage";
 import NotificationManagementPage from "./pages/notificationManagement";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./contexts/authContext";
+import TrackingPage from "./pages/TrackingPage";
 function App() {
   return (
     <BrowserRouter>
@@ -28,6 +29,8 @@ function App() {
             path="/order/:tableId/item/:itemId"
             element={<DetailsPage />}
           />
+          <Route path="/tracking" element={<TrackingPage />} />
+          <Route path="/smartdine" element={<SmartDineLanding />} />
           <Route path="/user/billing" element={<UserBillingPage />} />
 
           <Route
