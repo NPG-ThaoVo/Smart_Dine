@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import AdminLogin from "../../components/AdminLogin";
+import FormLogin from "../../components/FormLogin";
 import AuthContext from "../../contexts/authContext";
 
 const LoginPage = () => {
@@ -23,7 +23,7 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <AdminLogin
+      <FormLogin
         loading={loading}
         handleGoogleLoginWrapper={handleGoogleLoginWrapper}
       />
