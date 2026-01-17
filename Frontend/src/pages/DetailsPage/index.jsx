@@ -6,7 +6,7 @@ import { getMenuById } from "../../services/api/menu";
 import toast from "react-hot-toast";
 
 const DetailsPage = () => {
-  const { itemId } = useParams();
+  const { itemId, tableId } = useParams();
   const navigate = useNavigate();
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -39,6 +39,12 @@ const DetailsPage = () => {
     }
   }, [itemId]);
 
+  useEffect(() => {
+    const currentTableId = tableId || "1";
+    const savedCart = JSON.parse(localStorage.getItem(`/order/${currentTableId}`)) || [];
+    setCartItems(savedCart);
+  }, [tableId]);
+
   const handleIncrease = () => {
     setQuantity((prevQuantity) => prevQuantity + 1);
   };
@@ -54,9 +60,9 @@ const DetailsPage = () => {
     navigate(-1);
   };
 
-  //xử lý sự kiện thêm vào giỏ hàng
   const handleAddToCart = () => {
-    const existingCart = JSON.parse(localStorage.getItem("/order/1")) || [];
+    const currentTableId = tableId || "1";
+    const existingCart = JSON.parse(localStorage.getItem(`/order/${currentTableId}`)) || [];
     const existingItemIndex = existingCart.findIndex(
       (cartItem) => cartItem.id === item.id,
     );
@@ -65,8 +71,8 @@ const DetailsPage = () => {
     } else {
       existingCart.push({ ...item, quantity });
     }
-    localStorage.setItem("/order/1", JSON.stringify(existingCart));
-    navigate("/order/1");
+    localStorage.setItem(`/order/${currentTableId}`, JSON.stringify(existingCart));
+    navigate(`/order/${currentTableId}`);
     toast.success("Thêm vào giỏ hàng thành công!");
   };
 

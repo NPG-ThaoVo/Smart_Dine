@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import HeaderMenu from "@/components/HeaderMenu";
 import FoodCard from "@/components/FoodCard";
 import OrderSidebar from "@/components/OrderSidebar";
@@ -9,8 +9,8 @@ import { getAllMenu } from "@/services/api/menu";
 
 function Menu() {
   const navigate = useNavigate();
+  const { tableId = "1" } = useParams();
   const [menuData, setMenuData] = useState([]);
-  const [cartItems, setCartItems] = useState([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -58,6 +58,24 @@ function Menu() {
   }, {});
 
   /* ================= CART LOGIC ================= */
+  // Initialize cart from localStorage immediately to prevent overwriting with empty array
+  const [cartItems, setCartItems] = useState(() => {
+    const currentTableId = tableId || "1";
+    try {
+      const saved = localStorage.getItem(`/order/${currentTableId}`);
+      return saved ? JSON.parse(saved) : [];
+    } catch (error) {
+      console.error("Error parsing cart items:", error);
+      return [];
+    }
+  });
+
+  // Save to localStorage when cartItems changes
+  useEffect(() => {
+    const currentTableId = tableId || "1";
+    localStorage.setItem(`/order/${currentTableId}`, JSON.stringify(cartItems));
+  }, [cartItems, tableId]);
+
   const addToCart = (item) => {
     const existing = cartItems.find((i) => i.id === item.id);
 
@@ -132,7 +150,7 @@ function Menu() {
                     quantity={getItemQuantity(item.id)}
                     onAdd={() => addToCart(item)}
                     onRemove={() => removeFromCart(item.id)}
-                    onViewDetails={() => navigate(`/order/1/item/${item.id}`)}
+                    onViewDetails={() => navigate(`/order/${tableId}/item/${item.id}`)}
                   />
                 ))}
               </div>
