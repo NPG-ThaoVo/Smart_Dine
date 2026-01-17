@@ -5,8 +5,8 @@ import { protect } from "../middleware/authMiddleware.js";
 const router = express.Router();
 
 router.post("/", protect, menuController.createMenuItem);
-router.get("/", protect, menuController.getAllMenuItems);
-router.get("/:menuItemId", protect, menuController.getMenuItemById);
+router.get("/", menuController.getAllMenuItems);
+router.get("/:menuItemId", menuController.getMenuItemById);
 router.put("/:menuItemId", protect, menuController.updateMenuItemById);
 router.delete("/:menuItemId", protect, menuController.deleteMenuItemById);
 

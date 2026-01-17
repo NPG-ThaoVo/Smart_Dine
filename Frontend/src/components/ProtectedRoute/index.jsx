@@ -1,9 +1,9 @@
 import React from "react";
 import { useContext } from "react";
-import AuthContext from "@/contexts/AuthContext";
+import authContext from "@/contexts/authContext";
 import { Navigate } from "react-router-dom";
 const ProtectedRoute = ({ children }) => {
-  const { userInfo } = useContext(AuthContext);
+  const { userInfo } = useContext(authContext);
   if (!userInfo) {
     return <Navigate to="/admin/login" />;
   }
