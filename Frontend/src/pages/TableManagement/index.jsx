@@ -1,4 +1,5 @@
 import { DialogCreateOrEditTable } from "@/components/DialogCreateOrEditTable";
+// import { DialogDeleteTable } from "@/components/DialogDeleteTable";
 import { DialogDeleteConfirm } from "@/components/DialogDeleteConfirm";
 import { DialogQR } from "@/components/DialogQR";
 import HeaderContentAdmin from "@/components/HeaderContentAdmin";
@@ -12,6 +13,8 @@ import {
   updateTable,
   deleteTable,
 } from "@/services/api/tables";
+import BillingDetails from "@/components/BillingDetails";
+import { getBillByTableId } from "@/services/api/bill";
 
 const TableManagement = () => {
   const [loading, setLoading] = useState(false);
@@ -29,6 +32,9 @@ const TableManagement = () => {
   const [deleteTableData, setDeleteTableData] = useState(null);
   const [search, setSearch] = useState("");
 
+  const [openBilling, setOpenBilling] = useState(false);
+  const [selectedBill, setSelectedBill] = useState(null);
+
   const filteredTables = tables.filter((table) => {
     const keyword = search.toLowerCase().trim();
 
@@ -37,6 +43,50 @@ const TableManagement = () => {
       table.name?.toLowerCase().includes(keyword)
     );
   });
+
+  const handleOpenBilling = async (table) => {
+    try {
+      setLoading(true);
+
+      const res = await getBillByTableId(table._id);
+      const bills = res?.data?.data?.bills || [];
+
+      if (bills.length === 0) {
+        toast.error("Bàn này chưa có hóa đơn");
+        return;
+      }
+
+      let bill =
+        bills.find((b) => b.status === "UNPAID") ||
+        bills[0];
+
+      const mappedBill = {
+        id: bill._id,
+        table: bill.tableId
+          ? `Bàn ${bill.tableId.number} - ${bill.tableId.name}`
+          : "Mang đi",
+        time: new Date(bill.createdAt).toLocaleString("vi-VN", {
+          hour: "2-digit",
+          minute: "2-digit",
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        }),
+        total: bill.totalAmount,
+        status: bill.status === "UNPAID" ? "Đang phục vụ" : "Đã thanh toán",
+        rawStatus: bill.status,
+      };
+
+      setSelectedBill(mappedBill);
+      setOpenBilling(true);
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Không thể tải hóa đơn");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
 
   const getAllTable = async () => {
     try {
@@ -132,6 +182,7 @@ const TableManagement = () => {
   useEffect(() => {
     getAllTable();
   }, []);
+
   return (
     <div>
       <div className="space-y-8">
@@ -162,6 +213,7 @@ const TableManagement = () => {
             setDeleteTableData(table);
             setOpenDelete(true);
           }}
+          onOpenBilling={handleOpenBilling}
         />
         <DialogCreateOrEditTable
           open={openCreateOrEdit}
@@ -172,11 +224,6 @@ const TableManagement = () => {
           onSubmitEdit={handleUpdateTable}
         />
         <DialogQR open={openQR} onOpenChange={setOpenQR} table={qrTable} />
-        {/* <DialogDeleteTable
-          open={openDelete}
-          onOpenChange={setOpenDelete}
-          handleDeleteTable={handleDeleteTable}
-        /> */}
         <DialogDeleteConfirm
           open={openDelete}
           onOpenChange={setOpenDelete}
@@ -186,6 +233,11 @@ const TableManagement = () => {
           onConfirm={handleDeleteTable}
         />
       </div>
+      <BillingDetails
+        open={openBilling}
+        onOpenChange={setOpenBilling}
+        bill={selectedBill}
+      />
     </div>
   );
 };

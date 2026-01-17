@@ -1,3 +1,4 @@
+import billsModel from "../models/billsModel.js";
 import * as billService from "../services/billService.js";
 import { successResponse, errorResponse } from "../utils/response.js";
 import mongoose from "mongoose";
@@ -6,25 +7,29 @@ import mongoose from "mongoose";
 export const createBill = async (req, res) => {
   try {
     const { tableId, totalAmount } = req.body;
-    
+
     if (!tableId || totalAmount === undefined) {
-      return errorResponse(res, "Table ID và tổng tiền là các trường bắt buộc", 400);
+      return errorResponse(
+        res,
+        "Table ID và tổng tiền là các trường bắt buộc",
+        400
+      );
     }
-    
+
     if (!mongoose.Types.ObjectId.isValid(tableId)) {
       return errorResponse(res, "Định dạng Table ID không hợp lệ", 400);
     }
-    
+
     if (!Number.isFinite(totalAmount) || totalAmount < 0) {
       return errorResponse(res, "Tổng tiền phải là số không âm", 400);
     }
-    
+
     const billData = { tableId, totalAmount, status: req.body.status };
     const bill = await billService.createBill(billData);
-    
+
     return successResponse(res, "Tạo hóa đơn thành công", bill);
   } catch (error) {
-    if (error.name === 'ValidationError') {
+    if (error.name === "ValidationError") {
       return errorResponse(res, error.message, 400);
     }
     console.error("Lỗi tạo hóa đơn:", error);
@@ -47,18 +52,22 @@ export const getAllBills = async (req, res) => {
   }
 
   if (status && !["UNPAID", "PAID"].includes(status)) {
-    return errorResponse(res, "Trạng thái không hợp lệ. Chỉ chấp nhận UNPAID hoặc PAID", 400);
+    return errorResponse(
+      res,
+      "Trạng thái không hợp lệ. Chỉ chấp nhận UNPAID hoặc PAID",
+      400
+    );
   }
-  
+
   const safePage = page || 1;
   const safeLimit = Math.min(limit || 10, 100);
-  
+
   // Prevent DOS via excessive skip values
   const MAX_PAGE = 10000;
   if (safePage > MAX_PAGE) {
     return errorResponse(res, `Số trang không được vượt quá ${MAX_PAGE}`, 400);
   }
-  
+
   try {
     const result = await billService.getAllBills(safePage, safeLimit, status);
     return successResponse(res, "Lấy danh sách hóa đơn thành công", result);
@@ -72,17 +81,17 @@ export const getAllBills = async (req, res) => {
 export const getBillById = async (req, res) => {
   try {
     const billId = req.params.id;
-    
+
     if (!mongoose.Types.ObjectId.isValid(billId)) {
       return errorResponse(res, "Định dạng ID hóa đơn không hợp lệ", 400);
     }
-    
+
     const bill = await billService.getBillById(billId);
-    
+
     if (!bill) {
       return errorResponse(res, "Không tìm thấy hóa đơn", 404);
     }
-    
+
     return successResponse(res, "Lấy chi tiết hóa đơn thành công", bill);
   } catch (error) {
     console.error("Lỗi lấy chi tiết hóa đơn:", error);
@@ -98,5 +107,33 @@ export const getBillStats = async (req, res) => {
   } catch (error) {
     console.error("Lỗi lấy thống kê doanh thu:", error);
     return errorResponse(res, "Lỗi máy chủ nội bộ", 500);
+  }
+};
+
+export const payBill = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const bill = await billsModel.findById(id);
+    if (!bill) {
+      return res.status(404).json({ message: "Không tìm thấy hóa đơn" });
+    }
+
+    if (bill.status === "PAID") {
+      return res.status(400).json({ message: "Hóa đơn đã được thanh toán" });
+    }
+
+    bill.status = "PAID";
+    bill.paidAt = new Date();
+
+    await bill.save();
+
+    res.json({
+      message: "Thanh Toán Thành Công",
+      data: bill,
+    });
+  } catch (error) {
+    console.error("payBill error:", error);
+    res.status(500).json({ message: "Lỗi máy chủ nội bộ" });
   }
 };

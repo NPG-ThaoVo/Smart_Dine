@@ -48,53 +48,54 @@ export function OverviewStats({ stats: data, loading }) {
       <h1 className="text-xl md:text-2xl font-bold text-foreground">
         Tổng quan
       </h1>
+
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
         {loading
           ? Array.from({ length: 4 }).map((_, i) => (
-            <Card
-              key={i}
-              className="rounded-xl border border-border/30 bg-card/80 backdrop-blur-xl shadow-md"
-            >
-              <CardContent className="p-3 md:p-6">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
-                  <Skeleton className="h-10 w-10 rounded-lg" />
-                  <div className="min-w-0 flex-1 space-y-2">
-                    <Skeleton className="h-3 w-20" />
-                    <Skeleton className="h-6 w-12" />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))
-          : stats.map((item) => {
-            const Icon = item.icon;
-            return (
               <Card
-                key={item.label}
-                className="rounded-xl border border-border/30 bg-card/80 text-card-foreground backdrop-blur-xl shadow-md transition-all duration-300 hover:shadow-lg hover:border-border/50 glass-card"
+                key={i}
+                className="rounded-xl border border-border/30 bg-card/80 backdrop-blur-xl shadow-md"
               >
                 <CardContent className="p-3 md:p-6">
                   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
-                    <div
-                      className={`p-2 md:p-3 rounded-lg backdrop-blur-sm ${item.bgColor}`}
-                    >
-                      <Icon
-                        className={`w-5 h-5 md:w-6 md:h-6 ${item.textColor}`}
-                      />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-xs md:text-sm text-muted-foreground truncate">
-                        {item.label}
-                      </p>
-                      <p className="text-lg md:text-2xl font-bold truncate">
-                        {item.value}
-                      </p>
+                    <Skeleton className="h-10 w-10 rounded-lg" />
+                    <div className="min-w-0 flex-1 space-y-2">
+                      <Skeleton className="h-3 w-20" />
+                      <Skeleton className="h-6 w-12" />
                     </div>
                   </div>
                 </CardContent>
               </Card>
-            );
-          })}
+            ))
+          : stats.map((item) => {
+              const Icon = item.icon;
+              return (
+                <Card
+                  key={item.label}
+                  className="rounded-xl border border-border/30 bg-card/80 text-card-foreground backdrop-blur-xl shadow-md transition-all duration-300 hover:shadow-lg hover:border-border/50 glass-card"
+                >
+                  <CardContent className="p-3 md:p-6">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
+                      <div
+                        className={`p-2 md:p-3 rounded-lg backdrop-blur-sm ${item.bgColor}`}
+                      >
+                        <Icon
+                          className={`w-5 h-5 md:w-6 md:h-6 ${item.textColor}`}
+                        />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-xs md:text-sm text-muted-foreground truncate">
+                          {item.label}
+                        </p>
+                        <p className="text-lg md:text-2xl font-bold truncate">
+                          {item.value}
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
       </div>
     </>
   );
