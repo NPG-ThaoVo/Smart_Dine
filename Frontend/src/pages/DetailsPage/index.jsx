@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getMenuById } from "../../services/api/menu";
+import toast from "react-hot-toast";
 
 const DetailsPage = () => {
   const { itemId } = useParams();
@@ -52,11 +53,20 @@ const DetailsPage = () => {
     navigate(-1);
   };
 
+  //xử lý sự kiện thêm vào giỏ hàng
   const handleAddToCart = () => {
-    if (item) {
-      console.log("Add to cart:", item, quantity);
-      navigate(-1);
+    const existingCart = JSON.parse(localStorage.getItem("/")) || [];
+    const existingItemIndex = existingCart.findIndex(
+      (cartItem) => cartItem.id === item.id,
+    );
+    if (existingItemIndex !== -1) {
+      existingCart[existingItemIndex].quantity += quantity;
+    } else {
+      existingCart.push({ ...item, quantity });
     }
+    localStorage.setItem("/", JSON.stringify(existingCart));
+    navigate("/");
+    toast.success("Thêm vào giỏ hàng thành công!");
   };
 
   if (loading) {
@@ -71,7 +81,9 @@ const DetailsPage = () => {
     return (
       <div className="min-h-screen flex items-center justify-center flex-col gap-4">
         <p className="text-lg text-muted-foreground">Không tìm thấy món ăn</p>
-        <button onClick={handleBack} className="text-primary hover:underline">Quay lại</button>
+        <button onClick={handleBack} className="text-primary hover:underline">
+          Quay lại
+        </button>
       </div>
     );
   }
