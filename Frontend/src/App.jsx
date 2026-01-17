@@ -24,7 +24,7 @@ function App() {
         <Routes>
           <Route path="/" element={<SmartDineLanding />} />
           <Route path="/order/:tableId" element={<Menu />} />
-          <Route path="/admin/login" element={<AdminLoginPage />} />
+          <Route path="/admin/login" element={<LoginPage />} />
           <Route
             path="/order/:tableId/item/:itemId"
             element={<DetailsPage />}
