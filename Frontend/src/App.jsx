@@ -22,8 +22,9 @@ function App() {
       <Toaster position="top-right" reverseOrder={false} />
       <AuthProvider>
         <Routes>
-          <Route path="/" element={<Menu />} />
-          <Route path="/admin/login" element={<LoginPage />} />
+          <Route path="/" element={<SmartDineLanding />} />
+          <Route path="/order/:tableId" element={<Menu />} />
+          <Route path="/admin/login" element={<AdminLoginPage />} />
           <Route
             path="/order/:tableId/item/:itemId"
             element={<DetailsPage />}
