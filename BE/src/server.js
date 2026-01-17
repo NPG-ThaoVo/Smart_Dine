@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import { createServer } from "http";
 import connectDB from "./config/db.js"; // Remember the .js extension // Remember the .js extension
 import authRoutes from "./routes/authRoutes.js"; // Remember the .js extension
 import cors from "cors";
@@ -12,6 +13,7 @@ import categoryRoutes from "./routes/categoryRoutes.js";
 import billRoutes from "./routes/billRoutes.js";
 import notificationRoutes from "./routes/notificationRoutes.js";
 import "./models/categoriesModel.js";
+import { initSocket } from "./socket/socket.js";
 
 // Load environment variables
 dotenv.config();
@@ -49,6 +51,12 @@ app.use("/api/bills", billRoutes);
 app.use("/api/notifications", notificationRoutes);
 
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
+
+// Tạo HTTP server từ Express app
+const httpServer = createServer(app);
+
+// Khởi tạo Socket.IO
+initSocket(httpServer);
+httpServer.listen(PORT, () => {
   console.log(`🚀 Server is running at http://localhost:${PORT}`);
 });

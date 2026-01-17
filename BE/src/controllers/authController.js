@@ -2,7 +2,6 @@ import { successResponse, errorResponse } from "../utils/response.js";
 import admin from "../config/firebase.js";
 import User from "../models/userModel.js";
 import { generateTokens } from "../services/authService.js";
-
 const COOKIE_OPTIONS = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
@@ -57,6 +56,7 @@ export const googleLoginController = async (req, res) => {
         authType: "google",
         password: randomPassword,
       });
+
     }
 
     // Tạo token đăng nhập
@@ -66,6 +66,8 @@ export const googleLoginController = async (req, res) => {
     await User.findByIdAndUpdate(user._id, {
       refreshToken: tokens.refreshToken,
     });
+
+   
 
     // Set cookie
     res.cookie("refreshToken", tokens.refreshToken, COOKIE_OPTIONS);

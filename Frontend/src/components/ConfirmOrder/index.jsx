@@ -140,7 +140,7 @@ const ConfirmOrder = () => {
         <div className="space-y-3">
           <Button
             className="w-full h-14 rounded-2xl bg-[#F15A0A] hover:bg-[#E24F00] text-white text-lg font-semibold cursor-pointer"
-            onClick={() => navigate("/tracking")}
+            onClick={() => navigate(`/order/${orderData.tableId}/tracking`)}
           >
             Theo dõi đơn hàng
           </Button>

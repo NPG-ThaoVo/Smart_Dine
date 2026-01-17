@@ -36,6 +36,7 @@ const MenuAdminPage = () => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isGenerating, setIsGenerating] = useState({ description: false, upsell: false });
   const [generatingItemId, setGeneratingItemId] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const uploadImageToCloudinary = async (file) => {
     if (!file) return null;
@@ -66,6 +67,7 @@ const MenuAdminPage = () => {
 
   const fetchData = async () => {
     try {
+      setLoading(true);
       const [menuRes, catRes] = await Promise.all([
         getMenuItems(),
         getAllCategories()
@@ -90,17 +92,22 @@ const MenuAdminPage = () => {
     } catch (error) {
       console.error("Failed to fetch data:", error);
       toast.error("Không thể tải dữ liệu");
+    } finally {
+      setLoading(false);
     }
   };
 
   const fetchMenuItems = async () => {
     try {
+      setLoading(true);
       const res = await getMenuItems();
       if (res.data?.data?.items) {
         setMenuItems(res.data.data.items);
       }
     } catch (error) {
       console.error("Failed to fetch menu items:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -311,6 +318,7 @@ const MenuAdminPage = () => {
   return (
     <>
       <MenuFood
+        loading={loading}
         items={filteredItems}
         uncategorizedItems={uncategorizedItems}
         categories={categoryNames}

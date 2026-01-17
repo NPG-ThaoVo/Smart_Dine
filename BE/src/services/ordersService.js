@@ -1,5 +1,7 @@
 import ordersModel from '../models/ordersModel.js';
 import * as orderItemService from './orderItemService.js';
+import * as notificationService from './notificationServices.js';
+import { getIO } from '../socket/socket.js';
 
 export const createOrder = async (data) => {
     const { tableId } = data;
@@ -20,7 +22,33 @@ export const createOrder = async (data) => {
         await newOrder.save();
     }
 
-    return newOrder;
+    // Populate để lấy thông tin bàn
+    const populatedOrder = await ordersModel.findById(newOrder._id).populate('tableId', 'number');
+
+    // Tạo thông báo khi có đơn hàng mới
+    try {
+        const notification = await notificationService.createNotification({
+            type: 'NEW_ORDER',
+            title: `Đơn hàng mới - Bàn ${populatedOrder.tableId?.number || 'N/A'}`,
+            message: `Bàn ${populatedOrder.tableId?.number || 'N/A'} vừa đặt ${pendingItemsWithoutOrder.length} món`,
+            tableId: populatedOrder.tableId?._id,
+            orderId: populatedOrder._id,
+            status: 'UNREAD'
+        });
+
+        // Broadcast thông báo qua Socket.IO
+        try {
+            const io = getIO();
+            io.emit('newNotification', notification);
+        } catch (socketError) {
+            console.error('Lỗi khi broadcast notification:', socketError);
+        }
+    } catch (notifError) {
+        console.error('Lỗi khi tạo thông báo đơn hàng mới:', notifError);
+        // Không throw error để không ảnh hưởng việc tạo order
+    }
+
+    return populatedOrder;
 };
 
 export const getAllOrders = async () => {
@@ -51,11 +79,38 @@ export const getOrderById = async (id) => {
 };
 
 export const updateOrderStatus = async (id, status) => {
-    return await ordersModel.findByIdAndUpdate(
+    const order = await ordersModel.findByIdAndUpdate(
         id,
         { status },
         { new: true }
-    );
+    ).populate('tableId', 'number');
+
+    // Tạo thông báo khi order chuyển sang trạng thái COMPLETED
+    if (status === 'COMPLETED' && order) {
+        try {
+            const notification = await notificationService.createNotification({
+                type: 'FOOD_READY',
+                title: `Món ăn đã sẵn sàng - Bàn ${order.tableId?.number || 'N/A'}`,
+                message: `Đơn hàng tại bàn ${order.tableId?.number || 'N/A'} đã hoàn thành và sẵn sàng phục vụ`,
+                tableId: order.tableId?._id,
+                orderId: order._id,
+                status: 'UNREAD'
+            });
+
+            // Broadcast thông báo qua Socket.IO
+            try {
+                const io = getIO();
+                io.emit('newNotification', notification);
+            } catch (socketError) {
+                console.error('Lỗi khi broadcast notification:', socketError);
+            }
+        } catch (notifError) {
+            console.error('Lỗi khi tạo thông báo:', notifError);
+            // Không throw error để không ảnh hưởng việc cập nhật status
+        }
+    }
+
+    return order;
 };
 
 export const getOrdersByTableId = async (orderId, status) => {

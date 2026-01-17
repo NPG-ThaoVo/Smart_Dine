@@ -1,11 +1,22 @@
 import * as notificationService from '../services/notificationServices.js';
 import { successResponse, errorResponse } from '../utils/response.js';
+import { getIO } from '../socket/socket.js';
 
 // Tạo thông báo mới
 export const createNotification = async (req, res) => {
   try {
+    // createNotification đã trả về notification đã populate
     const notification = await notificationService.createNotification(req.body);
-    return successResponse(res, notification, 'Tạo thông báo thành công', 201);
+    
+    // Broadcast thông báo qua Socket.IO
+    try {
+      const io = getIO();
+      io.emit('newNotification', notification);
+    } catch (socketError) {
+      console.error('Lỗi khi broadcast notification:', socketError);
+    }
+    
+    return successResponse(res, 'Tạo thông báo thành công', notification);
   } catch (error) {
     console.error('Lỗi khi tạo thông báo:', error);
     return errorResponse(res, error.message, 500);
@@ -16,7 +27,7 @@ export const createNotification = async (req, res) => {
 export const getAllNotifications = async (req, res) => {
   try {
     const notifications = await notificationService.getAllNotifications();
-    return successResponse(res, notifications, 'Lấy danh sách thông báo thành công');
+    return successResponse(res, 'Lấy danh sách thông báo thành công', notifications);
   } catch (error) {
     console.error('Lỗi khi lấy danh sách thông báo:', error);
     return errorResponse(res, error.message, 500);
@@ -29,7 +40,7 @@ export const markAsRead = async (req, res) => {
     if (!notification) {
       return errorResponse(res, 'Không tìm thấy thông báo', 404);
     }
-    return successResponse(res, notification, 'Đánh dấu đã đọc thành công');
+    return successResponse(res, 'Đánh dấu đã đọc thành công', notification);
   } catch (error) {
     console.error('Lỗi khi đánh dấu đã đọc:', error);
     return errorResponse(res, error.message, 500);
