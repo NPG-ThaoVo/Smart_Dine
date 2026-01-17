@@ -1,7 +1,5 @@
 import React from "react";
-import UserTrackingHeader from "@/components/UserTrackingHeader";
-import UserTrackingBody from "@/components/UserTrackingBody";
-import UserTrackingButton from "@/components/UserTrackingButton";
+import FormTracking from "@/components/FormTracking";
 
 const TrackingPage = () => {
   const estimatedTime = 5;
@@ -22,11 +20,11 @@ const TrackingPage = () => {
   };
   return (
     <main className="container max-w-lg mx-auto px-4 py-6 space-y-6">
-      <UserTrackingHeader estimatedTime={estimatedTime} />
-
-      <UserTrackingBody items={orderedItems} />
-
-      <UserTrackingButton onClick={handleCallStaff} />
+      <FormTracking
+        estimatedTime={estimatedTime}
+        items={orderedItems}
+        onClick={handleCallStaff}
+      />
     </main>
   );
 };
