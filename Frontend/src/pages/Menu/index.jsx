@@ -20,7 +20,11 @@ function Menu() {
       try {
         setLoading(true);
         const res = await getAllMenu();
-        const items = res.data.data.items.map((item) => ({
+
+        // Debug: check response structure
+        console.log("API Response:", res.data);
+
+        const items = res.data?.data?.items.map((item) => ({
           id: item._id,
           name: item.name,
           price: item.price,
@@ -31,7 +35,8 @@ function Menu() {
         }));
         setMenuData(items);
       } catch (err) {
-        console.error(err);
+        console.error("Error fetching menu:", err);
+        console.error("Response:", err.response?.data);
       } finally {
         setLoading(false);
       }

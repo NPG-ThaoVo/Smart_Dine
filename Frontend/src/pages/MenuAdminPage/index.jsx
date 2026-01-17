@@ -9,7 +9,6 @@ import {
   updateMenuItem,
   deleteMenuItem,
 } from "@/services/api/menu";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import { getAllCategories } from "@/services/api/category";
 
 const INITIAL_FORM_DATA = {

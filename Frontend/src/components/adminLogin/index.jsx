@@ -50,23 +50,8 @@ const AdminLogin = ({ loading, handleGoogleLoginWrapper }) => {
           )}
           <span>Đăng nhập với Google</span>
         </Button>
-        <div className="relative">
-          <div className="shrink-0 bg-border h-[1px] w-full"></div>
-          <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-card px-2 text-xs text-muted-foreground">
-            Hoặc
-          </span>
-        </div>
-        <Button
-          variant="default"
-          className="w-full h-12 px-4 text-lg
-    rounded-xl shadow-sm
-    bg-[#E9560C] hover:bg-[#d94f0b]
-    text-white
-    focus-visible:ring-[#E9560C]cursor-pointer"
-        >
-          <User className="w-5 h-5 mr-2" />
-          Đăng nhập Demo
-        </Button>
+        <div className="relative"></div>
+
         <p className="font-medium text-center text-sm text-muted-foreground mt-1">
           Chỉ dành cho quản trị viên nhà hàng
         </p>

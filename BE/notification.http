@@ -1,0 +1,20 @@
+## Tạo thông báo mới
+POST http://localhost:3001/api/notifications
+Content-Type: application/json
+
+{
+ "title": "Thông báo mới",
+  "type": "NEW_ORDER",
+  "tableId": "695ea817fc00e87d2bc7a7b4",
+  "orderId": "6968ff74e8bb063125b26cf4",
+  "message": "Bạn có một đơn hàng mới"
+}
+### Lấy danh sách thông báo
+GET http://localhost:3001/api/notifications
+### Cập nhật trạng thái đã đọc cho thông báo
+PATCH http://localhost:3001/api/notifications/6968fff468def9dd33eb5097/read
+Content-Type: application/json
+
+{
+    "status": "READ"
+}
