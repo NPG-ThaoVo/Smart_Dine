@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AdminLogin from "../../components/AdminLogin";
-import AuthContext  from "../../contexts/authContext";
+import AuthContext from "../../contexts/authContext";
 
-const AdminLoginPage = () => {
+const adminLoginPage = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { loginWithGoogle } = useContext(AuthContext);
@@ -31,4 +31,4 @@ const AdminLoginPage = () => {
   );
 };
 
-export default AdminLoginPage;
+export default adminLoginPage;
