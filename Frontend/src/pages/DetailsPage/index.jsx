@@ -11,6 +11,7 @@ const DetailsPage = () => {
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     const fetchItem = async () => {
@@ -55,7 +56,7 @@ const DetailsPage = () => {
 
   //xử lý sự kiện thêm vào giỏ hàng
   const handleAddToCart = () => {
-    const existingCart = JSON.parse(localStorage.getItem("/")) || [];
+    const existingCart = JSON.parse(localStorage.getItem("/order/1")) || [];
     const existingItemIndex = existingCart.findIndex(
       (cartItem) => cartItem.id === item.id,
     );
@@ -64,8 +65,8 @@ const DetailsPage = () => {
     } else {
       existingCart.push({ ...item, quantity });
     }
-    localStorage.setItem("/", JSON.stringify(existingCart));
-    navigate("/");
+    localStorage.setItem("/order/1", JSON.stringify(existingCart));
+    navigate("/order/1");
     toast.success("Thêm vào giỏ hàng thành công!");
   };
 
@@ -98,6 +99,7 @@ const DetailsPage = () => {
         totalPrice={totalPrice}
         onBack={handleBack}
         onAddToCart={handleAddToCart}
+        cartItems={cartItems}
       />
     </div>
   );

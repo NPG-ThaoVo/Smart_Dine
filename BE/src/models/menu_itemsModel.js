@@ -21,7 +21,7 @@ const menuItemSchema = new mongoose.Schema(
     price: {
       type: Number,
       required: true,
-       min: [1, "Price must be greater than 0"],
+      min: [1, "Price must be greater than 0"],
     },
     isAvailable: {
       type: Boolean,
@@ -32,11 +32,10 @@ const menuItemSchema = new mongoose.Schema(
       default: "default.jpg",
       required: true,
     },
-    upsellSuggestions: [
-      {
-        type: String,
-      },
-    ],
+    upsellSuggestions: {
+      type: [String],
+      default: [],
+    },
   },
   { timestamps: true }
 );
