@@ -9,6 +9,7 @@ const ConfirmOrder = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     // Lấy dữ liệu order từ localStorage
     const lastOrder = localStorage.getItem("lastOrder");
 
