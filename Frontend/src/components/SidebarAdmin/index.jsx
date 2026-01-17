@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/sidebar";
 import { NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import AuthContext from "@/contexts/authContext";
+import authContext from "@/contexts/authContext";
 import { useContext } from "react";
 
 // Menu items.
@@ -59,7 +59,7 @@ const menuItems = [
 ];
 
 export function SidebarAdmin() {
-  const { userInfo, AdminLogout } = useContext(AuthContext);
+  const { userInfo, AdminLogout } = useContext(authContext);
 
   return (
     <Sidebar>
