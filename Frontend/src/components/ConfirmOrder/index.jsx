@@ -1,10 +1,47 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, Clock, ChefHat, ArrowLeft } from "lucide-react";
 
 const ConfirmOrder = () => {
   const navigate = useNavigate();
+  const [orderData, setOrderData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Lấy dữ liệu order từ localStorage
+    const lastOrder = localStorage.getItem("lastOrder");
+
+    if (lastOrder) {
+      try {
+        const parsedOrder = JSON.parse(lastOrder);
+        setOrderData(parsedOrder);
+      } catch (error) {
+        console.error("Error parsing order data:", error);
+      }
+    }
+
+    setLoading(false);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p>Đang tải...</p>
+      </div>
+    );
+  }
+
+  if (!orderData) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <p className="mb-4">Không tìm thấy thông tin đơn hàng</p>
+          <Button onClick={() => navigate("/")}>Quay lại menu</Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/10 relative overflow-hidden">
@@ -33,27 +70,41 @@ const ConfirmOrder = () => {
           <div className="p-6">
             <div className="flex justify-between mb-4 text-sm">
               <span className="text-muted-foreground">Mã đơn</span>
-              <span className="font-semibold">#ORDER-17</span>
+              <span className="font-semibold">
+                #{orderData.orderId?.slice(-8)?.toUpperCase() || "N/A"}
+              </span>
             </div>
 
             <div className="flex justify-between mb-4 text-sm">
               <span className="text-muted-foreground">Bàn</span>
-              <span className="font-semibold">Bàn 1 - Bàn cửa sổ</span>
+              <span className="font-semibold">
+                Bàn {orderData.tableId || "N/A"}
+              </span>
             </div>
 
             <div className="border-t border-border pt-4 mt-4">
               <h3 className="font-medium mb-3">Chi tiết đơn hàng</h3>
 
-              <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">
-                  Gỏi cuốn tôm thịt x1
-                </span>
-                <span>45.000 ₫</span>
-              </div>
+              {orderData.items &&
+                orderData.items.map((item) => (
+                  <div
+                    key={item.id}
+                    className="flex justify-between text-sm mb-2"
+                  >
+                    <span className="text-muted-foreground">
+                      {item.name} x{item.quantity}
+                    </span>
+                    <span>
+                      {(item.price * item.quantity).toLocaleString()} ₫
+                    </span>
+                  </div>
+                ))}
 
               <div className="flex justify-between font-medium mt-4 pt-4 border-t border-border">
                 <span>Tổng cộng</span>
-                <span className="text-[#E9560C] font-semibold">45.000 ₫</span>
+                <span className="text-[#E9560C] font-semibold">
+                  {orderData.totalPrice?.toLocaleString() || 0} ₫
+                </span>
               </div>
             </div>
           </div>
