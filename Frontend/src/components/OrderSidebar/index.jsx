@@ -101,11 +101,15 @@ export default function OrderSidebar({
       if (orderResponse.data.success) {
         console.log("✅ Đặt món thành công!");
 
-        // Save order info for ConfirmPage
+        // Clear old bill data from previous order
+        localStorage.removeItem("currentBillId");
+
+        // Save order info for ConfirmPage and BillingPage
         localStorage.setItem(
           "lastOrder",
           JSON.stringify({
             orderId: orderResponse.data.data._id,
+            tableId: tableId,
             items: cartItems,
             notes: notes,
             totalPrice: totalPrice,

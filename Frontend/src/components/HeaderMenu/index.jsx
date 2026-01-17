@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import OrderSidebar from "@/components/OrderSidebar";
-import { ClipboardList } from "lucide-react";
+import { ClipboardList, Receipt } from "lucide-react";
 
-const HeaderMenu = () => {
+const HeaderMenu = ({ hasOrder = false }) => {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <header className="sticky top-0 z-10 bg-white/70 backdrop-blur-md border-b border-white/30">
@@ -29,6 +31,12 @@ const HeaderMenu = () => {
               <ClipboardList className="h-4 w-4 md:mr-1" />
               <span className="hidden md:inline">Đơn của bạn</span>
             </Button>
+            {hasOrder ? (
+              <Button size="sm" onClick={() => navigate("/user/billing")}>
+                <Receipt className="h-4 w-4 md:mr-1" />
+                <span className="hidden md:inline">Tính tiền</span>
+              </Button>
+            ) : null}
             <OrderSidebar open={open} onOpenChange={setOpen} />
           </div>
         </div>
