@@ -2,12 +2,13 @@ import React from "react";
 import { Spinner } from "../ui/spinner";
 import { Button } from "../ui/button";
 import { User } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const AdminLogin = ({ loading, handleGoogleLoginWrapper }) => {
   return (
     <div className="rounded-xl border border-border/30 bg-card/80 text-card-foreground backdrop-blur-xl shadow-md transition-all duration-300 hover:shadow-lg hover:border-border/50 w-full max-w-md">
       <div className="flex flex-col space-y-1.5 p-6 text-center">
-        <div className="text-5xl mb-4">🍜</div>
+        <Link to="/" className="text-5xl mb-4">🍜</Link>
         <h3 className="font-bold tracking-tight text-2xl">SmartDine Admin</h3>
         <p className="font-medium text-sm text-muted-foreground">
           Đăng nhập để quản lý nhà hàng của bạn
