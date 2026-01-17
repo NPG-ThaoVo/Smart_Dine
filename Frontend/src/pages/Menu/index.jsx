@@ -8,8 +8,8 @@ import { ShoppingCart } from "lucide-react";
 import { getAllMenu } from "@/services/api/menu";
 
 function Menu() {
+  const tableId = useParams().tableId;
   const navigate = useNavigate();
-  const { tableId = "1" } = useParams();
   const [menuData, setMenuData] = useState([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -145,6 +145,7 @@ function Menu() {
               <div className="grid grid-cols-2 gap-4">
                 {category.items.map((item) => (
                   <FoodCard
+                  tableId={tableId}
                     key={item.id}
                     item={item}
                     quantity={getItemQuantity(item.id)}
