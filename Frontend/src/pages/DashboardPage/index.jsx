@@ -36,9 +36,13 @@ export default function DashboardPage() {
         const totalTables = tablesList.length;
         const activeTables = tablesList.filter((t) => !t.isAvailable).length;
         setTables(tablesList);
-        const menuItems = Array.isArray(menuData?.data?.data)
-          ? menuData.data.data
-          : (Array.isArray(menuData?.data) ? menuData.data : []);
+        const menuItems = Array.isArray(menuData?.data?.data?.items)
+          ? menuData.data.data.items
+          : Array.isArray(menuData?.data?.data)
+            ? menuData.data.data
+            : Array.isArray(menuData?.data)
+              ? menuData.data
+              : [];
 
         const totalItems = menuItems.length;
         const availableItems = menuItems.filter((i) => i.isAvailable).length;
