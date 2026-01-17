@@ -2,31 +2,7 @@ import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Clock, UtensilsCrossed, ChevronRight } from "lucide-react";
 
-const orders = [
-  {
-    table: 2,
-    status: "Đang nấu",
-    items: 2,
-    time: "Vừa xong",
-    statusColor: "primary",
-  },
-  {
-    table: 5,
-    status: "Đang nấu",
-    items: 3,
-    time: "Vừa xong",
-    statusColor: "primary",
-  },
-  {
-    table: 5,
-    status: "Chờ xác nhận",
-    items: 1,
-    time: "Vừa xong",
-    statusColor: "amber",
-  },
-];
-
-export function RecentOrders() {
+export function RecentOrders({ orders = [] }) {
   return (
     <Card className="rounded-xl border border-border/30 bg-card/80 text-card-foreground backdrop-blur-xl transition-all duration-300 hover:shadow-lg hover:border-border/50 glass-card border-none shadow-2xl">
       <CardHeader className="space-y-1.5 p-6 flex flex-row items-center justify-between pb-6">
@@ -48,18 +24,16 @@ export function RecentOrders() {
             {orders.map((order, index) => (
               <div
                 key={index}
-                className={`group flex items-center p-3 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${
-                  order.statusColor === "amber"
+                className={`group flex items-center p-3 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${order.statusColor === "amber"
                     ? "bg-amber-500/5 border-amber-500/20 hover:bg-amber-500/10"
                     : "bg-white/5 border-white/5 hover:bg-white/10"
-                }`}
+                  }`}
               >
                 <div
-                  className={`h-12 w-12 rounded-xl flex items-center justify-center border mr-4 transition-colors ${
-                    order.statusColor === "amber"
+                  className={`h-12 w-12 rounded-xl flex items-center justify-center border mr-4 transition-colors ${order.statusColor === "amber"
                       ? "bg-amber-500/10 border-amber-500/20 text-amber-500"
                       : "bg-primary/10 border-primary/20 text-primary"
-                  }`}
+                    }`}
                 >
                   {order.statusColor === "amber" ? (
                     <Clock className="w-6 h-6" />
@@ -79,11 +53,10 @@ export function RecentOrders() {
                   </div>
                   <div className="flex items-center gap-2">
                     <span
-                      className={`text-xs px-2 py-0.5 rounded-md font-medium capitalize ${
-                        order.statusColor === "amber"
+                      className={`text-xs px-2 py-0.5 rounded-md font-medium capitalize ${order.statusColor === "amber"
                           ? "bg-accent text-accent-foreground"
                           : "bg-primary/10 text-primary"
-                      }`}
+                        }`}
                     >
                       {order.status}
                     </span>

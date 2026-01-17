@@ -1,24 +1,13 @@
 import {
   Card,
   CardHeader,
-  CardTitle,
-  CardDescription,
   CardContent,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-const tables = [
-  { id: 1, status: "available" },
-  { id: 2, status: "occupied" },
-  { id: 3, status: "available" },
-  { id: 4, status: "available" },
-  { id: 5, status: "occupied" },
-  { id: 6, status: "available" },
-  { id: 7, status: "available" },
-  { id: 8, status: "available" },
-];
+export function TableOverview({ tables = [] }) {
+  const sortedTables = [...tables].sort((a, b) => a.number - b.number);
 
-export function TableOverview() {
   return (
     <Card className="rounded-xl border border-border/30 bg-card/80 text-card-foreground backdrop-blur-xl transition-all duration-300 hover:shadow-lg hover:border-border/50 glass-card border-none shadow-2xl">
       <CardHeader className="space-y-1.5 p-6 flex flex-row items-center justify-between pb-6">
@@ -47,47 +36,50 @@ export function TableOverview() {
       </CardHeader>
       <CardContent className="p-6 pt-0">
         <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 gap-4">
-          {tables.map((table) => (
-            <div
-              key={table.id}
-              className={cn(
-                "group relative aspect-square flex flex-col items-center justify-center rounded-2xl transition-all duration-300 cursor-pointer overflow-hidden border border-white/5 hover:border-white/20",
-                table.status === "available"
-                  ? "bg-emerald-500/5 hover:bg-emerald-500/10"
-                  : "bg-rose-500/5 hover:bg-rose-500/10"
-              )}
-            >
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-emerald-500/10 to-transparent"></div>
+          {sortedTables.map((table) => {
+            const status = table.isAvailable ? "available" : "occupied";
+            return (
               <div
+                key={table._id}
                 className={cn(
-                  "absolute top-3 right-3 w-2 h-2 rounded-full ring-4 ring-black/40",
-                  table.status === "available"
-                    ? "bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)] animate-pulse"
-                    : "bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.6)]"
-                )}
-              ></div>
-              <span
-                className={cn(
-                  "text-2xl font-black tracking-tight z-10",
-                  table.status === "available"
-                    ? "text-emerald-500"
-                    : "text-rose-500"
+                  "group relative aspect-square flex flex-col items-center justify-center rounded-2xl transition-all duration-300 cursor-pointer overflow-hidden border border-white/5 hover:border-white/20",
+                  status === "available"
+                    ? "bg-emerald-500/5 hover:bg-emerald-500/10"
+                    : "bg-rose-500/5 hover:bg-rose-500/10"
                 )}
               >
-                {table.id}
-              </span>
-              <span className="text-[10px] uppercase tracking-wider font-semibold text-muted-foreground/60 mt-1 z-10">
-                Bàn
-              </span>
-              {table.status === "occupied" && (
-                <div className="absolute inset-x-0 bottom-0 p-2 bg-black/60 backdrop-blur-sm translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                  <p className="text-[10px] text-center text-white/90 font-medium">
-                    Đang phục vụ
-                  </p>
-                </div>
-              )}
-            </div>
-          ))}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-emerald-500/10 to-transparent"></div>
+                <div
+                  className={cn(
+                    "absolute top-3 right-3 w-2 h-2 rounded-full ring-4 ring-black/40",
+                    status === "available"
+                      ? "bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)] animate-pulse"
+                      : "bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.6)]"
+                  )}
+                ></div>
+                <span
+                  className={cn(
+                    "text-2xl font-black tracking-tight z-10",
+                    status === "available"
+                      ? "text-emerald-500"
+                      : "text-rose-500"
+                  )}
+                >
+                  {table.number}
+                </span>
+                <span className="text-[10px] uppercase tracking-wider font-semibold text-muted-foreground/60 mt-1 z-10">
+                  Bàn
+                </span>
+                {status === "occupied" && (
+                  <div className="absolute inset-x-0 bottom-0 p-2 bg-black/60 backdrop-blur-sm translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                    <p className="text-[10px] text-center text-white/90 font-medium">
+                      Đang phục vụ
+                    </p>
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </CardContent>
     </Card>

@@ -6,38 +6,38 @@ import {
   DollarSign,
 } from "lucide-react";
 
-const stats = [
-  {
-    label: "Bàn đang phục vụ",
-    value: "2/8",
-    icon: TableProperties,
-    bgColor: "bg-accent/50",
-    textColor: "text-accent-foreground",
-  },
-  {
-    label: "Món còn hàng",
-    value: "9/10",
-    icon: UtensilsCrossed,
-    bgColor: "bg-primary/10",
-    textColor: "text-primary",
-  },
-  {
-    label: "Đơn chờ xử lý",
-    value: "1",
-    icon: ClipboardList,
-    bgColor: "bg-primary/15",
-    textColor: "text-primary",
-  },
-  {
-    label: "Doanh thu hôm nay",
-    value: "0 ₫",
-    icon: DollarSign,
-    bgColor: "bg-primary/10",
-    textColor: "text-primary",
-  },
-];
+export function OverviewStats({ stats: data }) {
+  const stats = [
+    {
+      label: "Bàn đang phục vụ",
+      value: `${data?.activeTables || 0}/${data?.totalTables || 0}`,
+      icon: TableProperties,
+      bgColor: "bg-accent/50",
+      textColor: "text-accent-foreground",
+    },
+    {
+      label: "Món còn hàng",
+      value: `${data?.availableItems || 0}/${data?.totalItems || 0}`,
+      icon: UtensilsCrossed,
+      bgColor: "bg-primary/10",
+      textColor: "text-primary",
+    },
+    {
+      label: "Đơn chờ xử lý",
+      value: data?.pendingOrders || 0,
+      icon: ClipboardList,
+      bgColor: "bg-primary/15",
+      textColor: "text-primary",
+    },
+    {
+      label: "Doanh thu hôm nay",
+      value: new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data?.revenue || 0),
+      icon: DollarSign,
+      bgColor: "bg-primary/10",
+      textColor: "text-primary",
+    },
+  ];
 
-export function OverviewStats() {
   return (
     <>
       <h1 className="text-xl md:text-2xl font-bold text-foreground">
