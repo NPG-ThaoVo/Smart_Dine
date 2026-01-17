@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import AdminLogin from "../../components/AdminLogin";
 import AuthContext from "../../contexts/authContext";
 
-const AdminLoginPage = () => {
+const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { loginWithGoogle } = useContext(AuthContext);
@@ -31,4 +31,4 @@ const AdminLoginPage = () => {
   );
 };
 
-export default AdminLoginPage;
+export default LoginPage;

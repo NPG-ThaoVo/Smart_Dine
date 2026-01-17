@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import AdminLoginPage from "./pages/adminLoginPage";
+import LoginPage from "./pages/LoginPage";
 import DetailsPage from "./pages/DetailsPage";
 import Menu from "./pages/Menu";
 import SmartDineLanding from "./pages/Smartdine-Landing-Page";
@@ -22,7 +22,7 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<Menu />} />
-          <Route path="/admin/login" element={<AdminLoginPage />} />
+          <Route path="/admin/login" element={<LoginPage />} />
           <Route
             path="/order/:tableId/item/:itemId"
             element={<DetailsPage />}
