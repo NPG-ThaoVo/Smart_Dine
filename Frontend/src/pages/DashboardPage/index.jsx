@@ -17,10 +17,12 @@ export default function DashboardPage() {
   });
   const [tables, setTables] = useState([]);
   const [recentOrders, setRecentOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const [tablesData, menuData, ordersData] = await Promise.all([
           getAllTables(),
           getMenuItems(),
@@ -35,6 +37,17 @@ export default function DashboardPage() {
 
         const orders = ordersData.data || [];
         const pendingOrders = orders.filter((o) => o.status === "PENDING").length;
+
+        const revenue = orders
+          .filter((o) => o.status === "COMPLETED")
+          .reduce((total, order) => {
+            const orderTotal =
+              order.orderItems?.reduce(
+                (sum, item) => sum + (item.price || 0) * (item.quantity || 0),
+                0
+              ) || 0;
+            return total + orderTotal;
+          }, 0);
 
         const sortedOrders = [...orders]
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
@@ -68,16 +81,19 @@ export default function DashboardPage() {
             };
           });
         setRecentOrders(sortedOrders);
+
         setStats({
           activeTables,
           totalTables,
           availableItems,
           totalItems,
           pendingOrders,
-          revenue: 0,
+          revenue,
         });
       } catch (error) {
         console.error("Error fetching dashboard data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -87,14 +103,14 @@ export default function DashboardPage() {
   return (
     <main className="flex-1 p-3 md:p-6 overflow-auto">
       <div className="space-y-6">
-        <OverviewStats stats={stats} />
+        <OverviewStats stats={stats} loading={loading} />
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           <div className="lg:col-span-7">
-            <TableOverview tables={tables} />
+            <TableOverview tables={tables} loading={loading} />
           </div>
           <div className="lg:col-span-5">
-            <RecentOrders orders={recentOrders} />
+            <RecentOrders orders={recentOrders} loading={loading} />
           </div>
         </div>
       </div>

@@ -1,8 +1,9 @@
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Clock, UtensilsCrossed, ChevronRight } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
-export function RecentOrders({ orders = [] }) {
+export function RecentOrders({ orders = [], loading }) {
   return (
     <Card className="rounded-xl border border-border/30 bg-card/80 text-card-foreground backdrop-blur-xl transition-all duration-300 hover:shadow-lg hover:border-border/50 glass-card border-none shadow-2xl">
       <CardHeader className="space-y-1.5 p-6 flex flex-row items-center justify-between pb-6">
@@ -21,53 +22,72 @@ export function RecentOrders({ orders = [] }) {
       <CardContent className="p-6 pt-0">
         <ScrollArea className="h-[320px] pr-2">
           <div className="space-y-3">
-            {orders.map((order, index) => (
-              <div
-                key={index}
-                className={`group flex items-center p-3 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${order.statusColor === "amber"
-                    ? "bg-amber-500/5 border-amber-500/20 hover:bg-amber-500/10"
-                    : "bg-white/5 border-white/5 hover:bg-white/10"
-                  }`}
-              >
+            {loading
+              ? Array.from({ length: 5 }).map((_, i) => (
                 <div
-                  className={`h-12 w-12 rounded-xl flex items-center justify-center border mr-4 transition-colors ${order.statusColor === "amber"
-                      ? "bg-amber-500/10 border-amber-500/20 text-amber-500"
-                      : "bg-primary/10 border-primary/20 text-primary"
+                  key={i}
+                  className="flex items-center p-3 rounded-2xl border border-white/5 bg-white/5"
+                >
+                  <Skeleton className="h-12 w-12 rounded-xl mr-4" />
+                  <div className="flex-1 min-w-0 space-y-2">
+                    <div className="flex items-center justify-between margin-b-1">
+                      <Skeleton className="h-4 w-24" />
+                      <Skeleton className="h-3 w-12" />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Skeleton className="h-5 w-20 rounded-md" />
+                      <Skeleton className="h-5 w-16 rounded-md" />
+                    </div>
+                  </div>
+                </div>
+              ))
+              : orders.map((order, index) => (
+                <div
+                  key={index}
+                  className={`group flex items-center p-3 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${order.statusColor === "amber"
+                      ? "bg-amber-500/5 border-amber-500/20 hover:bg-amber-500/10"
+                      : "bg-white/5 border-white/5 hover:bg-white/10"
                     }`}
                 >
-                  {order.statusColor === "amber" ? (
-                    <Clock className="w-6 h-6" />
-                  ) : (
-                    <UtensilsCrossed className="w-6 h-6" />
-                  )}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between mb-1">
-                    <p className="font-bold text-sm text-foreground truncate">
-                      Bàn {order.table}
-                    </p>
-                    <span className="text-[10px] text-muted-foreground flex items-center gap-1">
-                      <Clock className="w-3 h-3" />
-                      {order.time}
-                    </span>
+                  <div
+                    className={`h-12 w-12 rounded-xl flex items-center justify-center border mr-4 transition-colors ${order.statusColor === "amber"
+                        ? "bg-amber-500/10 border-amber-500/20 text-amber-500"
+                        : "bg-primary/10 border-primary/20 text-primary"
+                      }`}
+                  >
+                    {order.statusColor === "amber" ? (
+                      <Clock className="w-6 h-6" />
+                    ) : (
+                      <UtensilsCrossed className="w-6 h-6" />
+                    )}
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span
-                      className={`text-xs px-2 py-0.5 rounded-md font-medium capitalize ${order.statusColor === "amber"
-                          ? "bg-accent text-accent-foreground"
-                          : "bg-primary/10 text-primary"
-                        }`}
-                    >
-                      {order.status}
-                    </span>
-                    <span className="text-[10px] text-muted-foreground px-1.5 py-0.5 bg-white/5 rounded-md">
-                      {order.items} món
-                    </span>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="font-bold text-sm text-foreground truncate">
+                        Bàn {order.table}
+                      </p>
+                      <span className="text-[10px] text-muted-foreground flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
+                        {order.time}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span
+                        className={`text-xs px-2 py-0.5 rounded-md font-medium capitalize ${order.statusColor === "amber"
+                            ? "bg-accent text-accent-foreground"
+                            : "bg-primary/10 text-primary"
+                          }`}
+                      >
+                        {order.status}
+                      </span>
+                      <span className="text-[10px] text-muted-foreground px-1.5 py-0.5 bg-white/5 rounded-md">
+                        {order.items} món
+                      </span>
+                    </div>
                   </div>
+                  <ChevronRight className="w-5 h-5 text-muted-foreground/30 opacity-0 group-hover:opacity-100 transition-opacity -ml-2" />
                 </div>
-                <ChevronRight className="w-5 h-5 text-muted-foreground/30 opacity-0 group-hover:opacity-100 transition-opacity -ml-2" />
-              </div>
-            ))}
+              ))}
           </div>
         </ScrollArea>
       </CardContent>
