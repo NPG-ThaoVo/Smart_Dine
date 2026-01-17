@@ -2,9 +2,10 @@ import { Button } from "../ui/button";
 import { Plus, Minus } from "lucide-react";
 import { Badge } from "../ui/badge";
 
+
 const FoodCard = ({ item, quantity, onAdd, onRemove, onViewDetails }) => {
   const isSelected = quantity > 0;
-
+  
   return (
     <div
       className={`group relative flex flex-col rounded-3xl overflow-hidden

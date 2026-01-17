@@ -209,7 +209,7 @@ const MenuAdminPage = () => {
       description: item.description,
       upsell: item.upsellSuggestions?.[0] || "",
       available: item.isAvailable,
-      image: "",
+      image: item.image || "",
     });
     setFile(null);
     setIsCreateDialogOpen(true);
@@ -268,10 +268,29 @@ const MenuAdminPage = () => {
     }
     setIsGenerating((prev) => ({ ...prev, upsell: true }));
     try {
-      const prompt = `Gợi ý duy nhất 1 loại đồ uống (viết hoa chữ cái đầu) phù hợp nhất để uống kèm với món: "${formData.name}". Chỉ trả về tên đồ uống, không giải thích.`;
+      const drinkCategories = categories.filter((c) =>
+        c.name.toLowerCase().includes("đồ uống") || c.name.toLowerCase().includes("drink")
+      );
+      const drinkIds = drinkCategories.map((c) => c._id);
+      const availableDrinks = menuItems.filter((item) => {
+        const catId = item.categoryId?._id || item.categoryId;
+        return drinkIds.includes(catId);
+      });
+
+      const drinkListStr = availableDrinks.map((d) => `"${d.name}"`).join(", ");
+
+      let prompt = "";
+      if (drinkListStr) {
+        prompt = `Bạn là chuyên gia ẩm thực. Dưới đây là danh sách các đồ uống có sẵn tại nhà hàng: [${drinkListStr}]. Hãy chọn duy nhất 1 đồ uống trong danh sách này phù hợp nhất để uống kèm với món: "${formData.name}". Chỉ trả về tên đồ uống chính xác như trong danh sách, kết quả trả về không được có dấu ngoặc kép, không thêm bớt, không giải thích.`;
+      } else {
+        prompt = `Gợi ý duy nhất 1 loại đồ uống (viết hoa chữ cái đầu) phù hợp nhất để uống kèm với món: "${formData.name}". Chỉ trả về tên đồ uống, không giải thích.`;
+      }
+
       const text = await generateGeminiText(prompt);
-      setFormData((prev) => ({ ...prev, upsell: text }));
-      toast.success("Đã tạo gợi ý đồ uống!");
+      const cleanText = text.replace(/^"|"$/g, '');
+
+      setFormData((prev) => ({ ...prev, upsell: cleanText }));
+      toast.success("Đã tạo gợi ý đồ uống từ thực đơn!");
     } catch (error) {
       console.error("Gemini error:", error);
       toast.error("Lỗi khi tạo gợi ý: " + (error.message || "Không xác định"));
