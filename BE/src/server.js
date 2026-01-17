@@ -20,7 +20,7 @@ const app = express();
 //accept list of origin
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://smart-dine-ki3m.vercel.app/",
+  "https://smart-dine-ki3m.vercel.app",
   process.env.FRONTEND_URL,
 ];
 app.use(
